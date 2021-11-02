@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductsService } from 'src/app/service/products.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ProductService } from 'src/app/service/products.service';
 import { Product } from 'src/app/models/Product';
 
 @Component({
@@ -8,13 +8,13 @@ import { Product } from 'src/app/models/Product';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  products: Product[] = [];
-  constructor(private productService: ProductsService) { }
+  @Input() products: Product[] = [];
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     //raw data return for setting up View, move to backend later
-    let Products = this.productService.getProducts();
-    
+    this.products = this.productService.getProducts();
+
   }
 
 }
