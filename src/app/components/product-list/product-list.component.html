@@ -3,6 +3,7 @@
 </app-product-list> -->
 
 <h1>{{ title }}</h1>
-<ul *ngFor="let product of products">
+<app-product-item *ngFor="let product of products" [product]="product"></app-product-item>
+<!-- <ul *ngFor="let product of products">
     <li>{{ product.name }}, {{ product.price }}, {{ product.description }}</li>
-</ul>
+</ul> -->
