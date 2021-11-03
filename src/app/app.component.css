@@ -1,3 +1,10 @@
+body {
+    margin: o;
+}
+.margins {
+    /* margin: 40px 0px 0px 40px;    */
+    margin: 0;  
+}
 .app-display {
     display: flex;
     flex-wrap: wrap;
