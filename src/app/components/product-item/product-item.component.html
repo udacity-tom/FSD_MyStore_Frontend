@@ -1,6 +1,18 @@
 <div class=product-container>
     <img src="{{ product.url }}" class=product-image/>
+    <button class="btn btn-primary">See Details</button>
     <p>{{ product.name }}</p>
     <p>{{ product.price }}</p>
     <p>{{ product.description }}</p>
+    <br>
+    <br>
+    <div>
+        <button (click)="decreaseItems()">-</button>
+        {{ noOfItems }}
+        <button (click)="increaseItems()">+</button>
+    </div>
+    <br>
+    <br>
+    <button class="btn btn-primary" >Add To Cart</button>
+    <button class="btn btn-primary"></button>
 </div>
