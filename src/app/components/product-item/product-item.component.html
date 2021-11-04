@@ -1,18 +1,26 @@
-<div class=product-container>
-    <img src="{{ product.url }}" class=product-image/>
-    <button class="btn btn-primary">See Details</button>
+<div class="product-container" (mouseover)="showButtons=true" (mouseout)="showButtons=false">
+    <img  src="{{ product.url }}" class=product-image/>
     <p>{{ product.name }}</p>
     <p>{{ product.price }}</p>
     <p>{{ product.snippet }}</p>
+    <!-- <p>{{ product.description }}</p> -->
     <br>
     <br>
     <div>
+        <button 
+            *ngIf=(showButtons) 
+            class="btn btn-primary" 
+            style="margin-right: 40px;"
+            [routerLink]="['/detail']">
+            See Details</button>
+        <button *ngIf=(showButtons) class="btn btn-primary" >Add To Cart</button>
+    <!-- <div>
         <button (click)="decreaseItems()">-</button>
         {{ noOfItems }}
         <button (click)="increaseItems()">+</button>
     </div>
     <br>
-    <br>
-    <button class="btn btn-primary" >Add To Cart</button>
-    <button class="btn btn-primary"></button>
+    <br> -->
+    </div>
+    <!-- <button class="btn btn-primary"></button> -->
 </div>

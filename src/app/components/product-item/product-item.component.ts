@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 
 @Component({
@@ -8,7 +8,9 @@ import { Product } from 'src/app/models/Product';
 })
 export class ProductItemComponent implements OnInit {
   @Input() product: Product;
-  noOfItems: number = 1;
+  // @Output() product: Product;
+  // noOfItems: number = 1;
+  showButtons: boolean = false;
 
   constructor() { 
     this.product = {
@@ -26,13 +28,13 @@ export class ProductItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  increaseItems() {
-    this.noOfItems +=1
-  }
-  decreaseItems() {
-    if(this.noOfItems==1) return;
-    this.noOfItems -=1
-  }
+  // increaseItems() {
+  //   this.noOfItems +=1
+  // }
+  // decreaseItems() {
+  //   if(this.noOfItems==1) return;
+  //   this.noOfItems -=1
+  // }
   addToCart() {
 
   }
