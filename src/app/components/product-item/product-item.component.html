@@ -1,5 +1,5 @@
 <div class="product-container" (mouseover)="showButtons=true" (mouseout)="showButtons=false">
-    <img  src="{{ product.url }}" class=product-image/>
+    <img  src="{{ product.url }}" class=product-image [routerLink]="'/detail/'+product.id" />
     <p>{{ product.name }}</p>
     <p>{{ product.price }}</p>
     <p>{{ product.snippet }}</p>
@@ -11,7 +11,7 @@
             *ngIf=(showButtons) 
             class="btn btn-primary" 
             style="margin-right: 40px;"
-            [routerLink]="'/detail/' +product.id">
+            [routerLink]="'/detail/'+product.id">
             See Details</button>
         <button *ngIf=(showButtons) class="btn btn-primary" >Add To Cart</button>
     <!-- <div>
