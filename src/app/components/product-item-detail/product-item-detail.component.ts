@@ -3,7 +3,7 @@ import { Product } from 'src/app/models/Product';
 import { ProductService } from 'src/app/service/products.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+// import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-item-detail',
@@ -35,22 +35,15 @@ export class ProductItemDetailComponent implements OnInit {
   
   ngOnInit(): void {
     this.products = this.productService.getProducts();
-    // this.product = this.products.filter( item => {
-    //   item.id == this.route.queryParamMap.get('filter') 
-    // });
     this.givenId = Number(this.route.snapshot.paramMap.get('id'));
-    console.log('id',this.givenId);
     this.product = this.products.filter( item => {
-      if(item.id == Number(this.givenId)){
-      return item;
-      } else {
-        return this.product;
+      if(item.id != Number(this.givenId)){
+        return;
+      } 
+      else {
+        return item;
       }
     })[0];
-    
-    // this.filter$ = this.route.queryParamMap.pipe(
-    //   map((params: ParamMap) => params.get('filter')),
-    // );
   }
 
   increaseItems(): void {
