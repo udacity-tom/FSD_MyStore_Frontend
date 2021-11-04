@@ -19,7 +19,9 @@ export class ProductService {
         name: "Book",
         price: 9.99,
         url: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        description: "You can read it!",
+        snippet: "You can read it!",
+        description: "A book is a medium for recording information in the form of writing or images, typically composed of many pages (made of papyrus, parchment, vellum, or paper) bound together and protected by a cover.[1] The technical term for this physical arrangement is codex (plural, codices). In the history of hand-held physical supports for extended written compositions or records, the codex replaces its predecessor, the scroll. A single sheet in a codex is a leaf and each side of a leaf is a page. ",
+        accreditation: "wikipedia.org",
         category: "Book"
       },
       {
@@ -27,7 +29,9 @@ export class ProductService {
         name: "Headphones",
         price: 249.99,
         url: "https://images.unsplash.com/photo-1583394838336-acd977736f90?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        description: "Listen to stuff!",
+        snippet: "Listen to stuff!",
+        description: "",
+        accreditation: "wikipedia.org",
         category: "Electronics"
       },
       {
@@ -35,7 +39,9 @@ export class ProductService {
         name: "Backpack",
         price: 79.99,
         url: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        description: "Carry things around town!",
+        snippet: "Carry things around town!",
+        description: "",
+        accreditation: "wikipedia.org",
         category: "Baggage"
       },
       {
@@ -43,7 +49,9 @@ export class ProductService {
         name: "Glasses",
         price: 129.99,
         url: "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        description: "Now you can see!",
+        snippet: "Now you can see!",
+        description: "",
+        accreditation: "wikipedia.org",
         category: "Reading Aid"
       },
       {
@@ -51,7 +59,9 @@ export class ProductService {
         name: "Cup",
         price: 4.99,
         url: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        description: "Drink anything with it!",
+        snippet: "Drink anything with it!",
+        description: "",
+        accreditation: "wikipedia.org",
         category: "Houseware"
       },
       {
@@ -59,7 +69,9 @@ export class ProductService {
         name: "Shirt",
         price: 29.99,
         url: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80",
-        description: "Wear it with style!",
+        snippet: "Wear it with style!",
+        description: "",
+        accreditation: "wikipedia.org",
         category: "Clothing"
       }
     ]
