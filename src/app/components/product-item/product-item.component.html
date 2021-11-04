@@ -11,7 +11,7 @@
             *ngIf=(showButtons) 
             class="btn btn-primary" 
             style="margin-right: 40px;"
-            [routerLink]="['/detail']">
+            [routerLink]="'/detail/' +product.id">
             See Details</button>
         <button *ngIf=(showButtons) class="btn btn-primary" >Add To Cart</button>
     <!-- <div>

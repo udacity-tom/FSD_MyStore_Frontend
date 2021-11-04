@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { ProductService } from 'src/app/service/products.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-item-detail',
@@ -9,31 +12,51 @@ import { ProductService } from 'src/app/service/products.service';
 })
 export class ProductItemDetailComponent implements OnInit {
   @Input() products: Product[] = [];
+  // @Input() product: Product;
   // productDetail:
   product: Product;
+  givenId: number;
   noOfItems: number = 1;
+  filter$!: Observable<string>;
 
-  constructor(private productService:ProductService) { 
-    // this.product = {
-    //   id: 0,
-    //   name: '',
-    //   url: '',
-    //   price: 0,
-    //   snippet: '',
-    //   description: '',
-    //   accreditation: '',
-    //   category: ''
-    // }
-    
+  constructor(private productService:ProductService, private route: ActivatedRoute) { 
+    this.product = {
+      id: 0,
+      name: '',
+      url: '',
+      price: 0,
+      snippet: '',
+      description: '',
+      accreditation: '',
+      category: ''
+    }
+    this.givenId = 0;
   }
   
   ngOnInit(): void {
     this.products = this.productService.getProducts();
+    // this.product = this.products.filter( item => {
+    //   item.id == this.route.queryParamMap.get('filter') 
+    // });
+    this.givenId = Number(this.route.snapshot.paramMap.get('id'));
+    console.log('id',this.givenId);
+    this.product = this.products.filter( item => {
+      if(item.id == Number(this.givenId)){
+      return item;
+      } else {
+        return this.product;
+      }
+    })[0];
+    
+    // this.filter$ = this.route.queryParamMap.pipe(
+    //   map((params: ParamMap) => params.get('filter')),
+    // );
   }
 
-  increaseItems() {
+  increaseItems(): void {
     this.noOfItems +=1
   }
+
   decreaseItems() {
     if(this.noOfItems==1) return;
     this.noOfItems -=1
