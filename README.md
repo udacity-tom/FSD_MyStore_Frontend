@@ -1,7 +1,7 @@
-# FSD Storefront Backend API
+# FSD Mystore Backend API
 
 Full Stack Developer Nanodegree, create a node based API to support a frontend store website.
-
+This repository is designed to interface with the respository name FSD_Mystore_frontend 
 
 ## Introduction/API Functionality
 
@@ -54,9 +54,9 @@ In order to use the API you must pre-configure the initial database.
 To do so access the `psql` prompt as ``postgres`` on the installed Postgres database and enter the following commands at the prompt:
 
 ```
-CREATE DATABASE storefront_dev;
+CREATE DATABASE mystore;
 CREATE USER storefont_admin WITH PASSWORD 'password';
-GRANT ALL PRIVILEGES ON DATABASE storefront_dev TO storefront_admin;
+GRANT ALL PRIVILEGES ON DATABASE mystore TO storefront_admin;
 ```
 
 ### Setting the environmental variables
@@ -66,11 +66,11 @@ Copy the following into the file:
 ```
     POSTGRES_HOST=127.0.0.1  //or whereever the Postgres database is located
     
-    POSTGRES_DB=storefront_dev
+    POSTGRES_DB=mystore
     POSTGRES_USER_DEV=storefront_admin
     POSTGRES_PASSWORD_DEV=password
     
-    POSTGRES_TEST_DB=storefront_test
+    POSTGRES_TEST_DB=mystore_test
     POSTGRES_USER_TEST=storefront_admin
     POSTGRES_PASSWORD_TEST=password
     
@@ -98,13 +98,13 @@ When finished run the down migration for the test database with:
 ```
 npm run create-test-down
 ```
-The tests will run with one failure if the ``run watch-test`` script is notaborted aforehand. 
+The tests will run with one failure if the ``run watch-test`` script is not aborted aforehand. 
 ```
 - Uncaught exception: Error: listen EADDRINUSE: address already in use :::3002
 ```
 
 ## Interactively Running the API
-To call the API interactively, with the provided test data, using something like [Postman](https://www.postman.com/), follow these instructions
+To call the API interactively, with the provided test data, using software similar to [Postman](https://www.postman.com/), follow these instructions
 
 Access a terminal in the repo directory and enter the following command:
 ```
