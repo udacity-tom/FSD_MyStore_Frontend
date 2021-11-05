@@ -1,15 +1,16 @@
 <div class=product-container>
+    <h1 class="title">{{product.name}}</h1>
     <a routerLink="/products">
-    <img src="{{ product.url }}" class=product-image/>
-</a>
+        <img src="{{ product.url }}" class=product-image/>
+    </a>
     <!-- <button class="btn btn-primary">See Details</button> -->
-    <p>{{ product.name }}</p>
-    <p>{{ product.price }}</p>
+    <p>Product Name: {{ product.name }}</p>
+    <p>Product Price USD: {{ product.price }}</p>
     <p>{{ product.snippet }}</p>
-    <p>{{ product.description+product.name }}</p>
+    <p class="description">Full Description: {{ product.description+product.name }}</p>
     <br>
     <br>
-    <div>
+    <div class="quantity">
         <button (click)="decreaseItems()">-</button>
         {{ noOfItems }}
         <button (click)="increaseItems()">+</button>
