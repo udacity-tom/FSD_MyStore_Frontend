@@ -39,8 +39,7 @@ export class ProductItemDetailComponent implements OnInit {
     this.product = this.products.filter( item => {
       if(item.id != Number(this.givenId)){
         return;
-      } 
-      else {
+      } else {
         return item;
       }
     })[0];

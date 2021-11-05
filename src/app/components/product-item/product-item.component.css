@@ -1,3 +1,8 @@
+img {
+  border-radius: 10px;
+  /* width: 320px; */
+}
+
 .product-image {      
     list-style-type: none;
     width: 290px;
@@ -31,4 +36,16 @@
   .select-input {
     width: 108px; 
     margin-bottom: 8px;
+  }
+
+  .btn-primary-hover {
+    color: #007bff;
+    background-color: #fff;
+    border-color: #fff;
+  }
+
+  .btn-primary:hover {
+    color: #007bff;
+    background-color: #fff;
+    border-color: #fff;
   }

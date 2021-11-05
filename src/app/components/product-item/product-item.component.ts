@@ -11,6 +11,14 @@ export class ProductItemComponent implements OnInit {
   // @Output() product: Product;
   // noOfItems: number = 1;
   showButtons: boolean = false;
+  showCss: boolean = false;
+  value: boolean = false;
+  mouseEnter(div: string){
+    this.value = true;
+  }
+  mouseLeave(div: string) {
+    this.value = false;
+  }
 
   constructor() { 
     this.product = {

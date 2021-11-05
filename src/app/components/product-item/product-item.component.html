@@ -3,24 +3,18 @@
     <p>{{ product.name }}</p>
     <p>{{ product.price }}</p>
     <p>{{ product.snippet }}</p>
-    <!-- <p>{{ product.description }}</p> -->
     <br>
     <br>
-    <div>
-        <button 
-            *ngIf=(showButtons) 
-            class="btn btn-primary" 
-            style="margin-right: 40px;"
-            [routerLink]="'/detail/'+product.id">
-            See Details</button>
-        <button *ngIf=(showButtons) class="btn btn-primary" >Add To Cart</button>
-    <!-- <div>
-        <button (click)="decreaseItems()">-</button>
-        {{ noOfItems }}
-        <button (click)="increaseItems()">+</button>
+    <div *ngIf=(showButtons)>
+        <app-product-item-buttons [product]="product" ></app-product-item-buttons>
+        
     </div>
-    <br>
-    <br> -->
-    </div>
-    <!-- <button class="btn btn-primary"></button> -->
 </div>
+
+<!-- <button [ngClass]= "showCss ? 'btn btn-primary.hover' : 'btn btn-primary'"></button> -->
+
+<!-- (mouseenter)="showCss=true" (mouseleave)="showCss=false" -->
+<!-- <span (mouseenter)="showCss=true" (mouseleave)="showCss=false" >    
+    <button class="btn btn-primary"  [class.btn-primary-hover]="showCss">
+    Add To Cart</button>
+    </span> -->

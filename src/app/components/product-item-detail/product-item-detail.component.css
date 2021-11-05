@@ -23,3 +23,9 @@ img {
   .back-link {
     margin-top: 8px;
   }
+
+  .btn-primary:hover {
+    color: #007bff;
+    background-color: #fff;
+    border-color: #fff;
+  }
