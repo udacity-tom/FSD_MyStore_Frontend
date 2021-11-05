@@ -34,7 +34,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  pgtools.createdb(config, 'storefront_test', function(err, res) {
+  pgtools.createdb(config, 'mystore_test', function(err, res) {
     if (err) {
       console.error(err);
       process.exit(-1);
@@ -45,7 +45,7 @@ exports.up = function(db) {
 };
 
 exports.down = function(db) {
-  pgtools.dropdb(config, 'storefront_test', function(err, res) {
+  pgtools.dropdb(config, 'mystore_test', function(err, res) {
     if (err) {
       console.error(err);
       process.exit(-1);

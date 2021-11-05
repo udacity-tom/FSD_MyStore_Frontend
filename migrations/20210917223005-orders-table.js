@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/no-var-requires */
 'use strict';
 
 var dbm;
