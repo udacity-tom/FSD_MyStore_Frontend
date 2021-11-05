@@ -15,6 +15,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductItemButtonsComponent } from './components/product-item-buttons/product-item-buttons.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ProductItemButtonsComponent } from './components/product-item-buttons/p
     ProductListComponent,
     NavbarComponent,
     HomeComponent,
-    ProductItemButtonsComponent
+    ProductItemButtonsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
