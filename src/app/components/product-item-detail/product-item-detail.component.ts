@@ -34,7 +34,10 @@ export class ProductItemDetailComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.products = this.productService.getProducts();
+    this.productService.getProducts().subscribe(res => {
+      this.products = res;
+      console.log(this.products);
+    });
     this.givenId = Number(this.route.snapshot.paramMap.get('id'));
     this.product = this.products.filter( item => {
       if(item.id != Number(this.givenId)){

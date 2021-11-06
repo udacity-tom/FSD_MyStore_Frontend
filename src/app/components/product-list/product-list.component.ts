@@ -15,7 +15,9 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     //raw data return for setting up View, move to backend later
-    this.products = this.productService.getProducts();
+    this.productService.getProducts().subscribe(res => {
+      this.products = res;
+    });
     // this.products = [
     //   {
     //     id: 1,
