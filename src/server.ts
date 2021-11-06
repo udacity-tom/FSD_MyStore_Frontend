@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
+
 import userRoutes from './handlers/users';
 import orderRoutes from './handlers/orders';
 import productRoutes from './handlers/products';
@@ -12,6 +14,7 @@ const app: express.Application = express();
 const address = `${hostAddress}:${portAddress}`;
 
 app.use(bodyParser.json());
+app.use(cors);
 //handler routes
 userRoutes(app);
 orderRoutes(app);
