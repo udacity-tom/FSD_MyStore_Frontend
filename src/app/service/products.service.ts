@@ -9,12 +9,19 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductService {
 
-  // constructor(private http: HttpClient) { }
-  constructor(private http: HttpClient) { }
+  apiServer: string;
+  apiPort: string;
 
+  // constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.apiServer = '127.0.0.1';
+    this.apiPort = '3002';
+   }
+
+  // getAllProducts(what:string): Observable<what>
 
   getProducts():  Observable<Product[]> {
-    return this.http.get<Product[]>("http://127.0.0.1:3002/products")
+    return this.http.get<Product[]>(`http://${this.apiServer}:${this.apiPort}/products`)
   }
 
 
