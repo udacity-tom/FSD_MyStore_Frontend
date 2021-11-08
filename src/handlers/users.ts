@@ -30,7 +30,13 @@ const create = async (req: Request, res: Response) => {
       username: req.body.username,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      password: req.body.password
+      password: req.body.password,
+      houseNum: req.body.houseNum,
+      street1: req.body.street1,
+      street2: req.body.street2,
+      city: req.body.city,
+      postcode: req.body.postcode,
+      country: req.body.country
     };
     const newUser = await userStore.create(user);
 
@@ -38,7 +44,13 @@ const create = async (req: Request, res: Response) => {
       username: newUser.username,
       firstname: newUser.firstname,
       lastname: '',
-      password: ''
+      password: '',
+      houseNum: '',
+      street1: '',
+      street2: '',
+      city: '',
+      postcode: '',
+      country: ''
     };
     const token = await auth.createToken(jwtPayloadData);
     res.send([newUser, token]);

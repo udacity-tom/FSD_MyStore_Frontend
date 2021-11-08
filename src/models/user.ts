@@ -9,6 +9,12 @@ export type User = {
   firstname: string;
   lastname: string;
   password: string;
+  houseNum: string;
+  street1: string;
+  street2: string;
+  city: string;
+  postcode: string;
+  country: string;
 };
 
 export class UserStore {
