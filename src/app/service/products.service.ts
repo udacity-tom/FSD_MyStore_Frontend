@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/Product';
 import { Observable } from 'rxjs';
+import { from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 // import { Product } from 'src/app/models/Product';
 
@@ -11,11 +12,15 @@ export class ProductService {
 
   apiServer: string;
   apiPort: string;
+  itemDescription: object;
+  // header: string;
 
   // constructor(private http: HttpClient) { }
   constructor(private http: HttpClient) {
     this.apiServer = '127.0.0.1';
     this.apiPort = '3002';
+    this.itemDescription = {};
+    // this.header = '';
    }
 
   // getAllProducts(what:string): Observable<what>
@@ -24,6 +29,30 @@ export class ProductService {
     return this.http.get<Product[]>(`http://${this.apiServer}:${this.apiPort}/products`)
   }
 
+  getProduct(id: number): Observable<Product> {
+    return this.http.get<Product>(`http://${this.apiServer}:${this.apiPort}/products/${id}`);
+  }
+
+  getDescription(link: string, itemName: string): Observable<object> {
+    return this.itemDescription = from(
+      fetch(`${link}${itemName}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'GET',
+        mode: 'no-cors'
+      }
+
+      )
+    );
+    // return this.itemDescription;
+
+
+    // console.log('getDescription object', this.http.get<Product["description"]>(`${link}${itemName}`));
+    // console.log('without the call to service',`${link}${itemName}`);
+    // return this.http.get<object>(`${link}${itemName}`);
+  }
 
   // getProducts(): Product[] {
   //   return [
