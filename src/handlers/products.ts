@@ -30,7 +30,11 @@ const create = async (req: Request, res: Response) => {
   const newProductDetails: Product = {
     name: req.body.name,
     price: Number(req.body.price),
-    category: req.body.category
+    category: req.body.category,
+    url: req.body.url,
+    snippet: req.body.snippet,
+    description: req.body.description,
+    accreditation: req.body.accreditation
   };
   try {
     const newProduct = await productStore.create(newProductDetails);
@@ -51,6 +55,18 @@ const update = async (req: Request, res: Response) => {
     }
     if (req.body.category) {
       currentProductDetails.category = req.body.category;
+    }
+    if (req.body.url) {
+      currentProductDetails.url = req.body.url;
+    }
+    if (req.body.snippet) {
+      currentProductDetails.snippet = req.body.snippet;
+    }
+    if (req.body.description) {
+      currentProductDetails.description = req.body.description;
+    }
+    if (req.body.accreditation) {
+      currentProductDetails.accreditation = req.body.accreditation;
     }
     const updatedProduct = await productStore.update(currentProductDetails);
     res.json(updatedProduct);

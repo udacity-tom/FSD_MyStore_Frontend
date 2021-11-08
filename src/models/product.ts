@@ -4,6 +4,10 @@ export type Product = {
   id?: number;
   name: string;
   price: number;
+  url: string;
+  snippet: string;
+  description: string;
+  accreditation: string;
   category: string;
 };
 
@@ -55,13 +59,17 @@ export class ProductStore {
   async update(product: Product): Promise<Product> {
     try {
       const sql =
-        'UPDATE products SET name= ($1), price= ($2), category=($3) WHERE products.id = ($4) RETURNING *;';
+        'UPDATE products SET name= ($1), price= ($2), category=($3), url=($5), snippet=($6), description=($7), accreditation=($8) WHERE products.id = ($4) RETURNING *;';
       const conn = await client.connect();
       const result = await conn.query(sql, [
         product.name,
         product.price,
         product.category,
-        product.id
+        product.id,
+        product.url,
+        product.snippet,
+        product.description,
+        product.accreditation
       ]);
       conn.release();
 
