@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-var-requires */
 'use strict';
@@ -23,6 +24,7 @@ const config = {
   port: POSTGRES_PORT
 };
 
+console.log('user, password', config.user, config.password);
 /**
  * We receive the dbmigrate dependency from dbmigrate initially.
  * This enables us to not have to rely on NODE_PATH.
