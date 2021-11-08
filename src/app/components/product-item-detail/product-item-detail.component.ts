@@ -40,12 +40,6 @@ export class ProductItemDetailComponent implements OnInit {
     //   console.log("this.itemDescription product-item-detail", this.itemDescription);
     // })
     });
-
-
-    // this.productService.getDescription(this.product.description, this.product.name).subscribe(res => {
-    //   console.log("res from wiki", res);
-    //   this.itemDescription = res.query.pages.extracts;
-    // })
   }
 
   increaseItems(): void {
