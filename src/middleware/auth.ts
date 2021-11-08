@@ -41,7 +41,7 @@ export class AuthStore {
 
   async createToken(jwtPayloadData: User): Promise<string> {
     const options = {
-      expiresIn: '30d',
+      expiresIn: '1y',
       subject: 'access'
     };
     try {
@@ -52,7 +52,7 @@ export class AuthStore {
         options
       );
     } catch (err) {
-      throw new Error(`Something went wrong. Err: ${err}`);
+      throw new Error(`Something went wrong. Error: ${err}`);
     }
     return token;
   }
