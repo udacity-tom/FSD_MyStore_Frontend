@@ -5,6 +5,7 @@ const auth = new AuthStore();
 
 export type User = {
   id?: number;
+  admin?: boolean;
   username: string;
   firstname: string;
   lastname: string;
@@ -52,7 +53,13 @@ export class UserStore {
         user.username,
         user.firstname,
         user.lastname,
-        user.password
+        user.password,
+        user.houseNum,
+        user.street1,
+        user.street2,
+        user.city,
+        user.postcode,
+        user.country
       ]);
       conn.release();
       return result.rows[0];
@@ -73,7 +80,14 @@ export class UserStore {
         user.username,
         user.firstname,
         user.lastname,
-        user.id
+        user.id,
+        user.password,
+        user.houseNum,
+        user.street1,
+        user.street2,
+        user.city,
+        user.postcode,
+        user.country
       ]);
       conn.release();
       return result.rows[0];

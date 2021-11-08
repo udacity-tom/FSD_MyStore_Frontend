@@ -27,6 +27,7 @@ const show = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const user: User = {
+      admin: req.body.admin,
       username: req.body.username,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
@@ -41,9 +42,11 @@ const create = async (req: Request, res: Response) => {
     const newUser = await userStore.create(user);
 
     const jwtPayloadData: User = {
+      id: newUser.id,
+      admin: false,
       username: newUser.username,
       firstname: newUser.firstname,
-      lastname: '',
+      lastname: newUser.lastname,
       password: '',
       houseNum: '',
       street1: '',
@@ -80,6 +83,27 @@ const update = async (req: Request, res: Response) => {
     }
     if (req.body.lastname) {
       currentUserDetails.lastname = req.body.lastname;
+    }
+    if (req.body.password) {
+      currentUserDetails.password = req.body.password;
+    }
+    if (req.body.houseNum) {
+      currentUserDetails.houseNum = req.body.houseNum;
+    }
+    if (req.body.street1) {
+      currentUserDetails.street1 = req.body.street1;
+    }
+    if (req.body.street2) {
+      currentUserDetails.street2 = req.body.street2;
+    }
+    if (req.body.city) {
+      currentUserDetails.city = req.body.city;
+    }
+    if (req.body.postcode) {
+      currentUserDetails.postcode = req.body.postcode;
+    }
+    if (req.body.country) {
+      currentUserDetails.country = req.body.country;
     }
 
     const updateUser = await userStore.update(currentUserDetails);
