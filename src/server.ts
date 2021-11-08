@@ -14,7 +14,7 @@ const app: express.Application = express();
 const address = `${hostAddress}:${portAddress}`;
 
 app.use(bodyParser.json());
-app.use(cors);
+app.use(cors());
 //handler routes
 userRoutes(app);
 orderRoutes(app);
