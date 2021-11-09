@@ -35,10 +35,6 @@ export class ProductItemDetailComponent implements OnInit {
     this.givenId = Number(this.route.snapshot.paramMap.get('id'));
     this.productService.getProduct(this.givenId).subscribe(res => {
       this.product = res;
-    //   this.productService.getDescription(this.product.description, this.product.name).subscribe(res => {
-    //     this.itemDescription = res;
-    //   console.log("this.itemDescription product-item-detail", this.itemDescription);
-    // })
     });
   }
 
