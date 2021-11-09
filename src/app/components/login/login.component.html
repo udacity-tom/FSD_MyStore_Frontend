@@ -1,13 +1,13 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()" class="login-container">
-    <h1>Sign in Here!</h1>
+    <h1>Login Here!</h1>
     <br>
-    <p class="signin-text">Currently signing in as: {{username}}</p>
+    <p class="signin-text">Currently logging in as: {{username}}</p>
     <br>
     <input 
         type="text" 
         name="username" 
         required 
-        minlength="5" 
+        minlength="3" 
         placeholder="Enter Username" 
         [(ngModel)]="username"
         #userName="ngModel">
@@ -16,7 +16,7 @@
         type="text" 
         name="password" 
         required 
-        minlength="9" 
+        minlength="8" 
         placeholder="Enter Password" 
         [(ngModel)]="password"
         #passWord="ngModel">
@@ -31,5 +31,5 @@
 </div>
 <br>
 <div *ngIf="passWord.invalid && passWord.dirty">
-    You must enter a password and it must be at least 9 characters long.
+    You must enter a password and it must be at least 8 characters long.
 </div>

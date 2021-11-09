@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-// import { }
+import { LoginService } from 'src/app/service/login.service';
 
 
 @Component({
@@ -11,15 +11,31 @@ import { Observable } from 'rxjs';
 export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
+  returnedJWT: object = {};
+  token: string = '';
 
-  constructor() { }
+  constructor(private loginAuth: LoginService) { 
+
+  }
 
   ngOnInit(): void {
   }
 
   onSubmit(): void {
-    alert(``)
-  }
+   
+    this.loginAuth.authUser(this.username, this.password).subscribe(res => {
+   
+      this.returnedJWT = res;
+    }
+    );
 
+   
+    setTimeout( () => {
+    console.log('this is the token?',this.returnedJWT);
+    }, 400);
+  }
+  // getToken(jwtObject: object) {
+  //   this.token = jwtObject.token;
+  // }
 
 }
