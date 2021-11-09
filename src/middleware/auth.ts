@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import client from '../database';
-import jwt from 'jsonwebtoken';
+import jwt, { decode } from 'jsonwebtoken';
 import express from 'express';
 import { User } from '../models/user';
 
@@ -76,6 +76,7 @@ export class AuthStore {
       const jwtToken: string = authorisationHeader.split(' ')[1];
       const decoded = jwt.verify(jwtToken, tokenSecret);
       if (decoded) {
+        // TODO: add conditional check on payload submitted ID, to check if 'user' can view orders, etc, then check recursively if user is admin-true, they can view orders, etc also
         next();
       }
     } catch (err) {
