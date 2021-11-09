@@ -15,17 +15,21 @@ const tokenSecret = String(process.env.TOKEN_SECRET);
 
 export class AuthStore {
   async authenticate(username: string, password: string): Promise<string> {
+    console.log('AuthStore: Recieved params', username, password);
     const conn = await client.connect();
     const sql = 'SELECT * FROM users WHERE username = ($1)';
     const result = await conn.query(sql, [username]);
     const user: User = result.rows[0];
+    console.log('sql response', result.rows[0]);
     if (result.rows.length) {
       const userPassword = result.rows[0].password;
       const passwordCheck = bcrypt.compareSync(password + pepper, userPassword);
       if (passwordCheck) {
+        console.log('Yes, password checked out!');
         user.password = '';
         user.lastname = '';
         const token = this.createToken(user);
+        console.log('Yes, token was generated. Look ->', token);
         return token;
       } else {
         return 'Failure-login refused, try again';
