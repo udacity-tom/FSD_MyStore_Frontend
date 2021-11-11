@@ -3,30 +3,33 @@ import { Product } from '../models/Product';
 import { Observable } from 'rxjs';
 import { from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-// import { Product } from 'src/app/models/Product';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  apiServer: string;
-  apiPort: string;
+  apiServer: string = environment.API_SERVER_IP;
+  apiPort: string = environment.API_PORT;
+  protocol: string = environment.PROTOCOL;
   itemDescription: object;
 
   constructor(private http: HttpClient) {
-    this.apiServer = '127.0.0.1';
-    this.apiPort = '3002';
     this.itemDescription = {};
    }
-
+   
   getProducts():  Observable<Product[]> {
-    return this.http.get<Product[]>(`http://${this.apiServer}:${this.apiPort}/products`)
+    return this.http.get<Product[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/products`)
   }
 
   getProduct(id: number): Observable<Product> {
-    return this.http.get<Product>(`http://${this.apiServer}:${this.apiPort}/products/${id}`);
+    return this.http.get<Product>(`${this.protocol}${this.apiServer}:${this.apiPort}/products/${id}`);
   }
+
+  // postProuct(product: Product){
+  //   return this.http.post<Product>(`http)
+  // }
 
   getDescription(link: string, itemName: string): Observable<object> {
     return this.itemDescription = from(
