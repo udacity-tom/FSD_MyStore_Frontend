@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,  } from 'rxjs';
 import { LoginService } from 'src/app/service/login.service';
+import { TokenService } from 'src/app/service/token.service';
 
 
 @Component({
@@ -13,29 +14,31 @@ export class LoginComponent implements OnInit {
   password: string = '';
   returnedJWT: object = {};
   token: string = '';
-
-  constructor(private loginAuth: LoginService) { 
+  authFn: object = {};
+  loading: boolean = false;
+  // stream: Observable<string> = '';
+  
+  constructor(private loginAuth: LoginService, private tokenService: TokenService) { 
 
   }
 
   ngOnInit(): void {
+    
   }
-
+//To-do: Refactor
   onSubmit(): void {
-   
-    this.loginAuth.authUser(this.username, this.password).subscribe(res => {
-   
-      this.returnedJWT = res;
-    }
-    );
-
-   
-    setTimeout( () => {
-    console.log('this is the token?',this.returnedJWT);
-    }, 400);
+    this.loading = true;
+    this.returnedJWT = this.getLogin(this.username, this.password);
+    this.loading = false;
+    console.log('stored Token', this.tokenService.getToken());
   }
-  // getToken(jwtObject: object) {
-  //   this.token = jwtObject.token;
-  // }
-
+  getLogin(username: string, password: string) {
+    return this.loginAuth.authUser(this.username, this.password)
+    .subscribe(
+      res => {
+        this.returnedJWT = res;
+        this.tokenService.setToken(this.returnedJWT);
+      }
+      );
+  }
 }
