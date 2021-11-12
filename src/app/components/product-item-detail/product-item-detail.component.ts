@@ -39,11 +39,11 @@ export class ProductItemDetailComponent implements OnInit {
   }
 
   increaseItems(): void {
-    this.noOfItems +=1
+    this.noOfItems++
   }
 
   decreaseItems() {
     if(this.noOfItems==1) return;
-    this.noOfItems -=1
+    this.noOfItems--
   }
 }
