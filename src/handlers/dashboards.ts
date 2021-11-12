@@ -38,6 +38,7 @@ const dashboardRoutes = (app: express.Application): void => {
   app.get(
     '/users/:id/orders/complete/all',
     auth.verifyAuthToken,
+    auth.verifyAdmin,
     userOrderCompleted
   );
 };

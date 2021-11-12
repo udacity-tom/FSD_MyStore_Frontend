@@ -81,17 +81,38 @@ const addProduct = async (req: Request, res: Response) => {
 };
 
 const orderRoutes = (app: express.Application): void => {
-  app.get('/orders', auth.verifyAuthToken, index); //show all orders
-  app.get('/orders/:oid', auth.verifyAuthToken, show); //show only one order
-  app.get('/users/:id/orders', auth.verifyAuthToken, showUserOrders); //show current orders for user (id)
-  app.get('/users/:id/orders/:oid', auth.verifyAuthToken, showOrder); //shows details of order for user (id) with order (oid)
-  app.post('/users/:id/orders/create', auth.verifyAuthToken, create);
+  app.get('/orders', auth.verifyAuthToken, auth.verifyUserAuth, index); //show all orders
+  app.get('/orders/:oid', auth.verifyAuthToken, auth.verifyUserAuth, show); //show only one order
+  app.get(
+    '/users/:id/orders',
+    auth.verifyAuthToken,
+    auth.verifyUserAuth,
+    showUserOrders
+  ); //show current orders for user (id)
+  app.get(
+    '/users/:id/orders/:oid',
+    auth.verifyAuthToken,
+    auth.verifyUserAuth,
+    showOrder
+  ); //shows details of order for user (id) with order (oid)
+  app.post(
+    '/users/:id/orders/create',
+    auth.verifyAuthToken,
+    auth.verifyUserAuth,
+    create
+  );
   app.post(
     '/users/:id/orders/:oid/add-product',
     auth.verifyAuthToken,
+    auth.verifyUserAuth,
     addProduct
   );
-  app.delete('/users/:id/orders/:oid', auth.verifyAuthToken, destroy);
+  app.delete(
+    '/users/:id/orders/:oid',
+    auth.verifyAuthToken,
+    auth.verifyAdmin,
+    destroy
+  );
 };
 
 export default orderRoutes;

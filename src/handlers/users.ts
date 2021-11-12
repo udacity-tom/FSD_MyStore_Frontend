@@ -126,12 +126,12 @@ const destroy = async (req: Request, res: Response) => {
 };
 
 const userRoutes = (app: express.Application): void => {
-  app.get('/users', auth.verifyAuthToken, index);
-  app.get('/users/:id', auth.verifyAuthToken, show);
+  app.get('/users', auth.verifyAuthToken, auth.verifyUserAuth, index);
+  app.get('/users/:id', auth.verifyAuthToken, auth.verifyUserAuth, show);
   app.post('/users/create', checkUserName, create); // == new user & return JWT
   app.post('/users/authenticate', authenticate); // == login & issue new JWT
-  app.put('/users/:id', auth.verifyAuthToken, update);
-  app.delete('/users/:id', auth.verifyAuthToken, destroy);
+  app.put('/users/:id', auth.verifyAuthToken, auth.verifyUserAuth, update);
+  app.delete('/users/:id', auth.verifyAuthToken, auth.verifyUserAuth, destroy);
 };
 
 export default userRoutes;
