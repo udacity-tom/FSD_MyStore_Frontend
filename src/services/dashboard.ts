@@ -3,6 +3,17 @@ import { Order } from '../models/order';
 import { Product } from '../models/product';
 
 export class DashboardQueries {
+  //NOTE: Where to put? Not a model? No handler-> so no route->better placed here. Keep routes/models clean.
+  async isUserAdmin(tokenUid: number): Promise<boolean> {
+    try {
+      const sql = 'SELECT * FROM users WHERE id = ($1);';
+      const conn = await client.connect();
+      const results = await conn.query(sql, [tokenUid]);
+      return results.rows[0].admin;
+    } catch (err) {
+      throw new Error(`User is not Admin!`);
+    }
+  }
   async popularProducts(): Promise<string[]> {
     try {
       const sql =

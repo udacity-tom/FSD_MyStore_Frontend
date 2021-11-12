@@ -1,17 +1,19 @@
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import client from '../database';
-import jwt, { decode } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import express from 'express';
 import { User } from '../models/user';
+import { DashboardQueries } from '../services/dashboard';
 
-//This file provides authentication functions, like: password encryption, JWT verification, etc.
+//This file provides authentication functions, like: password encryption, JWT verification, middleware for authorisation, etc.
 
 dotenv.config();
 
 const pepper = process.env.BCRYPT_PASSWORD;
 const saltRounds = Number(process.env.SALT_ROUNDS);
 const tokenSecret = String(process.env.TOKEN_SECRET);
+const dashboardService = new DashboardQueries();
 
 export class AuthStore {
   async authenticate(username: string, password: string): Promise<string> {
@@ -45,7 +47,7 @@ export class AuthStore {
 
   async createToken(jwtPayloadData: User): Promise<string> {
     const options = {
-      expiresIn: '1y',
+      expiresIn: '1day',
       subject: 'access'
     };
     try {
@@ -61,13 +63,62 @@ export class AuthStore {
     return token;
   }
 
-  async authorise(token: string): Promise<string> {
+  // async authorise(token: string): Promise<string> {
+  //   try {
+  //     jwt.verify(token, tokenSecret);
+  //   } catch (err) {
+  //     throw new Error(`Invalid Token!!`);
+  //   }
+  //   return 'valid';
+  // }
+  // async isAdmin(jwtID: number): Promise<boolean> {
+  //   return await dashboardService.isUserAdmin(jwtID);
+  // }
+
+  async verifyAdmin(
+    req: express.Request,
+    res: express.Response,
+    next: () => void
+  ): Promise<void> {
+    const authorisationHeader = String(req.headers.authorization);
+    const jwtToken: string = authorisationHeader.split(' ')[1];
+    const decoded = jwt.verify(jwtToken, tokenSecret);
+    const jwtPayload = jwt.decode(jwtToken, { complete: true });
+
     try {
-      jwt.verify(token, tokenSecret);
+      if (decoded) {
+        if (await dashboardService.isUserAdmin(jwtPayload?.payload.id)) {
+          next();
+        } else {
+          res.status(403).json({ message: 'Unauthorized Access' });
+        }
+      }
     } catch (err) {
-      throw new Error(`Invalid Token!!`);
+      res.status(401).json({ message: 'Invalid Token!' });
     }
-    return 'valid';
+  }
+
+  async verifyUserAuth(
+    req: express.Request,
+    res: express.Response,
+    next: () => void
+  ): Promise<void> {
+    const routeUid = Number(req.params.id);
+    const authorisationHeader = String(req.headers.authorization);
+    const jwtToken: string = authorisationHeader.split(' ')[1];
+    const jwtPayload = jwt.decode(jwtToken, { complete: true });
+    try {
+      if (
+        jwtPayload?.payload.id == routeUid ||
+        (await dashboardService.isUserAdmin(jwtPayload?.payload.id))
+      ) {
+        next();
+      } else {
+        res.status(403).json({ message: 'Unauthorized Access' });
+      }
+    } catch (err) {
+      res.status(403).json({ message: 'Unauthorized Access' });
+    }
   }
 
   async verifyAuthToken(
@@ -80,7 +131,6 @@ export class AuthStore {
       const jwtToken: string = authorisationHeader.split(' ')[1];
       const decoded = jwt.verify(jwtToken, tokenSecret);
       if (decoded) {
-        // TODO: add conditional check on payload submitted ID, to check if 'user' can view orders, etc, then check recursively if user is admin-true, they can view orders, etc also
         next();
       }
     } catch (err) {
