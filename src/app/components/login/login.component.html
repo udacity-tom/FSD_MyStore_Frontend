@@ -1,28 +1,28 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()" class="login-container">
     <h1>Login Here!</h1>
     <br>
-    <p class="signin-text">Currently logging in as: {{username}}</p>
     <br>
     <input 
-        type="text" 
-        name="username" 
-        required 
-        minlength="3" 
-        placeholder="Enter Username" 
-        [(ngModel)]="username"
-        #userName="ngModel">
+    type="text" 
+    name="username" 
+    required 
+    minlength="3" 
+    placeholder="Enter Username" 
+    [(ngModel)]="username"
+    #userName="ngModel">
     <br>
     <input 
-        type="text" 
-        name="password" 
-        required 
-        minlength="8" 
-        placeholder="Enter Password" 
-        [(ngModel)]="password"
-        #passWord="ngModel">
+    type="text" 
+    name="password" 
+    required 
+    minlength="8" 
+    placeholder="Enter Password" 
+    [(ngModel)]="password"
+    #passWord="ngModel">
     <br>
     <input type="submit" [disabled]="form.invalid" value="Submit" class="btn btn-primary">
 </form>
+<p *ngIf="loading" class="signin-text">Currently logging in as: {{username}}</p>
 <br>
 <div *ngIf="userName.invalid && userName.dirty">
     <div *ngIf="userName.errors?.required">
