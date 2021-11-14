@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
+// import { Jwt } from 'jsonwebtoken';
+// import { Jwt } from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
+// import { JwtPayload } from 'jsonwebtoken';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
+  currentToken: string = this.getToken();
+  timeToExpiry: number = 0;
 
   constructor() { }
 
@@ -19,5 +25,10 @@ export class TokenService {
     return storedToken;
   }
 
+  getCurrentExpiry(){
+    if(this.currentToken) {
+      // this.timeToExpiry = Jwt.decode(this.currentToken, {complete: true}).payload.exp;
+    }
+  }
 
 }
