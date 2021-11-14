@@ -14,10 +14,12 @@ const pepper = process.env.BCRYPT_PASSWORD;
 const saltRounds = Number(process.env.SALT_ROUNDS);
 const tokenSecret = String(process.env.TOKEN_SECRET);
 const dashboardService = new DashboardQueries();
-
+const jwtExpiry = '30day';
 export class AuthStore {
-  async authenticate(username: string, password: string): Promise<string> {
-    console.log('AuthStore: Recieved params', username, password);
+  async authenticate(username: string, password: string): Promise<object> {
+    // const jwtexpiry = '30day';
+    const jwtexpiry = jwtExpiry;
+    // console.log('AuthStore: Recieved params', username, password);
     const conn = await client.connect();
     const sql = 'SELECT * FROM users WHERE username = ($1)';
     const result = await conn.query(sql, [username]);
@@ -27,18 +29,24 @@ export class AuthStore {
       const userPassword = result.rows[0].password;
       const passwordCheck = bcrypt.compareSync(password + pepper, userPassword);
       if (passwordCheck) {
-        console.log('Yes, password checked out!');
+        // console.log('Yes, password checked out!');
         user.password = '';
         user.lastname = '';
-        const token = this.createToken(user);
-        console.log('Yes, token was generated. Look ->', token);
-        return token;
+        const newjwtToken = await this.createToken(user);
+        console.log('tokenreturn', { token: newjwtToken, expiry: jwtexpiry });
+        // console.log('Yes, token was generated. Look ->', token);
+        return { token: newjwtToken, expiry: jwtexpiry };
       } else {
-        return 'Failure-login refused, try again';
+        return { err: 'Failure-login refused, try again' };
       }
     }
-    return 'Unknown user, have you registered an account?';
+    return {err: 'Unknown user, have you registered an account?'};
   }
+
+  // async jwtexpiry(token: string): Promise<object> {
+  //   const jwtPayload = jwt.decode(token, { complete: true });
+  //   return jwtPayload;
+  // }
 
   async hashPassword(password: string): Promise<string> {
     const hash = bcrypt.hashSync(password + pepper, saltRounds);
@@ -46,10 +54,12 @@ export class AuthStore {
   }
 
   async createToken(jwtPayloadData: User): Promise<string> {
+    // const jwtexpiry
     const options = {
-      expiresIn: '1day',
+      expiresIn: jwtExpiry,
       subject: 'access'
     };
+    console.log('testing the expiry value', jwtExpiry);
     try {
       // eslint-disable-next-line no-var
       var token: string = jwt.sign(
@@ -107,6 +117,7 @@ export class AuthStore {
     const authorisationHeader = String(req.headers.authorization);
     const jwtToken: string = authorisationHeader.split(' ')[1];
     const jwtPayload = jwt.decode(jwtToken, { complete: true });
+    console.log('jwtPayload', jwtPayload);
     try {
       if (
         jwtPayload?.payload.id == routeUid ||

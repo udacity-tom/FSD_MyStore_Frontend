@@ -67,7 +67,9 @@ const authenticate = async (req: Request, res: Response) => {
     const { username, password } = req.body;
     console.log('Users: Recieved params', username, password);
     const userAuth = await auth.authenticate(username, password);
-    res.send({ token: userAuth }); //returns jwt
+    console.log('userAuth return', userAuth);
+    // const expiresIn = await auth.jwtExpirey(userAuth);
+    res.send(userAuth); //returns jwt
   } catch (err) {
     res.status(400).json(err);
   }
