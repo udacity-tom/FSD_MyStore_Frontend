@@ -8,26 +8,30 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class TokenService {
-  currentToken: string = this.getToken();
+  currentToken: string = '';
   timeToExpiry: number = 0;
+  tokenObj: object = {currentToken: this.currentToken, timeToExpiry: this.timeToExpiry};
 
   constructor() { }
 
 
-  setToken(storedToken: object) {
-    console.log('token.service', storedToken);
-   localStorage.currentToken = JSON.stringify(storedToken);   
+  setToken(tokenToSet: object) {
+    console.log('token.service', tokenToSet);
+   localStorage.currentToken = JSON.stringify(tokenToSet);   
   }
 
-  getToken(){
-    let storedToken: string = '';
+  getToken(): {token: string, expiry: number} {
+    let storedToken: {token: string, expiry: number};
     storedToken = JSON.parse(localStorage.currentToken);
+    console.log('storedToken', storedToken);
     return storedToken;
   }
 
   getCurrentExpiry(){
-    if(this.currentToken) {
-      // this.timeToExpiry = Jwt.decode(this.currentToken, {complete: true}).payload.exp;
+    const currentExpiry = this.getToken();
+    if(this.getToken()) {
+      this.timeToExpiry = currentExpiry.expiry;
+      console.log('current Expiry', this.timeToExpiry);
     }
   }
 
