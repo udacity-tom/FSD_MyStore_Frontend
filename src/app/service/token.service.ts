@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-// import { Jwt } from 'jsonwebtoken';
-// import { Jwt } from 'jsonwebtoken';
-// import jwt from 'jsonwebtoken';
-// import { JwtPayload } from 'jsonwebtoken';
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +20,7 @@ export class TokenService {
   getToken(): {token: string, expiry: number} {
     let storedToken: {token: string, expiry: number};
     storedToken = JSON.parse(localStorage.currentToken);
-    console.log('storedToken', storedToken);
+    console.log('storedToken token service', storedToken);
     return storedToken;
   }
 
@@ -33,6 +30,18 @@ export class TokenService {
       this.timeToExpiry = currentExpiry.expiry;
       console.log('current Expiry', this.timeToExpiry);
     }
+  }
+
+  checkToken() {
+    //checkToken on server response and initiate a setToken()
+    //The interceptor observable sends the jwt with every request.
+    //the server validates the request based on the submitted jwt
+    //When the server sees the token is older than 15mins, it sends a new jwt
+    //the client intercepts the new token and saves it.
+    //
+    //this, below, is client side renewel
+    //get current expiry, check current time, then when expiry is 25% 
+    //renew token via authentication 
   }
 
 }
