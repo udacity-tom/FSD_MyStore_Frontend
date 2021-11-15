@@ -10,12 +10,12 @@ export type User = {
   firstname: string;
   lastname: string;
   password: string;
-  houseNum: string;
-  street1: string;
-  street2: string;
-  city: string;
-  postcode: string;
-  country: string;
+  houseNum?: string;
+  street1?: string;
+  street2?: string;
+  city?: string;
+  postcode?: string;
+  country?: string;
 };
 
 export class UserStore {
@@ -47,7 +47,7 @@ export class UserStore {
     try {
       user.password = await auth.hashPassword(user.password);
       const sql =
-        'INSERT INTO users (username, firstname, lastname, password) VALUES($1, $2, $3, $4) RETURNING *;';
+        'INSERT INTO users (username, firstname, lastname, password, houseNum, street1, street2, city, postcode, country) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;';
       const conn = await client.connect();
       const result = await conn.query(sql, [
         user.username,

@@ -25,22 +25,24 @@ const show = async (req: Request, res: Response) => {
 };
 
 const create = async (req: Request, res: Response) => {
+  console.log('users.ts body submitted', req.body);
   try {
     const user: User = {
-      admin: req.body.admin,
+      admin: req.body.admin || false,
       username: req.body.username,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       password: req.body.password,
-      houseNum: req.body.houseNum,
-      street1: req.body.street1,
-      street2: req.body.street2,
-      city: req.body.city,
-      postcode: req.body.postcode,
-      country: req.body.country
+      houseNum: req.body.houseNum || '',
+      street1: req.body.street1 || '',
+      street2: req.body.street2 || '',
+      city: req.body.city || '',
+      postcode: req.body.postcode || '',
+      country: req.body.country || ''
     };
+    console.log('submitted data in user object', user);
     const newUser = await userStore.create(user);
-
+    console.log('newUser', newUser);
     const jwtPayloadData: User = {
       id: newUser.id,
       admin: false,
