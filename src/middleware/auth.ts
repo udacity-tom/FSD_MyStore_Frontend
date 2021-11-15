@@ -18,7 +18,7 @@ const jwtExpiry = '30day';
 export class AuthStore {
   async authenticate(username: string, password: string): Promise<object> {
     // const jwtexpiry = '30day';
-    const jwtexpiry = jwtExpiry;
+    // const jwtexpiry = jwtExpiry;
     // console.log('AuthStore: Recieved params', username, password);
     const conn = await client.connect();
     const sql = 'SELECT * FROM users WHERE username = ($1)';
@@ -33,14 +33,20 @@ export class AuthStore {
         user.password = '';
         user.lastname = '';
         const newjwtToken = await this.createToken(user);
-        console.log('tokenreturn', { token: newjwtToken, expiry: jwtexpiry });
-        // console.log('Yes, token was generated. Look ->', token);
-        return { token: newjwtToken, expiry: jwtexpiry };
+        // console.log('tokenreturn', { token: newjwtToken, expiry: jwtexpiry });
+        const jwtPayload = jwt.decode(newjwtToken, { complete: true });
+        // console.log(
+        //   'Yes, token was generated. Look ->',
+        //   newjwtToken,
+        //   jwtPayload
+        // );
+
+        return { token: newjwtToken, expiry: jwtPayload?.payload.exp };
       } else {
         return { err: 'Failure-login refused, try again' };
       }
     }
-    return {err: 'Unknown user, have you registered an account?'};
+    return { err: 'Unknown user, have you registered an account?' };
   }
 
   // async jwtexpiry(token: string): Promise<object> {
@@ -59,7 +65,7 @@ export class AuthStore {
       expiresIn: jwtExpiry,
       subject: 'access'
     };
-    console.log('testing the expiry value', jwtExpiry);
+    // console.log('testing the expiry value', jwtExpiry);
     try {
       // eslint-disable-next-line no-var
       var token: string = jwt.sign(
