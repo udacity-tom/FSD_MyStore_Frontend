@@ -28,15 +28,18 @@ export class ProductStore {
     try {
       const conn = await client.connect();
       const sql =
-        'INSERT INTO products (name, price, category) VALUES($1, $2, $3) RETURNING *;';
+        'INSERT INTO products (name, price, url, snippet, description, accreditation, category) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *;';
       const result = await conn.query(sql, [
         product.name,
         product.price,
+        product.url,
+        product.snippet,
+        product.description,
+        product.accreditation,
         product.category
       ]);
       conn.release();
       return result.rows[0];
-      //take supplied user and store in database, on success return user in json form
     } catch (err) {
       throw new Error(
         `Something went wrong, try again. Duplicate product account? Error: ${err}`
