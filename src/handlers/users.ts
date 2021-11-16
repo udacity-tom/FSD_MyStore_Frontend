@@ -45,7 +45,6 @@ const create = async (req: Request, res: Response) => {
     console.log('newUser', newUser);
     const jwtPayloadData: User = {
       id: newUser.id,
-      admin: false,
       username: newUser.username,
       firstname: newUser.firstname,
       lastname: newUser.lastname,
@@ -58,7 +57,18 @@ const create = async (req: Request, res: Response) => {
       country: ''
     };
     const token = await auth.createToken(jwtPayloadData);
-    res.send([newUser, token]);
+    const jwtPayload = await auth.getPayload(token);
+    console.log('newUser, token', {
+      newUser: newUser,
+      newtoken: token,
+      payload: jwtPayload
+    });
+    // const createObj = {
+    //   newUser: newUser,
+    //   newtoken: token,
+    //   payload: jwtPayload
+    // };
+    res.send({ newUser, token, jwtPayload });
   } catch (err) {
     res.status(400).json(err);
   }
