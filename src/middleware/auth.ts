@@ -17,9 +17,6 @@ const dashboardService = new DashboardQueries();
 const jwtExpiry = '30day';
 export class AuthStore {
   async authenticate(username: string, password: string): Promise<object> {
-    // const jwtexpiry = '30day';
-    // const jwtexpiry = jwtExpiry;
-    // console.log('AuthStore: Recieved params', username, password);
     const conn = await client.connect();
     const sql = 'SELECT * FROM users WHERE username = ($1)';
     const result = await conn.query(sql, [username]);
@@ -29,18 +26,10 @@ export class AuthStore {
       const userPassword = result.rows[0].password;
       const passwordCheck = bcrypt.compareSync(password + pepper, userPassword);
       if (passwordCheck) {
-        // console.log('Yes, password checked out!');
         user.password = '';
         user.lastname = '';
         const newjwtToken = await this.createToken(user);
-        // console.log('tokenreturn', { token: newjwtToken, expiry: jwtexpiry });
-        const jwtPayload = jwt.decode(newjwtToken, { complete: true });
-        // console.log(
-        //   'Yes, token was generated. Look ->',
-        //   newjwtToken,
-        //   jwtPayload
-        // );
-
+        const jwtPayload = await this.getPayload(newjwtToken);
         return { token: newjwtToken, expiry: jwtPayload?.payload.exp };
       } else {
         return { err: 'Failure-login refused, try again' };
@@ -49,6 +38,7 @@ export class AuthStore {
     return { err: 'Unknown user, have you registered an account?' };
   }
 
+  // async renewToken
   // async jwtexpiry(token: string): Promise<object> {
   //   const jwtPayload = jwt.decode(token, { complete: true });
   //   return jwtPayload;
@@ -59,13 +49,15 @@ export class AuthStore {
     return hash;
   }
 
+  async getPayload(givenToken: string): Promise<jwt.JwtPayload | null> {
+    return jwt.decode(givenToken, { complete: true });
+  }
+
   async createToken(jwtPayloadData: User): Promise<string> {
-    // const jwtexpiry
     const options = {
       expiresIn: jwtExpiry,
       subject: 'access'
     };
-    // console.log('testing the expiry value', jwtExpiry);
     try {
       // eslint-disable-next-line no-var
       var token: string = jwt.sign(
