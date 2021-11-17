@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
         this.newtoken = Object.values(this.returnedRes)[1];
         this.payload = Object.values(this.returnedRes)[2].payload;
         this.exp = Object.values(this.payload)[13];
-        this.tokenService.setToken({token: this.newtoken, expiry: this.exp});
+        this.tokenService.setToken({token: this.newtoken, expiry: this.exp}, username);
       }
     );
   }

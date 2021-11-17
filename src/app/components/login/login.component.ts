@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable,  } from 'rxjs';
+import { of, Observable,  } from 'rxjs';
 import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
 
@@ -17,28 +17,44 @@ export class LoginComponent implements OnInit {
   authFn: object = {};
   loading: boolean = false;
   // stream: Observable<string> = '';
+  loginStatus: boolean = false;
   
   constructor(private loginAuth: LoginService, private tokenService: TokenService) { 
 
   }
 
   ngOnInit(): void {
+    this.updateLoginStatus();
     
   }
 //To-do: Refactor
   onSubmit(): void {
     this.loading = true;
     this.returnedJWT = this.getLogin(this.username, this.password);
+    this.updateLoginStatus();
     this.loading = false;
-    console.log('stored Token', this.tokenService.getToken());
+    // this.tokenService.setToken(this.returnedJWT);
+    // console.log('stored Token login component', this.tokenService.getToken());
   }
+
+  updateLoginStatus():void { 
+    this.loginAuth.loginStatus().subscribe(res => {
+      this.loginStatus = res;
+    })
+
+
+    // this.loginStatus = of(this.loginAuth.loginStatus().subscribe());
+    // this.loginAuth.logStatus().subscribe();
+    
+  }
+
   getLogin(username: string, password: string) {
-    return this.loginAuth.authUser(this.username, this.password)
+    return this.loginAuth.authUser(this.username, this.password)//something fishy going on here this shouldn't be this.
     .subscribe(
       res => {
         this.returnedJWT = res;
-        this.tokenService.setToken(this.returnedJWT);
+        this.tokenService.setToken(this.returnedJWT, username);
       }
-      );
+    );
   }
 }

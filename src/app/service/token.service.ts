@@ -12,7 +12,7 @@ export class TokenService {
   constructor() { }
 
 
-  setToken(tokenToSet: object) {
+  setToken(tokenToSet: object, currentUser: string) {
     // console.log('token.service whole thing', tokenToSet);
     // console.log('Object keys', Object.keys(tokenToSet));
     // console.log('token.service token', tokenToSet);
@@ -21,18 +21,24 @@ export class TokenService {
   }
 
   getToken(): {token: string, expiry: number} {
+    if(localStorage.currentToken){
     let storedToken: {token: string, expiry: number};
     storedToken = JSON.parse(localStorage.currentToken);
     // console.log('storedToken token service', storedToken);
     return storedToken;
+    } else {
+      return {token: 'no Token', expiry: -1};
+    }
   }
 
-  getCurrentExpiry(){
+  getCurrentExpiry(): number {
     const currentExpiry = this.getToken();
     if(this.getToken()) {
       this.timeToExpiry = currentExpiry.expiry;
+      return this.timeToExpiry;
       // console.log('current Expiry', this.timeToExpiry);
     }
+    return -1;
   }
 
   checkToken() {
