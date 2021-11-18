@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/service/login.service';
+import { TokenService } from 'src/app/service/token.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,14 +9,17 @@ import { LoginService } from 'src/app/service/login.service';
 })
 export class NavbarComponent implements OnInit {
   loginStatus: boolean;
+  username: string;
 
 
-  constructor(private loginAuth: LoginService ) { 
+  constructor(private loginAuth: LoginService, private tokenService: TokenService  ) { 
     this.loginStatus = false;
+    this.username = '';
   }
 
   ngOnInit(): void {
     this.updateLoginStatus();
+    this.getUsername();
   }
 
   updateLoginStatus(): void {
@@ -24,5 +28,17 @@ export class NavbarComponent implements OnInit {
     })
     console.log('Navbar loginSTatus', this.loginStatus);
   }
+
+  getUsername(): void {
+    this.tokenService.getToken().subscribe(res => {
+      this.username = res.user;
+    })
+    console.log('navbar getusername()', this.username);
+
+  }
+  
+  // getuser(): void {
+  //   this.username = this.tokenService.getCurrentUser();
+  // }
 
 }
