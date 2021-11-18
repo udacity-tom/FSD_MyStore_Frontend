@@ -1,5 +1,7 @@
 <div class="navigation">
-    <a routerLink="/">Home</a>
+    <a *ngIf="!loginStatus" routerLink="/">Home</a>
+    <a *ngIf="loginStatus" routerLink="/loggedin">Logout</a>
+
     <br>
     <a routerLink="/products">Products</a>
     <br>
