@@ -1,49 +1,38 @@
 import { Injectable } from '@angular/core';
+import { of, Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
-  currentToken: string = '';
-  timeToExpiry: number = 0;
-  tokenObj: object = {currentToken: this.currentToken, timeToExpiry: this.timeToExpiry};
+  token: string = '';
+  expiry: number = 0;
+  user: string = '';
+  tokenObj: object = {token: this.token, expiry: this.expiry, user: this.user};
 
   constructor() { }
 
 
   setToken(tokenToSet: object) {
-    // Object.defineProperty(tokenToSet, 'user', {
-    //   writable: true,
-    //   value: currentUser
-    // });
-    // tokenToSet.user = currentUser;
-    // console.log('token.service whole thing', tokenToSet);
-    // console.log('Object keys', Object.keys(tokenToSet));
-    // console.log('token.service token', tokenToSet);
    localStorage.currentToken = JSON.stringify(tokenToSet);
-    //  console.log('getToken()', this.getToken());
+
   }
 
-  getToken(): {token: string, expiry: number, user: string} {
+  getToken(): Observable <{token: string, expiry: number, user: string}> {
     if(localStorage.currentToken){
     let storedToken: {token: string, expiry: number, user: string};
+    console.log('Yes, there is a stored token');
     storedToken = JSON.parse(localStorage.currentToken);
     // console.log('storedToken token service', storedToken);
-    return storedToken;
+    return of(storedToken);
     } else {
-      return {token: 'no Token', expiry: -1, user: ''};
+      return of({token: 'no Token', expiry: -1, user: ''});
     }
   }
 
-  getCurrentExpiry(): number {
-    const currentExpiry = this.getToken();
-    if(this.getToken()) {
-      this.timeToExpiry = currentExpiry.expiry;
-      return this.timeToExpiry;
-      // console.log('current Expiry', this.timeToExpiry);
-    }
-    return -1;
+  deleteToken() {
+    delete localStorage.currentToken;
   }
 
   checkToken() {
