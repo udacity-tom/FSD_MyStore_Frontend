@@ -18,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductItemButtonsComponent } from './components/product-item-buttons/product-item-buttons.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { LoggedInComponent } from './components/logged-in/logged-in.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { RegisterComponent } from './components/register/register.component';
     HomeComponent,
     ProductItemButtonsComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoggedInComponent
   ],
   imports: [
     BrowserModule,
