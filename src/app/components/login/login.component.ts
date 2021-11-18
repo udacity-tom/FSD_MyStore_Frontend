@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { of, Observable,  } from 'rxjs';
 import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NavigationExtras } from '@angular/router';
 
 
 @Component({
@@ -19,7 +21,8 @@ export class LoginComponent implements OnInit {
   // stream: Observable<string> = '';
   loginStatus: boolean = false;
   
-  constructor(private loginAuth: LoginService, private tokenService: TokenService) { 
+  constructor(private loginAuth: LoginService, 
+    private tokenService: TokenService, private router: Router, private route: ActivatedRoute) { 
 
   }
 
@@ -33,6 +36,7 @@ export class LoginComponent implements OnInit {
     this.returnedJWT = this.getLogin(this.username, this.password);
     this.updateLoginStatus();
     this.loading = false;
+    this.router.navigate(['loggedin', {relativeTo: this.route}])
     // this.tokenService.setToken(this.returnedJWT);
     // console.log('stored Token login component', this.tokenService.getToken());
   }
@@ -40,9 +44,9 @@ export class LoginComponent implements OnInit {
   updateLoginStatus():void { 
     this.loginAuth.loginStatus().subscribe(res => {
       this.loginStatus = res;
+      // const currentUser = this.tokenService.getToken().user;
+      this.username = this.tokenService.getToken().user;
     })
-
-
     // this.loginStatus = of(this.loginAuth.loginStatus().subscribe());
     // this.loginAuth.logStatus().subscribe();
     
@@ -53,7 +57,10 @@ export class LoginComponent implements OnInit {
     .subscribe(
       res => {
         this.returnedJWT = res;
-        this.tokenService.setToken(this.returnedJWT, username);
+        // console.log('this.returnedJwt-login component', this.returnedJWT);
+        
+        // this.returnedJWT.user = username;
+        this.tokenService.setToken(this.returnedJWT);
       }
     );
   }
