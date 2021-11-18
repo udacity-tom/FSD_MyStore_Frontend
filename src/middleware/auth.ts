@@ -30,7 +30,11 @@ export class AuthStore {
         user.lastname = '';
         const newjwtToken = await this.createToken(user);
         const jwtPayload = await this.getPayload(newjwtToken);
-        return { token: newjwtToken, expiry: jwtPayload?.payload.exp };
+        return {
+          token: newjwtToken,
+          expiry: jwtPayload?.payload.exp,
+          user: username
+        };
       } else {
         return { err: 'Failure-login refused, try again' };
       }
