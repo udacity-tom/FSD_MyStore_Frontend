@@ -19,14 +19,16 @@ export class LoginService {
   returnedJWT: string = '';
   tokenPromise: string = '';
   returnedRes: {
-newUser: object,
-newtoken: string,
-payload: object } = {
-  newUser: {},
-  newtoken: '',
-  payload: {}
-};
-userIsLoggedIn: boolean = false;
+  newUser: object,
+  newtoken: string,
+  payload: object } = {
+    newUser: {},
+    newtoken: '',
+    payload: {}
+  };
+  userIsLoggedIn: boolean = false;
+  user: string = '';
+  expiry: number = 0;
   
   httpOptions = {
     headers: new HttpHeaders({
@@ -41,37 +43,27 @@ userIsLoggedIn: boolean = false;
     this.currentJWT = '';
   }
   
-
-// function logstatus(observer: Ob)
-
-  // logStatus = new Observable<boolean>(logStatus => {
-  // logStatus = new Observable<boolean>(currentStatus => {
-    // let userIsLoggedIn = false;
-loginStatus(): Observable<boolean> {
-    const userHasJwt = this.tokenService.getToken();
-    const jwtValidity = Number(this.tokenService.getCurrentExpiry());
+  loginStatus(): Observable<boolean> {
+    this.tokenService.getToken().subscribe(res => {
+      this.currentJWT = res.token;
+      this.expiry = res.expiry;
+      this.user = res.user;
+    });
+    // console.log('login service', this.currentJWT, this.expiry, this.user);
     const currentTime = Math.floor((Number(new Date())/1000));
-    const currentUser = userHasJwt.user;
-    console.log('userHasJwt',userHasJwt);
-    console.log('userHasJwt.user->currentUser',currentUser);
-    console.log('jwtValidity',jwtValidity);
-    // console.log('currentTime', Number(new Date())/1000, currentTime);
-      if (userHasJwt) {
-        console.log('userHasJwt',userHasJwt);
-        if(jwtValidity > currentTime) {
-          console.log('jwtValidity',jwtValidity);
-          console.log('currentTime',currentTime);
+      if (this.currentJWT != 'no Token') {
+        if(this.expiry > currentTime) {
           this.userIsLoggedIn = true;
+        } else {
+          this.logOut();
         }
-        console.log('userIsLoggedIn value', this.userIsLoggedIn);  
+        // console.log('userIsLoggedIn value, ', this.userIsLoggedIn);  
       } else {
         this.userIsLoggedIn = false;
-        console.log('userIsLoggedIn value', this.userIsLoggedIn);
+        // console.log('userIsLoggedIn value', this.userIsLoggedIn);
       }
     return of(this.userIsLoggedIn);
   };
-
-
 
   authUser(username: string, password: string): Observable<ArrayBuffer>{
     this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/authenticate`;
@@ -80,7 +72,8 @@ loginStatus(): Observable<boolean> {
 
  
   logOut() {
-    //logs user out, essentially deleting localstorage token, but updates logged in status
+    this.tokenService.deleteToken();
+  //   //logs user out, essentially deleting localstorage token, but updates logged in status
   }
   
   registerNewUser(username: string, firstname: string, lastname: string, password: string): Observable<object> {
@@ -88,14 +81,4 @@ loginStatus(): Observable<boolean> {
     console.log('login service user register', {username: username, firstname: firstname, lastname:lastname, password: password});
     return this.http.post<{newUser:object, newToken: string, payload: object}> (this.url, {username: username, firstname: firstname, lastname:lastname, password: password}, );
   }
-    // isLoggedIn():Observable<string> {
-    
-  //   return 
-  // }
-
-  
-
-
-
-  }
-
+}
