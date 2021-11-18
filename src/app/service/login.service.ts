@@ -51,7 +51,9 @@ loginStatus(): Observable<boolean> {
     const userHasJwt = this.tokenService.getToken();
     const jwtValidity = Number(this.tokenService.getCurrentExpiry());
     const currentTime = Math.floor((Number(new Date())/1000));
+    const currentUser = userHasJwt.user;
     console.log('userHasJwt',userHasJwt);
+    console.log('userHasJwt.user->currentUser',currentUser);
     console.log('jwtValidity',jwtValidity);
     // console.log('currentTime', Number(new Date())/1000, currentTime);
       if (userHasJwt) {

@@ -12,22 +12,27 @@ export class TokenService {
   constructor() { }
 
 
-  setToken(tokenToSet: object, currentUser: string) {
+  setToken(tokenToSet: object) {
+    // Object.defineProperty(tokenToSet, 'user', {
+    //   writable: true,
+    //   value: currentUser
+    // });
+    // tokenToSet.user = currentUser;
     // console.log('token.service whole thing', tokenToSet);
     // console.log('Object keys', Object.keys(tokenToSet));
     // console.log('token.service token', tokenToSet);
-   localStorage.currentToken = JSON.stringify(tokenToSet);   
-  //  console.log('getToken()', this.getToken());
+   localStorage.currentToken = JSON.stringify(tokenToSet);
+    //  console.log('getToken()', this.getToken());
   }
 
-  getToken(): {token: string, expiry: number} {
+  getToken(): {token: string, expiry: number, user: string} {
     if(localStorage.currentToken){
-    let storedToken: {token: string, expiry: number};
+    let storedToken: {token: string, expiry: number, user: string};
     storedToken = JSON.parse(localStorage.currentToken);
     // console.log('storedToken token service', storedToken);
     return storedToken;
     } else {
-      return {token: 'no Token', expiry: -1};
+      return {token: 'no Token', expiry: -1, user: ''};
     }
   }
 
