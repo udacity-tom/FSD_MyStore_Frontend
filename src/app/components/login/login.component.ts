@@ -3,7 +3,7 @@ import { of, Observable,  } from 'rxjs';
 import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NavigationExtras } from '@angular/router';
+// import { NavigationExtras } from '@angular/router';
 
 
 @Component({
@@ -21,8 +21,11 @@ export class LoginComponent implements OnInit {
   // stream: Observable<string> = '';
   loginStatus: boolean = false;
   
-  constructor(private loginAuth: LoginService, 
-    private tokenService: TokenService, private router: Router, private route: ActivatedRoute) { 
+  constructor(
+    private loginAuth: LoginService, 
+    private tokenService: TokenService, 
+    private router: Router, 
+    private route: ActivatedRoute) { 
 
   }
 
@@ -36,29 +39,30 @@ export class LoginComponent implements OnInit {
     this.returnedJWT = this.getLogin(this.username, this.password);
     this.updateLoginStatus();
     this.loading = false;
-    this.router.navigate(['loggedin', {relativeTo: this.route}])
-    // this.tokenService.setToken(this.returnedJWT);
-    // console.log('stored Token login component', this.tokenService.getToken());
+    // this.router.navigate(['loggedin', {relativeTo: this.route}])
+    this.router.navigate(['loggedin'])
   }
 
   updateLoginStatus():void { 
     this.loginAuth.loginStatus().subscribe(res => {
       this.loginStatus = res;
-      // const currentUser = this.tokenService.getToken().user;
-      this.username = this.tokenService.getToken().user;
+      this.tokenService.getToken().subscribe(res => {
+        this.username = res.user;
+      })
+
     })
     // this.loginStatus = of(this.loginAuth.loginStatus().subscribe());
     // this.loginAuth.logStatus().subscribe();
-    
   }
 
+  // getUsername()
+
   getLogin(username: string, password: string) {
-    return this.loginAuth.authUser(this.username, this.password)//something fishy going on here this shouldn't be this.
+    return this.loginAuth.authUser(username, password)//something fishy going on here this shouldn't be this.
     .subscribe(
       res => {
         this.returnedJWT = res;
         // console.log('this.returnedJwt-login component', this.returnedJWT);
-        
         // this.returnedJWT.user = username;
         this.tokenService.setToken(this.returnedJWT);
       }
