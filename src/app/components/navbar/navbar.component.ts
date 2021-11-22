@@ -17,10 +17,10 @@ export class NavbarComponent implements OnInit {
     this.username = '';
   }
 
-  ngOnChanges(): void {
-    this.updateLoginStatus();
-    this.getUsername();
-  }
+  // ngOnChanges(): void {
+  //   this.updateLoginStatus();
+  //   this.getUsername();
+  // }
 
   ngOnInit(): void {
     this.updateLoginStatus();
