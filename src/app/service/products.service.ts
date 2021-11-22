@@ -38,7 +38,7 @@ export class ProductService {
 
   postNewProduct(newProduct: Product): Observable<Product> {
     //checked signed in & check current user
-    this.httpOptions.headers = this.httpOptions.headers.set('Authorisation', 'Bearer '+this.tokenService.getToken());
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.tokenService.getToken());
     console.log('headers', this.httpOptions);
     return this.http.post<Product>(`${this.protocol}${this.apiServer}:${this.apiPort}/products/create`, {newProduct: newProduct});
   }

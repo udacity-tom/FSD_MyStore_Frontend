@@ -9,7 +9,8 @@ export class TokenService {
   token: string = '';
   expiry: number = 0;
   user: string = '';
-  tokenObj: object = {token: this.token, expiry: this.expiry, user: this.user};
+  uid: number = 0;
+  tokenObj: object = {token: this.token, expiry: this.expiry, user: this.user, uid: this.uid};
 
   constructor() { }
 
@@ -19,15 +20,15 @@ export class TokenService {
 
   }
 
-  getToken(): Observable <{token: string, expiry: number, user: string}> {
+  getToken(): Observable <{token: string, expiry: number, user: string, uid: number}> {
     if(localStorage.currentToken){
-    let storedToken: {token: string, expiry: number, user: string};
+    let storedToken: {token: string, expiry: number, user: string, uid: number};
     storedToken = JSON.parse(localStorage.currentToken);
     console.log('Yes, there is a stored token', storedToken);
     // console.log('storedToken token service', storedToken);
     return of(storedToken);
     } else {
-      return of({token: 'no Token', expiry: -1, user: ''});
+      return of({token: 'no Token', expiry: -1, user: '', uid: 0});
     }
   }
 
