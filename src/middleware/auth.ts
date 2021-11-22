@@ -33,7 +33,8 @@ export class AuthStore {
         return {
           token: newjwtToken,
           expiry: jwtPayload?.payload.exp,
-          user: username
+          user: username,
+          uid: jwtPayload?.payload.id
         };
       } else {
         return { err: 'Failure-login refused, try again' };
@@ -42,7 +43,7 @@ export class AuthStore {
     return { err: 'Unknown user, have you registered an account?' };
   }
 
-  // async renewToken
+  // async renewToken/refreshToken (as middleware)
   // async jwtexpiry(token: string): Promise<object> {
   //   const jwtPayload = jwt.decode(token, { complete: true });
   //   return jwtPayload;
