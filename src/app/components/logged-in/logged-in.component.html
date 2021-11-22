@@ -1,1 +1,28 @@
-<p>logged-in works!</p>
+<form #form="ngForm"  class="login-container" >
+    <h2 *ngIf="loginStatus">Currently {{username}} is logged in!</h2>
+    <!-- <h1 *ngIf()>Login Here!</h1> -->
+    <h1>Logout</h1>
+    <br>
+    <input type="submit" (click)="logout()" value="Log out" class="btn btn-primary">
+    <br>
+    <br>
+    <br>
+    <br>
+    <input type="submit" (click)="onSubmit()" value="orders" class="btn btn-primary">
+    <!-- <input type="submit" [disabled]="form.invalid" value="Submit" class="btn btn-primary"> -->
+</form>
+<!-- <p *ngIf="loading" class="signin-text">Currently logging in as: {{username}}</p> -->
+<br>
+
+<div>
+    <h1>Your previous orders: </h1>
+</div>
+    <!-- <div *ngIf="userName.invalid && userName.dirty">
+        <div *ngIf="userName.errors?.required">
+            Please enter your username, it must be at least  characters long.
+        </div>
+    </div>
+    <br>
+    <div *ngIf="passWord.invalid && passWord.dirty">
+        You must enter a password and it must be at least 8 characters long.
+    </div> -->
