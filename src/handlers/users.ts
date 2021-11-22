@@ -78,6 +78,7 @@ const authenticate = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
     console.log('Users: Recieved params', username, password);
+    console.log('Users: req.headers', req.headers);
     const userAuth = await auth.authenticate(username, password);
     console.log('userAuth return', userAuth);
     // const expiresIn = await auth.jwtExpirey(userAuth);

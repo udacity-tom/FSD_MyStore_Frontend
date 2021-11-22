@@ -3,7 +3,7 @@ import { Order } from '../models/order';
 import { Product } from '../models/product';
 
 export class DashboardQueries {
-  //NOTE: Where to put? Not a model? No handler-> so no route->better placed here. Keep routes/models clean.
+  //NOTE: Where to put? Not a model? No handler-> so no route->better placed here. This keeps routes/models clean.
   async isUserAdmin(tokenUid: number): Promise<boolean> {
     try {
       const sql = 'SELECT * FROM users WHERE id = ($1);';
