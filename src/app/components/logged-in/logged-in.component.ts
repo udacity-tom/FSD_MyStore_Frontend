@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -55,19 +55,25 @@ export class LoggedInComponent implements OnInit {
     this.tokenService.getToken();
   }
 
+  onChanges(): void {
+    this.updateLoginStatus();
+    this.tokenService.getToken();
+  }
+
   updateLoginStatus(): void {
     this.loginAuth.loginStatus().subscribe(res => {
       this.loginStatus = res;
       if(!this.loginStatus){
-        console.log('re-route page, this.loginStatus is ', !this.loginStatus);
-        this.router.navigate(['/'])
+        console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
+        // this.router.navigate(['/', {relativeTo: this.route}]);
+        this.router.navigate(['/']);
         return;
       }
       this.tokenService.getToken().subscribe(res => {
               this.username = res.user;
             })
     })
-    console.log('Navbar loginStatus', this.loginStatus);
+    console.log('logged-in componet loginStatus', this.loginStatus);
   }
 
   onSubmit(): void {
@@ -75,7 +81,6 @@ export class LoggedInComponent implements OnInit {
     this.loading = true;
     // this.returnedJWT = this.getLogin(this.username, this.password);
     this.updateLoginStatus();
-  
     this.loading = false;
     // this.router.navigate(['loggedin', {relativeTo: this.route}])
     // this.router.navigate(['loggedin'])
