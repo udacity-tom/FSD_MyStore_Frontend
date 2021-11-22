@@ -24,12 +24,12 @@ export class LoggedInComponent implements OnInit {
   currentOrders: Order[] = [];
   loginStatus: boolean;
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer '
-    })
-  }
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer '
+  //   })
+  // }
   apiServer: string = environment.API_SERVER_IP;
   apiPort: string = environment.API_PORT;
   protocol: string = environment.PROTOCOL;
@@ -73,11 +73,15 @@ export class LoggedInComponent implements OnInit {
               this.username = res.user;
             })
     })
-    console.log('logged-in componet loginStatus', this.loginStatus);
+    console.log('logged-in component loginStatus', this.loginStatus);
   }
 
   onSubmit(): void {
     console.log('this current orders',this.orderService.getOrders());
+    this.orderService.getOrders().subscribe(res => {
+      this.currentOrders = res;
+    })
+
     this.loading = true;
     // this.returnedJWT = this.getLogin(this.username, this.password);
     this.updateLoginStatus();

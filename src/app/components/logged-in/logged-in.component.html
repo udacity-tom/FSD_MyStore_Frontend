@@ -17,6 +17,11 @@
 <div>
     <h1>Your previous orders: </h1>
 </div>
+<div *ngFor="let order of currentOrders" >
+    {{order.id}}
+    {{order.user_id}}
+    {{order.status}}
+</div>
     <!-- <div *ngIf="userName.invalid && userName.dirty">
         <div *ngIf="userName.errors?.required">
             Please enter your username, it must be at least  characters long.
