@@ -22,8 +22,8 @@ export class TokenService {
   getToken(): Observable <{token: string, expiry: number, user: string}> {
     if(localStorage.currentToken){
     let storedToken: {token: string, expiry: number, user: string};
-    console.log('Yes, there is a stored token');
     storedToken = JSON.parse(localStorage.currentToken);
+    console.log('Yes, there is a stored token', storedToken);
     // console.log('storedToken token service', storedToken);
     return of(storedToken);
     } else {

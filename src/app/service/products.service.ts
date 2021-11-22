@@ -4,7 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { from } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { InterceptorService } from './interceptor.service';
+// import { InterceptorService } from './interceptor.service';
 import { TokenService } from './token.service';
 
 @Injectable({
@@ -37,8 +37,9 @@ export class ProductService {
   }
 
   postNewProduct(newProduct: Product): Observable<Product> {
-    //checked signed in
+    //checked signed in & check current user
     this.httpOptions.headers = this.httpOptions.headers.set('Authorisation', 'Bearer '+this.tokenService.getToken());
+    console.log('headers', this.httpOptions);
     return this.http.post<Product>(`${this.protocol}${this.apiServer}:${this.apiPort}/products/create`, {newProduct: newProduct});
   }
   // , {observe: 'body', responseType: 'json' }
