@@ -17,10 +17,27 @@
 <div>
     <h1>Your previous orders: </h1>
 </div>
-<div *ngFor="let order of currentOrders" >
-    {{order.id}}
-    {{order.user_id}}
-    {{order.status}}
+<div>
+    <!-- {{currentOrders.filter()}} -->
+    <p>You have {{currentOrders.length }} orders on file, {{noOfCompletedOrders.length}}</p>
+    <table Cols="3">
+        <thead>
+        <tr>
+            <th colspan="2" width="80px">Order ID</th>
+            <!-- <th colspan="3"></th> -->
+            <th colspan="2">Order status</th>
+        </tr>
+    </thead>
+    <tbody>
+    <!-- <span *ngFor="let order of currentOrders" > -->
+        <tr *ngFor="let order of currentOrders">
+            <td align="center">{{order.id}}</td>
+            <td></td>
+            <td align="right">{{order.status}}</td>
+        </tr>
+    </tbody>
+    <!-- </span> -->
+</table>
 </div>
     <!-- <div *ngIf="userName.invalid && userName.dirty">
         <div *ngIf="userName.errors?.required">
