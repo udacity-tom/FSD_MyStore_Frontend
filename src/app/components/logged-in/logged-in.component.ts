@@ -22,6 +22,11 @@ export class LoggedInComponent implements OnInit {
   authFn: object = {};
   loading: boolean = false;
   currentOrders: Order[] = [];
+  
+  // noOfCompletedOrders: Order[] = this.currentOrders.filter(el => {
+  //   el.status = 'complete'
+  // });
+  noOfCompletedOrders: Order[] = [];
   loginStatus: boolean;
 
   // httpOptions = {
@@ -29,7 +34,12 @@ export class LoggedInComponent implements OnInit {
   //     'Content-Type': 'application/json',
   //     'Authorization': 'Bearer '
   //   })
-  // }
+//   Array(3) [ {…}, {…}, {…} ]
+// 0: Object { id: 1, user_id: "1", status: "complete" }
+// 1: Object { id: 2, user_id: "1", status: "complete" }
+// 2: Object { id: 3, user_id: "1", status: "active" }​
+// length: 3
+
   apiServer: string = environment.API_SERVER_IP;
   apiPort: string = environment.API_PORT;
   protocol: string = environment.PROTOCOL;
@@ -49,7 +59,15 @@ export class LoggedInComponent implements OnInit {
   ngOnInit(): void {
     this.orderService.getOrders().subscribe(res => {
       this.currentOrders = res;
-    })
+    });
+    console.log('complete', this.currentOrders.filter(el =>{
+      el.status = 'complete';
+    }))
+    this.noOfCompletedOrders = this.currentOrders.filter(el => {
+      
+      el.status = 'complete'
+    });
+    console.log('noOfcompletedorders', this.noOfCompletedOrders);
     console.log('current orders', this.currentOrders);
     this.updateLoginStatus();
     this.tokenService.getToken();
@@ -77,12 +95,17 @@ export class LoggedInComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('this current orders',this.orderService.getOrders());
+    this.loading = true;
+    // console.log('this current orders',this.orderService.getOrders());
     this.orderService.getOrders().subscribe(res => {
       this.currentOrders = res;
+      // console.log('this.currentOrders',this.currentOrders);
     })
-
-    this.loading = true;
+    this.noOfCompletedOrders = this.currentOrders.filter(el => {
+      el.status = 'complete'
+    });
+    console.log('noOfcompletedorders', this.noOfCompletedOrders);
+    // this.noOfCompletedOrders;
     // this.returnedJWT = this.getLogin(this.username, this.password);
     this.updateLoginStatus();
     this.loading = false;
