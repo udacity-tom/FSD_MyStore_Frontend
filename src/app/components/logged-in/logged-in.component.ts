@@ -97,6 +97,7 @@ export class LoggedInComponent implements OnInit {
 
   onSubmit(): void {
     this.loading = true;
+    
     // console.log('this current orders',this.orderService.getOrders());
     this.orderService.getOrders().subscribe(res => {
       this.currentOrders = res;
