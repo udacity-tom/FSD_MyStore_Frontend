@@ -14,26 +14,31 @@ export class OrdersService {
   apiServer: string = environment.API_SERVER_IP;
   apiPort: string = environment.API_PORT;
   protocol: string = environment.PROTOCOL;
+  jwtToken: {token: string, expiry: number, user: string, uid: number} = {token: '', expiry: 0, user: '', uid: 0};
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer '
     })
   }
-  jwtToken: {token: string, expiry: number, user: string, uid: number} = {token: '', expiry: 0, user: '', uid: 0};
 
 
   constructor(private http: HttpClient, private tokenService: TokenService, private interceptRequest: InterceptorService) { }
   
   getOrders(): Observable<Order[]> {  //gets the results of orders DB
-    console.log('order service, token value', this.jwtToken);
-    this.currentToken();
-    console.log('order service, token value', this.jwtToken);
-    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.jwtToken.token);
+    // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.jwtToken.token);
+    this.addAuthorisation();
     console.log('headers', this.httpOptions);
     let request = this.http.get<Order[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders', this.httpOptions);
     // return this.interceptRequest(request);
     return request;
+  }
+  
+  
+  
+  addAuthorisation(): void {
+    this.currentToken(); //invoke method to update token
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.jwtToken.token);
   }
 
   currentToken(): void {
