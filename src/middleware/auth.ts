@@ -16,7 +16,13 @@ const tokenSecret = String(process.env.TOKEN_SECRET);
 const dashboardService = new DashboardQueries();
 const jwtExpiry = '30day';
 export class AuthStore {
-  async authenticate(username: string, password: string): Promise<object> {
+  async authenticate(
+    username: string,
+    password: string
+  ): Promise<
+    | { token: string; expiry: string; user: string; uid: number }
+    | { err: string }
+  > {
     const conn = await client.connect();
     const sql = 'SELECT * FROM users WHERE username = ($1)';
     const result = await conn.query(sql, [username]);
@@ -117,7 +123,9 @@ export class AuthStore {
     next: () => void
   ): Promise<void> {
     const routeUid = Number(req.params.id);
+    console.log('verifyUserAuth id', req.params.id);
     const authorisationHeader = String(req.headers.authorization);
+    console.log('authorisations ID', authorisationHeader);
     const jwtToken: string = authorisationHeader.split(' ')[1];
     const jwtPayload = jwt.decode(jwtToken, { complete: true });
     console.log('jwtPayload', jwtPayload);
@@ -142,7 +150,9 @@ export class AuthStore {
   ): Promise<void> {
     try {
       const authorisationHeader = String(req.headers.authorization);
+      console.log('authorisationHeader ', authorisationHeader);
       const jwtToken: string = authorisationHeader.split(' ')[1];
+      console.log('jwtToken from auth', jwtToken);
       const decoded = jwt.verify(jwtToken, tokenSecret);
       if (decoded) {
         next();
