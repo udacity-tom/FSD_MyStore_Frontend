@@ -27,12 +27,8 @@ export class OrdersService {
   
   getOrders(): Observable<Order[]> {  //gets the results of orders DB
     console.log('order service, token value', this.jwtToken);
-    // let currentToken: object = from(this.tokenService.getToken());
     this.currentToken();
-    // console.log('order service currentToken', jwtToken);
-    // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.jwtToken);
-    // console.log('headers', this.httpOptions);
-    // console.log('requested route on orders', `${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders');
+    console.log('order service, token value', this.jwtToken);
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.jwtToken.token);
     console.log('headers', this.httpOptions);
     let request = this.http.get<Order[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders', this.httpOptions);

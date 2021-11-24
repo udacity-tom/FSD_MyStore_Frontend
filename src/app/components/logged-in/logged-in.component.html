@@ -19,7 +19,7 @@
 </div>
 <div>
     <!-- {{currentOrders.filter()}} -->
-    <p>You have {{currentOrders.length }} orders on file, {{noOfCompletedOrders.length}}</p>
+    <p>You have {{(currentOrders.length == 0 ? 'no' : currentOrders.length)}} orders on file, {{noOfCompletedOrders.length}}</p>
     <table Cols="3">
         <thead>
         <tr>
@@ -30,12 +30,17 @@
     </thead>
     <tbody>
     <!-- <span *ngFor="let order of currentOrders" > -->
-        <tr *ngFor="let order of currentOrders">
-            <td align="center">{{order.id}}</td>
-            <td></td>
-            <td align="right">{{order.status}}</td>
+        <tr *ngFor="let order of currentOrders" (click)="orderDetails(order.id)">
+            <!-- <a (click)="orderDetails(order.id)"> -->
+                <td align="center" >{{order.id}}</td>
+                <td></td>
+                <td align="right">{{order.status}}</td>
+            <!-- </a> -->
         </tr>
     </tbody>
+    <div *ngIf="currentOrderDetails != ['none'] ">
+
+    </div>
     <!-- </span> -->
 </table>
 </div>

@@ -24,7 +24,7 @@ export class TokenService {
     if(localStorage.currentToken){
     let storedToken: {token: string, expiry: number, user: string, uid: number};
     storedToken = JSON.parse(localStorage.currentToken);
-    console.log('Yes, there is a stored token', storedToken);
+    // console.log('Yes, there is a stored token', storedToken);
     // console.log('storedToken token service', storedToken);
     return of(storedToken);
     } else {

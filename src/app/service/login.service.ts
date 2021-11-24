@@ -15,6 +15,7 @@ export class LoginService {
   username: string;
   password: string;
   currentJWT: string;
+  uid: number;
   url: string = '';
   returnedJWT: string = '';
   tokenPromise: string = '';
@@ -41,6 +42,7 @@ export class LoginService {
     this.username = '';
     this.password = '';
     this.currentJWT = '';
+    this.uid = 0;
   }
   
   loginStatus(): Observable<boolean> {
@@ -48,8 +50,9 @@ export class LoginService {
       this.currentJWT = res.token;
       this.expiry = res.expiry;
       this.user = res.user;
+      this.uid = res.uid;
     });
-    console.log('login service', this.currentJWT, this.expiry, this.user);
+    console.log('login service', this.currentJWT, this.expiry, this.user, this.uid);
     const currentTime = Math.floor((Number(new Date())/1000));
       if (this.currentJWT != 'no Token') {
         if(this.expiry > currentTime) {

@@ -27,6 +27,7 @@ export class LoggedInComponent implements OnInit {
   //   el.status = 'complete'
   // });
   noOfCompletedOrders: Order[] = [];
+  currentOrderDetails: string[] = ['none'];
   loginStatus: boolean;
 
   // httpOptions = {
@@ -116,6 +117,10 @@ export class LoggedInComponent implements OnInit {
   // allUsersOrders(): Observable<Order[]> {
     
   // }
+
+  orderDetails(oid:number): void {
+    console.log('orderDetails', oid);
+  }
 
 
   logout():void {
