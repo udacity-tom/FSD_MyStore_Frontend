@@ -28,13 +28,17 @@ export class OrdersService {
   getOrders(): Observable<Order[]> {  //gets the results of orders DB
     // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.jwtToken.token);
     this.addAuthorisation();
-    console.log('headers', this.httpOptions);
+    // console.log('headers', this.httpOptions);
     let request = this.http.get<Order[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders', this.httpOptions);
     // return this.interceptRequest(request);
     return request;
   }
   
-  
+  orderDetails(oid: number): Observable<Order[]> {
+    this.addAuthorisation();
+    const request = this.http.get<Order[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid, this.httpOptions);
+    return request;
+  }
   
   addAuthorisation(): void {
     this.currentToken(); //invoke method to update token
