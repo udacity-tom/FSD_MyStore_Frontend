@@ -52,7 +52,7 @@ export class LoginService {
       this.user = res.user;
       this.uid = res.uid;
     });
-    console.log('login service', this.currentJWT, this.expiry, this.user, this.uid);
+    // console.log('login service', this.currentJWT, this.expiry, this.user, this.uid);
     const currentTime = Math.floor((Number(new Date())/1000));
       if (this.currentJWT != 'no Token') {
         if(this.expiry > currentTime) {

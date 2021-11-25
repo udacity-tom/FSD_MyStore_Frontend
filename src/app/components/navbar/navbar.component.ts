@@ -35,14 +35,14 @@ export class NavbarComponent implements OnInit {
     this.loginAuth.loginStatus().subscribe(res => {
       this.loginStatus = res;
     })
-    console.log('Navbar loginSTatus', this.loginStatus);
+    // console.log('Navbar loginSTatus', this.loginStatus);
   }
 
   getUsername(): void {
     this.tokenService.getToken().subscribe(res => {
       this.username = res.user;
     })
-    console.log('navbar getusername()', this.username);
+    // console.log('navbar getusername()', this.username);
 
   }
   
