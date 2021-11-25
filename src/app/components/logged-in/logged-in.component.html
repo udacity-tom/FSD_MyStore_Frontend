@@ -39,7 +39,12 @@
         </tr>
     </tbody>
     <div *ngIf="currentOrderDetails != [{id: 0, product_id: 0, quantity: 0, order_id: 0}] ">
-
+        <div *ngFor="let product of currentOrderDetails">
+            <p>ID: {{product.id}}</p>
+            <p>Order ID: {{product.order_id}}</p>
+            <p>Product ID: {{product.product_id}}</p>
+            <p>Product Quantity: {{product.quantity}}</p>
+        </div>
     </div>
     <!-- </span> -->
 </table>

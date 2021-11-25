@@ -3,6 +3,7 @@ import { Observable, from } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Order } from '../models/Order';
+import { Order_products } from '../models/Order_products';
 import { TokenService } from './token.service';
 import { InterceptorService } from './interceptor.service';
 
@@ -34,9 +35,9 @@ export class OrdersService {
     return request;
   }
   
-  orderDetails(oid: number): Observable<Order[]> {
+  orderDetails(oid: number): Observable<Order_products[]> {
     this.addAuthorisation();
-    const request = this.http.get<Order[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid, this.httpOptions);
+    const request = this.http.get<Order_products[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid, this.httpOptions);
     return request;
   }
   

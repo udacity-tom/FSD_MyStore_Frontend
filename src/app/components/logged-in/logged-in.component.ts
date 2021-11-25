@@ -103,6 +103,7 @@ export class LoggedInComponent implements OnInit {
 
   orderDetails(oid:number): void {
     this.orderService.orderDetails(oid).subscribe(res => {
+      console.log('res from orderDetails', res);
       this.currentOrderDetails = res;
     })
     console.log('orderDetails', oid);
