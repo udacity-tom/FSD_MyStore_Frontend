@@ -5,4 +5,14 @@ INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (4, 5, 4,
 INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (5, 3, 10, 2);
 INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (6, 4, 10, 1);
 INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (7, 4, 2, 4);
-ALTER SEQUENCE order_products_id_seq RESTART WITH 8;
+INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (8, 2, 2, 8);
+INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (9, 7, 2, 3);
+INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (10, 2, 2, 3);
+INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (11, 9, 2, 3);
+INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (12, 12, 2, 3);
+INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (13, 2, 2, 6);
+INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (14, 2, 2, 7);
+INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (15, 2, 2, 8);
+INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (16, 2, 2, 8);
+INSERT INTO order_products (id, product_id, quantity, order_id) VALUES (17, 2, 2, 8);
+ALTER SEQUENCE order_products_id_seq RESTART WITH 13;
