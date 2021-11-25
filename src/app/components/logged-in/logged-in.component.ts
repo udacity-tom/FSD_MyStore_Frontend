@@ -24,7 +24,8 @@ export class LoggedInComponent implements OnInit {
   loading: boolean = false;
   currentOrders: Order[] = [];
   noOfCompletedOrders: Order[] = [];
-  currentOrderDetails: Order_products[] = [ {id: 0, product_id: 0, quantity: 0, order_id: 0}];
+  @Input() currentOrderDetails: Order_products[] = [ {id: 0, product_id: 0, quantity: 0, order_id: 0}];
+  showOrderDetails: boolean = false;
   loginStatus: boolean;
 
 
@@ -105,7 +106,8 @@ export class LoggedInComponent implements OnInit {
     this.orderService.orderDetails(oid).subscribe(res => {
       console.log('res from orderDetails', res);
       this.currentOrderDetails = res;
-    })
+    });
+    this.showOrderDetails = true;
     console.log('orderDetails', oid);
   }
 
