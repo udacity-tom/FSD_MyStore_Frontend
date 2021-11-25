@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Order } from 'src/app/models/Order';
 import { Observable } from 'rxjs';
 import { OrdersService } from 'src/app/service/orders.service';
+import { Order_products } from 'src/app/models/Order_products';
 // import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
@@ -23,14 +24,9 @@ export class LoggedInComponent implements OnInit {
   loading: boolean = false;
   currentOrders: Order[] = [];
   noOfCompletedOrders: Order[] = [];
-  currentOrderDetails: string[] = ['none'];
+  currentOrderDetails: Order_products[] = [ {id: 0, product_id: 0, quantity: 0, order_id: 0}];
   loginStatus: boolean;
 
-  // httpOptions = {
-  //   headers: new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer '
-  //   })
 
   apiServer: string = environment.API_SERVER_IP;
   apiPort: string = environment.API_PORT;
@@ -106,6 +102,9 @@ export class LoggedInComponent implements OnInit {
   }
 
   orderDetails(oid:number): void {
+    this.orderService.orderDetails(oid).subscribe(res => {
+      this.currentOrderDetails = res;
+    })
     console.log('orderDetails', oid);
   }
 

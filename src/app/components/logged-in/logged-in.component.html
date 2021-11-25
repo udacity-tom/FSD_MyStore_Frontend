@@ -19,7 +19,7 @@
 </div>
 <div>
     <!-- {{currentOrders.filter()}} -->
-    <p>You have {{(currentOrders.length == 0 ? 'no' : currentOrders.length)}} orders on file, {{(noOfCompletedOrders.length == 0 ? 'No orders' : (noOfCompletedOrders.length == 1 ? 'One Order' : noOfCompletedOrders.length+' orders') ) }} are complete.</p>
+    <p>You have {{(currentOrders.length == 0 ? 'no' : currentOrders.length)}} orders on file. {{(noOfCompletedOrders.length == 0 ? 'No orders' : (noOfCompletedOrders.length == 1 ? 'One Order' : noOfCompletedOrders.length+' orders')) }} {{(noOfCompletedOrders.length == 1 ? 'is' : 'are')}} complete.</p>
     <table Cols="3">
         <thead>
         <tr>
@@ -38,7 +38,7 @@
             <!-- </a> -->
         </tr>
     </tbody>
-    <div *ngIf="currentOrderDetails != ['none'] ">
+    <div *ngIf="currentOrderDetails != [{id: 0, product_id: 0, quantity: 0, order_id: 0}] ">
 
     </div>
     <!-- </span> -->
