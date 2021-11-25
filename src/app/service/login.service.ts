@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders, HttpEvent } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TokenService } from './token.service';
-import { Product } from '../models/Product';
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +16,6 @@ export class LoginService {
   currentJWT: string;
   uid: number;
   url: string = '';
-  returnedJWT: string = '';
-  tokenPromise: string = '';
-  returnedRes: {
-  newUser: object,
-  newtoken: string,
-  payload: object } = {
-    newUser: {},
-    newtoken: '',
-    payload: {}
-  };
   userIsLoggedIn: boolean = false;
   user: string = '';
   expiry: number = 0;
@@ -52,7 +41,7 @@ export class LoginService {
       this.user = res.user;
       this.uid = res.uid;
     });
-    // console.log('login service', this.currentJWT, this.expiry, this.user, this.uid);
+
     const currentTime = Math.floor((Number(new Date())/1000));
       if (this.currentJWT != 'no Token') {
         if(this.expiry > currentTime) {
@@ -60,10 +49,8 @@ export class LoginService {
         } else {
           this.logOut();
         }
-        // console.log('userIsLoggedIn value, ', this.userIsLoggedIn);  
       } else {
         this.userIsLoggedIn = false;
-        // console.log('userIsLoggedIn value', this.userIsLoggedIn);
       }
     return of(this.userIsLoggedIn);
   };

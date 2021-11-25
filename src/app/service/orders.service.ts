@@ -23,15 +23,11 @@ export class OrdersService {
     })
   }
 
-
   constructor(private http: HttpClient, private tokenService: TokenService, private interceptRequest: InterceptorService) { }
   
   getOrders(): Observable<Order[]> {  //gets the results of orders DB
-    // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.jwtToken.token);
     this.addAuthorisation();
-    // console.log('headers', this.httpOptions);
-    let request = this.http.get<Order[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders', this.httpOptions);
-    // return this.interceptRequest(request);
+    const request = this.http.get<Order[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders', this.httpOptions);
     return request;
   }
   
@@ -42,7 +38,7 @@ export class OrdersService {
   }
   
   addAuthorisation(): void {
-    this.currentToken(); //invoke method to update token
+    this.currentToken(); //invoke method to update token before submission to API
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.jwtToken.token);
   }
 
@@ -50,10 +46,6 @@ export class OrdersService {
     this.tokenService.getToken().subscribe(res => {
       this.jwtToken = res;
     })
-    // return this.jwtToken;
-  }
-  currentUserId(): void {
-    // this.
   }
 }
 
