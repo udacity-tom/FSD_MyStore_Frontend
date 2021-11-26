@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { OrdersService } from 'src/app/service/orders.service';
 import { Order } from 'src/app/models/Order';
 import { of } from 'rxjs';
+import { Order_products } from 'src/app/models/Order_products';
+import { ProductService } from 'src/app/service/products.service';
 
 @Component({
   selector: 'app-cart',
@@ -14,10 +16,11 @@ import { of } from 'rxjs';
 })
 export class CartComponent implements OnInit {
   @Input() cart: Product[] = [];  //products in cart
-  currentOrder: Order[] = [{id: 0, user_id: 0, status: ''}]; //The DB order where status ='active'
+  currentOrder: Order = {id: 0, user_id: 0, status: ''}; //The DB order where status ='active'
   @Input() cartOrder: Order = {id: 0, user_id: 0, status: ''}; //the current user cart to update to DB onChange
   allOrders: Order[] = []; //all user orders on DB
-  // {id: 0, user_id: 0, status: ''}
+  orderProducts: Order_products[] = [{id: 0, product_id: 0, quantity: 0, order_id: 0}];//order transactions
+  product: Product = {id: 0, name: '', url: '', price: 0, snippet:'', description: '', accreditation: '', category: '' };
   loginStatus: boolean = false;
   username: string = '';
 
@@ -25,21 +28,21 @@ export class CartComponent implements OnInit {
     private loginService: LoginService, 
     private tokenService: TokenService, 
     private router: Router,
-    private orders: OrdersService,
+    private ordersService: OrdersService,
+    private productService: ProductService
      ) { }
 
   ngOnInit(): void {
     //check if user is logged in, if yes update cart with active order
-    this.orderInCart();
-    this.activeOrder(this.allOrders);
-    this.updateLoginStatus();
-    console.log('active order', this.currentOrder, this.allOrders,  )
+    this.updateLoginStatus()
+    if(this.loginStatus){
+      this.userOrders();//get all orders on system for user
+    }
   }
 
   onChanges() {
-    //update the cart with changes: adding products, removing products, checkout, etc...
+    //update the cart with changes: adding products, removing products, checkout, etc...if necessary
   }
-
 
   updateLoginStatus(): void {
     this.loginService.loginStatus().subscribe(res => {
@@ -56,37 +59,41 @@ export class CartComponent implements OnInit {
     });
   }
 
-  orderInCart(): void {
-    this.orders.getOrders().subscribe(res => {
-      console.log('res', res);
+  userOrders(): void {
+    this.ordersService.getOrders().subscribe(res => {
+      // console.log('res', res);
       this.allOrders = res;
       this.activeOrder(res);
     });
-    console.log('this.currentOrder, this.allOrders', this.currentOrder, this.allOrders);
-      // console.log('active order', this.currentOrder )
-    }
-  
-
-  activeOrder(allOrders: Order[]) {
-      this.currentOrder = allOrders.filter(order => {  
-      return order.status == 'active';
-      }
-    );
   }
   
+  activeOrder(allOrders: Order[]):void {
+    const justOne =  allOrders.filter(order => {  
+      return order.status == 'active';
+    });
+    this.currentOrder = justOne[0];//takes just one order from array, array->item
+    // console.log('this.currentOrder, this.allOrders', this.currentOrder, 'this.currentOrder.id', this.currentOrder.id,  this.allOrders);
+    this.productsInActiveOrder();
+  }
+  
+  
+  productsInActiveOrder() { //gets the products in the active order
+    this.ordersService.orderDetails(this.currentOrder.id).subscribe(res => {
+      // console.log('res in proudctsInActiveOrder', res);
+      this.orderProducts = res;
+      this.productsInActiveCart();
+    })
+  }
+  
+  productsInActiveCart(): void {
+    this.orderProducts.forEach(item =>{
+      this.productService.getProduct(item.product_id).subscribe(res => {
+        this.cart.push(res);
+      });
+    });
+  }
+
 }
-//what is a cart?
-/*
-This cart takes any active orders and lists out their products
-the cart 'state' is held here as an array of products as listed in the DB
-The DB is the source of truth. maintaining persistance across the app.
-so here the first thing we do after loggin in is updtate the cart state here
-and modify the cart page to display the list of items.
-
-create a service to interlink the cart to the products and display the included products.
-click on product takes the user to the product details page
-
-*/
 
 
 // }

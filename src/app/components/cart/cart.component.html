@@ -3,10 +3,38 @@
     <br>
     <h3>Your current Cart Contents</h3>
 
-    <ul *ngFor="let product of currentOrder">
+    <ul *ngFor="let product of orderProducts">
         <li>
-            {{product.id}}
+            {{product.product_id}}
+            {{product.quantity}}
         </li>
     </ul>
 
+
+    <br>
+    <table Cols="6">
+        <thead>
+            <tr>
+                <!-- <th colspan="2" width="80px">Product ID</th> -->
+                <th colspan="1" width="80px"></th>
+                <th colspan="1" width="80px"></th>
+                <th colspan="1" width="380px">Description</th>
+                <th colspan="2" align="left" width="150px">Category</th>
+            </tr>
+            <br>
+    </thead>
+    <tbody>
+    <!-- <span *ngFor="let order of currentOrders" > -->
+        <tr *ngFor="let product of cart" >
+            <!-- <a (click)="orderDetails(order.id)"> -->
+                <!-- <td align="center" >{{product.id}}</td> -->
+                <td></td>
+                <td align="left"><img src = "{{product.url}}" width=50px; height=50px;></td>
+                <td align="left">{{product.name}}</td>
+                <td align="left">{{product.category}}</td>
+                <br>
+            <!-- </a> -->
+        </tr>
+    </tbody>
+    </table>
 </form>
