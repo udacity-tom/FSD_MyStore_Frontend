@@ -1,1 +1,12 @@
-<p>cart works!</p>
+<form #form="ngForm"  class="login-container" >
+    <h2 *ngIf="loginStatus">Currently {{username}} is logged in!</h2>
+    <br>
+    <h3>Your current Cart Contents</h3>
+
+    <ul *ngFor="let product of currentOrder">
+        <li>
+            {{product.id}}
+        </li>
+    </ul>
+
+</form>
