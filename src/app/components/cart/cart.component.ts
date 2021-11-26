@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, EventEmitter, Output } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
@@ -16,6 +16,9 @@ import { ProductService } from 'src/app/service/products.service';
 })
 export class CartComponent implements OnInit {
   @Input() cart: Product[] = [];  //products in cart
+  @Output() removeItemFromCart: EventEmitter<Product> = new EventEmitter;
+  cartTotal: number = 0;
+
   currentOrder: Order = {id: 0, user_id: 0, status: ''}; //The DB order where status ='active'
   @Input() cartOrder: Order = {id: 0, user_id: 0, status: ''}; //the current user cart to update to DB onChange
   allOrders: Order[] = []; //all user orders on DB
@@ -88,11 +91,15 @@ export class CartComponent implements OnInit {
   productsInActiveCart(): void {
     this.orderProducts.forEach(item =>{
       this.productService.getProduct(item.product_id).subscribe(res => {
+        this.cartTotal += Number(res.price);
         this.cart.push(res);
       });
     });
   }
 
+  removeCartItem(pid: number) {
+    console.log('Remove the item with Product ID of ', pid);
+  }
 }
 
 

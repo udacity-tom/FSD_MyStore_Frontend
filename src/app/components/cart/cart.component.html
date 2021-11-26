@@ -3,38 +3,48 @@
     <br>
     <h3>Your current Cart Contents</h3>
 
-    <ul *ngFor="let product of orderProducts">
+    <!-- <ul *ngFor="let product of orderProducts">
         <li>
             {{product.product_id}}
             {{product.quantity}}
         </li>
-    </ul>
+    </ul> -->
 
 
     <br>
-    <table Cols="6">
+    <table Cols="7">
         <thead>
             <tr>
-                <!-- <th colspan="2" width="80px">Product ID</th> -->
-                <th colspan="1" width="80px"></th>
-                <th colspan="1" width="80px"></th>
-                <th colspan="1" width="380px">Description</th>
-                <th colspan="2" align="left" width="150px">Category</th>
+                <th scope="col" width="80px"></th>
+                <th scope="col" width="80px"></th>
+                <th scope="col" width="250px">Description</th>
+                <th scope="col" align="left" width="190px">Category</th>
+                <th scope="col" align="right !important" width="190px">Price</th>
+                <th scope="col" align="left" width="190px"></th>
+                <th scope="col" align="center" width="190px">Remove?</th>
             </tr>
-            <br>
     </thead>
+    <br>
     <tbody>
     <!-- <span *ngFor="let order of currentOrders" > -->
-        <tr *ngFor="let product of cart" >
+        <tr *ngFor="let product of cart" height=70px>
             <!-- <a (click)="orderDetails(order.id)"> -->
                 <!-- <td align="center" >{{product.id}}</td> -->
-                <td></td>
-                <td align="left"><img src = "{{product.url}}" width=50px; height=50px;></td>
-                <td align="left">{{product.name}}</td>
-                <td align="left">{{product.category}}</td>
+                <td width="80px"></td>
+                <td width="80px" align="left"><img src = "{{product.url}}" width=50px; height=50px;></td>
+                <td width="250px" align="left">{{product.name}}</td>
+                <td width="150px" align="left">{{product.category}}</td>
+                <td width="190px" align="right">{{product.price}}</td>
+                <td width="190px"></td>
+                <td width="190px" align="left"><button class="btn btn-primary" (click)="removeCartItem(product.id)">Remove</button></td>
                 <br>
             <!-- </a> -->
         </tr>
+        <!-- <tr> -->
+            <!-- <td width=600px>Total Value is: </td> -->
+            <!-- <tr width=600px>Total Value is: {{cartTotal}}</tr> -->
+        <!-- </tr> -->
     </tbody>
     </table>
+    <h2>Your Cart Total is: USD {{cartTotal}}</h2>
 </form>
