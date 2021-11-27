@@ -68,7 +68,7 @@ export class OrderStore {
       return result.rows;
     } catch (err) {
       throw new Error(
-        `There was an error with finding order ID=${id}. Erro: ${err}`
+        `There was an error with finding order ID=${id}. Err: ${err}`
       );
     }
   }
