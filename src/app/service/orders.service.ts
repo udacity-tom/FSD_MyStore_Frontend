@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Order } from '../models/Order';
@@ -22,6 +22,10 @@ export class OrdersService {
       'Authorization': 'Bearer '
     })
   }
+  currentOrder: Order = {id: 0, user_id: 0, status: ''}; //The DB order where status ='active'
+  allOrders: Order[] = []; //all user orders on DB
+  activeOrderNum: number = 0;
+
 
   constructor(private http: HttpClient, private tokenService: TokenService, private interceptRequest: InterceptorService) { }
   
@@ -37,6 +41,26 @@ export class OrdersService {
     return request;
   }
   
+  currentActiveOrder(): Observable<number> {
+    this.getOrders().subscribe(res => {
+      this.allOrders = res;
+      this.activeOrderNum = this.activeOrder(res);
+    });
+    // const justOne  = this.allOrders.filter(order => {
+    //   console.log('orders.service.ts justOne', justOne);
+    //   return order.status == 'active';
+    // })
+    // return of(justOne[0].id);
+    return of(this.activeOrderNum);
+  }
+  activeOrder(allOrders: Order[]): number {
+    const justOne  = this.allOrders.filter(order => {
+      return order.status == 'active';
+    })
+    // console.log('orders.service.ts justOne', justOne);
+    return justOne[0].id;
+  }
+
   addAuthorisation(): void {
     this.currentToken(); //invoke method to update token before submission to API
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.jwtToken.token);

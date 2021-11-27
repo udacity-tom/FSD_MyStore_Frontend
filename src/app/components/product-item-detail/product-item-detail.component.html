@@ -7,7 +7,7 @@
     <p>Product Name: {{ product.name }}</p>
     <p>Product Price USD: {{ product.price }}</p>
     <p>{{ product.snippet }}</p>
-    <p class="description">Full Description: {{ product.description+product.name }}</p>
+    <p class="description">Full Description: {{ product.description }}</p>
     <br>
     <br>
     <div class="quantity">
@@ -16,6 +16,6 @@
         <button (click)="increaseItems()">+</button>
     </div>
     <br>
-    <button class="btn btn-primary" >Add To Cart</button>&nbsp;
+    <button class="btn btn-primary" (click)="addProductsToCart(product.id, noOfItems)">Add To Cart</button>&nbsp;
     <button class="btn btn-primary" [routerLink]="['/products']">Back To Products</button>
 </div>

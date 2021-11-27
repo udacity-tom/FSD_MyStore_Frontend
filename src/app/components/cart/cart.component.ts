@@ -1,13 +1,15 @@
 import { Component, Input, OnInit, OnChanges, EventEmitter, Output } from '@angular/core';
 import { Product } from 'src/app/models/Product';
+import { Order_products } from 'src/app/models/Order_products';
+import { Order } from 'src/app/models/Order';
+import { Router } from '@angular/router';
 import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
-import { Router } from '@angular/router';
 import { OrdersService } from 'src/app/service/orders.service';
-import { Order } from 'src/app/models/Order';
-import { of } from 'rxjs';
-import { Order_products } from 'src/app/models/Order_products';
 import { ProductService } from 'src/app/service/products.service';
+import { CartService } from 'src/app/service/cart.service';
+import { of } from 'rxjs';
+// import { CartService }
 
 interface Cart_product extends Product {
   quantity: number;
@@ -30,13 +32,15 @@ export class CartComponent implements OnInit {
   product: Product = {id: 0, name: '', url: '', price: 0, snippet:'', description: '', accreditation: '', category: '' };
   loginStatus: boolean = false;
   username: string = '';
+  addedCartItem: number = 0;
 
   constructor(
     private loginService: LoginService, 
     private tokenService: TokenService, 
     private router: Router,
     private ordersService: OrdersService,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService
      ) { }
 
   ngOnInit(): void {
@@ -46,8 +50,11 @@ export class CartComponent implements OnInit {
       this.userOrders();//get all orders on system for user
     }
   }
-
+  
   onChanges() {
+    // if(this.loginStatus){
+    //   this.userOrders();//get all orders on system for user
+    // }
     //update the cart with changes: adding products, removing products, checkout, etc...if necessary
   }
 
@@ -74,6 +81,8 @@ export class CartComponent implements OnInit {
     });
   }
   
+
+
   activeOrder(allOrders: Order[]):void {
     const justOne =  allOrders.filter(order => {  
       return order.status == 'active';
@@ -86,11 +95,12 @@ export class CartComponent implements OnInit {
   
   productsInActiveOrder() { //gets the products in the active order
     this.ordersService.orderDetails(this.currentOrder.id).subscribe(res => {
-      // console.log('res in proudctsInActiveOrder', res);
+      console.log('res in proudctsInActiveOrder', res);
       this.orderProducts = res;
       this.productsInActiveCart();
     })
   }
+  
   
   productsInActiveCart(): void {
     // console.log('productsinactiveCart, this.orderProducts', this.orderProducts);
@@ -98,7 +108,7 @@ export class CartComponent implements OnInit {
       // console.log('item in productsInActiveCart', item);
       this.productService.getProduct(item.product_id).subscribe(res => {
         // Number(this.orderQuantity(item.));
-        res = Object.assign(res, {quantity: this.orderProducts[0].quantity})
+        res = Object.assign(res, {quantity: this.orderProducts[0].quantity});
         // console.log('this.orderQuantity(item.product_id)', this.orderProducts[0].quantity);
         this.cartTotal += Number((res.price*Number(res.quantity)).toFixed(2));
         // this.cart.push(res);
@@ -109,12 +119,12 @@ export class CartComponent implements OnInit {
       });
     });
   }
-
-  // orderQuantity(productID: number) {
-  //   const item =  this.orderProducts.filter( item => {
-  //     return item.id == Number(productID);
+      
+  // addProductsToActiveOrder(){
+  //   this.cartService.addProductService().subscribe(res => {
+  //     this.currentOrder
+  //     // console.log('product ', pid, ' added to order')
   //   })
-  //   console.log('item found is', item);
   // }
 
   removeCartItem(pid: number) {

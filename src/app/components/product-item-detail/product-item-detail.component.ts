@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { ProductService } from 'src/app/service/products.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { CartService } from 'src/app/service/cart.service';
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-product-item-detail',
@@ -15,7 +16,11 @@ export class ProductItemDetailComponent implements OnInit {
   noOfItems: number;
   itemDescription: object;
 
-  constructor(private productService:ProductService, private route: ActivatedRoute) { 
+  constructor(
+    private productService:ProductService, 
+    private route: ActivatedRoute,
+    private cartService: CartService
+    ) { 
     this.product = {
       id: 0,
       name: '',
@@ -46,4 +51,10 @@ export class ProductItemDetailComponent implements OnInit {
     if(this.noOfItems==1) return;
     this.noOfItems--
   }
+  addProductsToCart(pid: number, quantity: number){
+    console.log('product ', pid, ' added to order')
+    this.cartService.addProductToActiveOrder(pid, quantity);
+  }
+
 }
+
