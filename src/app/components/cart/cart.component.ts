@@ -9,15 +9,19 @@ import { of } from 'rxjs';
 import { Order_products } from 'src/app/models/Order_products';
 import { ProductService } from 'src/app/service/products.service';
 
+interface Cart_product extends Product {
+  quantity: number;
+}
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  @Input() cart: Product[] = [];  //products in cart
+  @Input() cart: Cart_product[] = [];  //products in cart
   @Output() removeItemFromCart: EventEmitter<Product> = new EventEmitter;
-  cartTotal: number = 0;
+  cartTotal: number = 0.00;
+
 
   currentOrder: Order = {id: 0, user_id: 0, status: ''}; //The DB order where status ='active'
   @Input() cartOrder: Order = {id: 0, user_id: 0, status: ''}; //the current user cart to update to DB onChange
@@ -74,7 +78,7 @@ export class CartComponent implements OnInit {
     const justOne =  allOrders.filter(order => {  
       return order.status == 'active';
     });
-    this.currentOrder = justOne[0];//takes just one order from array, array->item
+    this.currentOrder = justOne[0];//takes just one 'activ' order from array, array->item
     // console.log('this.currentOrder, this.allOrders', this.currentOrder, 'this.currentOrder.id', this.currentOrder.id,  this.allOrders);
     this.productsInActiveOrder();
   }
@@ -89,13 +93,29 @@ export class CartComponent implements OnInit {
   }
   
   productsInActiveCart(): void {
-    this.orderProducts.forEach(item =>{
+    // console.log('productsinactiveCart, this.orderProducts', this.orderProducts);
+    this.orderProducts.forEach(item => {
+      // console.log('item in productsInActiveCart', item);
       this.productService.getProduct(item.product_id).subscribe(res => {
-        this.cartTotal += Number(res.price);
+        // Number(this.orderQuantity(item.));
+        res = Object.assign(res, {quantity: this.orderProducts[0].quantity})
+        // console.log('this.orderQuantity(item.product_id)', this.orderProducts[0].quantity);
+        this.cartTotal += Number((res.price*Number(res.quantity)).toFixed(2));
+        // this.cart.push(res);
+        // console.log('this.orderProducts[0].quantity', this.orderProducts[0].quantity);
+        // res: Product = of(res):Cart_product;
+        // console.log('productsInactivecart', res);
         this.cart.push(res);
       });
     });
   }
+
+  // orderQuantity(productID: number) {
+  //   const item =  this.orderProducts.filter( item => {
+  //     return item.id == Number(productID);
+  //   })
+  //   console.log('item found is', item);
+  // }
 
   removeCartItem(pid: number) {
     console.log('Remove the item with Product ID of ', pid);

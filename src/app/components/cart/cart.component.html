@@ -19,7 +19,8 @@
                 <th scope="col" width="80px"></th>
                 <th scope="col" width="250px">Description</th>
                 <th scope="col" align="left" width="190px">Category</th>
-                <th scope="col" align="right !important" width="190px">Price</th>
+                <th scope="col" align="right" width="190px">Price</th>
+                <th scope="col" align="right" width="190px">Quantity</th>
                 <th scope="col" align="left" width="190px"></th>
                 <th scope="col" align="center" width="190px">Remove?</th>
             </tr>
@@ -35,6 +36,7 @@
                 <td width="250px" align="left">{{product.name}}</td>
                 <td width="150px" align="left">{{product.category}}</td>
                 <td width="190px" align="right">{{product.price}}</td>
+                <td width="190px" align="right">{{product.quantity}}</td>
                 <td width="190px"></td>
                 <td width="190px" align="left"><button class="btn btn-primary" (click)="removeCartItem(product.id)">Remove</button></td>
                 <br>

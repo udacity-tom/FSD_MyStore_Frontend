@@ -32,7 +32,7 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/products`)
   }
 
-  getProduct(id: number): Observable<Product> {
+  getProduct(id: number): Observable<any> {
     return this.http.get<Product>(`${this.protocol}${this.apiServer}:${this.apiPort}/products/${id}`);
   }
 
