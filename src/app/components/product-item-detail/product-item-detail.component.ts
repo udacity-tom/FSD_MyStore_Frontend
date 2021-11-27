@@ -15,6 +15,7 @@ export class ProductItemDetailComponent implements OnInit {
   givenId: number;
   noOfItems: number;
   itemDescription: object;
+  response: object = {};
 
   constructor(
     private productService:ProductService, 
@@ -52,8 +53,12 @@ export class ProductItemDetailComponent implements OnInit {
     this.noOfItems--
   }
   addProductsToCart(pid: number, quantity: number){
-    console.log('product ', pid, ' added to order')
-    this.cartService.addProductToActiveOrder(pid, quantity);
+    // console.log('product ', pid, ' added to order. Quantity is ', quantity)
+    // this.cartService.addProductToActiveOrder(pid, quantity);
+    this.cartService.addProductToActiveOrder(pid, quantity).subscribe(res => {
+      this.response = res;
+      console.log('add product to cart res',res);
+    })
   }
 
 }
