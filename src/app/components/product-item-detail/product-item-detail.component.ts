@@ -57,7 +57,7 @@ export class ProductItemDetailComponent implements OnInit {
     // this.cartService.addProductToActiveOrder(pid, quantity);
     this.cartService.addProductToActiveOrder(pid, quantity).subscribe(res => {
       this.response = res;
-      console.log('add product to cart res',res);
+      console.log('product-list-item component, add product to cart res =',res);
     })
   }
 

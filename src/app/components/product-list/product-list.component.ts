@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/service/products.service';
 import { Product } from 'src/app/models/Product';
+import { CartService } from 'src/app/service/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -10,64 +11,27 @@ import { Product } from 'src/app/models/Product';
 export class ProductListComponent implements OnInit {
   title: string = 'Product List component';
   @Input() products: Product[] = [];
+  pid: number = 0;
+  quantity: number = 0;
+  response: object = {};
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private cartService: CartService) { }
 
   ngOnInit(): void {
     //raw data return for setting up View, move to backend later
     this.productService.getProducts().subscribe(res => {
       this.products = res;
     });
-    // this.products = [
-    //   {
-    //     id: 1,
-    //     name: "Book",
-    //     price: 9.99,
-    //     url: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    //     description: "You can read it!",
-    //     category: "Book"
-    //   },
-    //   {
-    //     id: 2,
-    //     name: "Headphones",
-    //     price: 249.99,
-    //     url: "https://images.unsplash.com/photo-1583394838336-acd977736f90?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    //     description: "Listen to stuff!",
-    //     category: "Electronics"
-    //   },
-    //   {
-    //     id: 3,
-    //     name: "Backpack",
-    //     price: 79.99,
-    //     url: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    //     description: "Carry things around town!",
-    //     category: "Baggage"
-    //   },
-    //   {
-    //     id: 4,
-    //     name: "Glasses",
-    //     price: 129.99,
-    //     url: "https://images.unsplash.com/photo-1591076482161-42ce6da69f67?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    //     description: "Now you can see!",
-    //     category: "Reading Aid"
-    //   },
-    //   {
-    //     id: 5,
-    //     name: "Cup",
-    //     price: 4.99,
-    //     url: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    //     description: "Drink anything with it!",
-    //     category: "Houseware"
-    //   },
-    //   {
-    //     id: 6,
-    //     name: "Shirt",
-    //     price: 29.99,
-    //     url: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80",
-    //     description: "Wear it with style!",
-    //     category: "Clothing"
-    //   }
-    // ]
+   
   }
+
+  // addProductsToCart(pid: number, quantity: number){
+  //   console.log('product ', pid, ' added to order. Quantity is ', quantity)
+  //   this.cartService.addProductToActiveOrder(pid, quantity).subscribe(res => {
+  //     this.response = res;
+  //     console.log('product-list add to cart res', res);
+  //   })
+  // }
+ 
 
 }
