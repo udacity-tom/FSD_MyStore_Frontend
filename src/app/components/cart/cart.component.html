@@ -31,7 +31,7 @@
         <tr *ngFor="let product of cart" height=70px>
             <!-- <a (click)="orderDetails(order.id)"> -->
                 <!-- <td align="center" >{{product.id}}</td> -->
-                <td width="80px">{{product.id}}</td>
+                <td width="80px">{{product.id}}/{{product.order_productsId}}</td>
                 <td width="80px" align="left"><img src = "{{product.url}}" width=50px; height=50px;></td>
                 <td width="250px" align="left">{{product.name}}</td>
                 <td width="150px" align="left">{{product.category}}</td>

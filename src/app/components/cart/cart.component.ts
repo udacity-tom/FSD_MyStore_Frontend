@@ -23,7 +23,7 @@ interface Cart_product extends Product {
 })
 export class CartComponent implements OnInit {
   @Input() cart: Cart_product[] = [];  //products in cart
-  @Output() removeItemFromCart: EventEmitter<Product> = new EventEmitter;
+  // @Output() removeItemFromCart: EventEmitter<Product> = new EventEmitter;
   cartTotal: number = 0.00;
 
 
@@ -54,6 +54,7 @@ export class CartComponent implements OnInit {
   }
   
   onChanges() {
+    // this.userOrders();
     // if(this.loginStatus){
     //   this.userOrders();//get all orders on system for user
     // }
@@ -77,23 +78,18 @@ export class CartComponent implements OnInit {
 
   userOrders(): void {
     this.ordersService.getOrders().subscribe(res => {
-      // console.log('res', res);
       this.allOrders = res;
       this.activeOrder(res);
     });
   }
-  
-
 
   activeOrder(allOrders: Order[]):void {
     const justOne =  allOrders.filter(order => {  
       return order.status == 'active';
     });
-    this.currentOrder = justOne[0];//takes just one 'activ' order from array, array->item
-    // console.log('this.currentOrder, this.allOrders', this.currentOrder, 'this.currentOrder.id', this.currentOrder.id,  this.allOrders);
+    this.currentOrder = justOne[0];
     this.productsInActiveOrder();
   }
-  
   
   productsInActiveOrder() { //gets the products in the active order
     this.ordersService.orderDetails(this.currentOrder.id).subscribe(res => {
@@ -103,42 +99,18 @@ export class CartComponent implements OnInit {
     })
   }
   
-  //NOTES add a for-loop to iterate over items, and add each this.orderProducts[id].quantity and to 
-  // add in order_products id into the interface extenstion, then we know which line to delete.
   productsInActiveCart(): void {
     console.log('productsinactiveCart, this.orderProducts', this.orderProducts);
     this.orderProducts.forEach(item => {
-      // console.log('item in productsInActiveCart', item);
       this.productService.getProduct(item.product_id).subscribe(res => {
-        // Number(this.orderQuantity(item.));
-        // res = Object.assign(res, {quantity: this.orderProducts[0].quantity});//TO-DO fix this!!!!!!!!!
-        res = Object.assign(res, {quantity: item.quantity, order_productsId: item.id, orderId: item.order_id});//TO-DO fix this!!!!!!!!!!!!!!!!
-        console.log('res after quantity and order_products.id', res);
-        // console.log('res of adding quantity', res)
-        // console.log('this.orderQuantity(item.product_id)', this.orderProducts[0].quantity);
+        res = Object.assign(res, {quantity: item.quantity, order_productsId: item.id, orderId: item.order_id});
         this.cartTotal += Number((res.price*Number(res.quantity)).toFixed(2));
-        // this.cart.push(res);
-        // console.log('this.orderProducts[0].quantity', this.orderProducts[0].quantity);
-        // res: Product = of(res):Cart_product;
-        // console.log('productsInactivecart', res);
         this.cart.push(res);
       });
     });
   }
-      
-  // addProductsToActiveOrder(){
-  //   this.cartService.addProductService().subscribe(res => {
-  //     this.currentOrder
-  //     // console.log('product ', pid, ' added to order')
-  //   })
-  // }
 
-  removeCartItem(
-    // id: string,
-    quantity: number,
-    orderId: number,
-    productId: number,
-    order_productId: number) {
+  removeCartItem(quantity: number, orderId: number, productId: number, order_productId: number) {
     console.log('Remove the item with Product ID of ', order_productId);
       // this.ordersService.removeCartItem(id, quantity, orderId, productId, order_productId).subscribe(res => {
       this.ordersService.removeCartItem(quantity, orderId, productId, order_productId).subscribe(res => {
@@ -147,20 +119,6 @@ export class CartComponent implements OnInit {
           console.log('The item ',productId, order_productId,' was deleted!')
         }
       })
+      this.router.navigate(['/cart']);
   }
-
-  // postNewProduct(newProduct: Product): Observable<Product> {
-  //   //checked signed in & check current user
-  //   this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.tokenService.getToken());
-  //   console.log('headers', this.httpOptions);
-  //   return this.http.post<Product>(`${this.protocol}${this.apiServer}:${this.apiPort}/products/create`, {newProduct: newProduct});
-  // }
-
 }
-
-// id: string,
-// quantity: number,
-// orderId: string,
-// productId: string
-
-// }

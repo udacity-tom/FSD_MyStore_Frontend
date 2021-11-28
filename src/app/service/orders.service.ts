@@ -45,7 +45,12 @@ export class OrdersService {
 
   removeCartItem(quantity: number, oid: number, productId: number, opid: number): Observable<{id: number ,quantity: number, orderId: number, productId: number, order_productId: number}>{
     this.addAuthorisation();
-    const request = this.http.post<{id: number ,quantity: number, orderId: number, productId: number, order_productId: number}> (`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid+'/delete-product/'+opid, this.httpOptions)
+    // console.log((`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid+'/delete-product/'+opid, this.httpOptions));
+    const body = {
+      "id": productId,
+      "quantity": quantity
+  }
+    const request = this.http.post<{id: number ,quantity: number, orderId: number, productId: number, order_productId: number}> (`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid+'/delete-product/'+opid, body, this.httpOptions)
     return request;
   }
 
