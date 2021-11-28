@@ -13,6 +13,7 @@ import { of } from 'rxjs';
 
 interface Cart_product extends Product {
   quantity: number;
+  order_productsId: number;
 }
 @Component({
   selector: 'app-cart',
@@ -95,20 +96,24 @@ export class CartComponent implements OnInit {
   
   productsInActiveOrder() { //gets the products in the active order
     this.ordersService.orderDetails(this.currentOrder.id).subscribe(res => {
-      console.log('res in proudctsInActiveOrder', res);
+      // console.log('res in proudctsInActiveOrder', res);
       this.orderProducts = res;
       this.productsInActiveCart();
     })
   }
   
-  
+  //NOTES add a for-loop to iterate over items, and add each this.orderProducts[id].quantity and to 
+  // add in order_products id into the interface extenstion, then we know which line to delete.
   productsInActiveCart(): void {
-    // console.log('productsinactiveCart, this.orderProducts', this.orderProducts);
+    console.log('productsinactiveCart, this.orderProducts', this.orderProducts);
     this.orderProducts.forEach(item => {
       // console.log('item in productsInActiveCart', item);
       this.productService.getProduct(item.product_id).subscribe(res => {
         // Number(this.orderQuantity(item.));
-        res = Object.assign(res, {quantity: this.orderProducts[0].quantity});
+        // res = Object.assign(res, {quantity: this.orderProducts[0].quantity});//TO-DO fix this!!!!!!!!!
+        res = Object.assign(res, {quantity: item.quantity, order_productsId: item.id});//TO-DO fix this!!!!!!!!!!!!!!!!
+        console.log('res after quantity and order_products.id', res);
+        // console.log('res of adding quantity', res)
         // console.log('this.orderQuantity(item.product_id)', this.orderProducts[0].quantity);
         this.cartTotal += Number((res.price*Number(res.quantity)).toFixed(2));
         // this.cart.push(res);
@@ -129,6 +134,7 @@ export class CartComponent implements OnInit {
 
   removeCartItem(pid: number) {
     console.log('Remove the item with Product ID of ', pid);
+
   }
 }
 
