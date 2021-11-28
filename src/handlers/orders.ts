@@ -141,7 +141,7 @@ const orderRoutes = (app: express.Application): void => {
     '/users/:id/orders/:oid/delete-product/:opid',
     auth.verifyAuthToken,
     auth.verifyUserAuth,
-    addProduct
+    removeProduct
   );
   app.delete(
     '/users/:id/orders/:oid',
