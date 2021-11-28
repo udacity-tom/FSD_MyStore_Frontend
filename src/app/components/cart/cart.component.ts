@@ -14,6 +14,7 @@ import { of } from 'rxjs';
 interface Cart_product extends Product {
   quantity: number;
   order_productsId: number;
+  orderId: number;
 }
 @Component({
   selector: 'app-cart',
@@ -111,7 +112,7 @@ export class CartComponent implements OnInit {
       this.productService.getProduct(item.product_id).subscribe(res => {
         // Number(this.orderQuantity(item.));
         // res = Object.assign(res, {quantity: this.orderProducts[0].quantity});//TO-DO fix this!!!!!!!!!
-        res = Object.assign(res, {quantity: item.quantity, order_productsId: item.id});//TO-DO fix this!!!!!!!!!!!!!!!!
+        res = Object.assign(res, {quantity: item.quantity, order_productsId: item.id, orderId: item.order_id});//TO-DO fix this!!!!!!!!!!!!!!!!
         console.log('res after quantity and order_products.id', res);
         // console.log('res of adding quantity', res)
         // console.log('this.orderQuantity(item.product_id)', this.orderProducts[0].quantity);
@@ -132,11 +133,34 @@ export class CartComponent implements OnInit {
   //   })
   // }
 
-  removeCartItem(pid: number) {
-    console.log('Remove the item with Product ID of ', pid);
-
+  removeCartItem(
+    // id: string,
+    quantity: number,
+    orderId: number,
+    productId: number,
+    order_productId: number) {
+    console.log('Remove the item with Product ID of ', order_productId);
+      // this.ordersService.removeCartItem(id, quantity, orderId, productId, order_productId).subscribe(res => {
+      this.ordersService.removeCartItem(quantity, orderId, productId, order_productId).subscribe(res => {
+        const wasDeleted = res;
+        if(wasDeleted){
+          console.log('The item ',productId, order_productId,' was deleted!')
+        }
+      })
   }
+
+  // postNewProduct(newProduct: Product): Observable<Product> {
+  //   //checked signed in & check current user
+  //   this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.tokenService.getToken());
+  //   console.log('headers', this.httpOptions);
+  //   return this.http.post<Product>(`${this.protocol}${this.apiServer}:${this.apiPort}/products/create`, {newProduct: newProduct});
+  // }
+
 }
 
+// id: string,
+// quantity: number,
+// orderId: string,
+// productId: string
 
 // }

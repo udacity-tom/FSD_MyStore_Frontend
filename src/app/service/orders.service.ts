@@ -6,6 +6,7 @@ import { Order } from '../models/Order';
 import { Order_products } from '../models/Order_products';
 import { TokenService } from './token.service';
 import { InterceptorService } from './interceptor.service';
+// import { request } from 'http';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,13 @@ export class OrdersService {
     return request;
   }
   
+
+  removeCartItem(quantity: number, oid: number, productId: number, opid: number): Observable<{id: number ,quantity: number, orderId: number, productId: number, order_productId: number}>{
+    this.addAuthorisation();
+    const request = this.http.post<{id: number ,quantity: number, orderId: number, productId: number, order_productId: number}> (`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid+'/delete-product/'+opid, this.httpOptions)
+    return request;
+  }
+
   currentActiveOrder(): Observable<number> {
     this.getOrders().subscribe(res => {
       this.allOrders = res;
