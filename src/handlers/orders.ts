@@ -68,6 +68,13 @@ const destroy = async (req: Request, res: Response) => {
 
 const addProduct = async (req: Request, res: Response) => {
   try {
+    console.log(
+      'addProduct called info ',
+      req.params.id,
+      req.body.quantity,
+      req.params.oid,
+      req.body.id
+    );
     const addProducts = await orderStore.addProduct(
       req.params.id, //user id
       req.body.quantity,
@@ -75,6 +82,29 @@ const addProduct = async (req: Request, res: Response) => {
       req.body.id //product id
     );
     res.json(addProducts);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
+const removeProduct = async (req: Request, res: Response) => {
+  try {
+    console.log(
+      'orders.ts handler removeProduct called info ',
+      req.params.id,
+      req.body.quantity,
+      req.params.oid,
+      req.body.id,
+      req.params.opid
+    );
+    const removeProduct = await orderStore.removeProduct(
+      req.params.id, //user id
+      req.body.quantity,
+      req.params.oid,
+      req.body.id, //product id
+      req.params.opid
+    );
+    res.json(removeProduct);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -103,6 +133,12 @@ const orderRoutes = (app: express.Application): void => {
   );
   app.post(
     '/users/:id/orders/:oid/add-product',
+    auth.verifyAuthToken,
+    auth.verifyUserAuth,
+    addProduct
+  );
+  app.post(
+    '/users/:id/orders/:oid/delete-product/:opid',
     auth.verifyAuthToken,
     auth.verifyUserAuth,
     addProduct

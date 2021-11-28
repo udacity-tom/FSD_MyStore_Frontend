@@ -159,4 +159,41 @@ export class OrderStore {
       );
     }
   }
+
+  async removeProduct(
+    id: string, //userid
+    quantity: number,
+    orderId: string,
+    productId: string,
+    order_productId: string
+  ): Promise<Order | string> {
+    try {
+      console.log('in the removeProduct model for SQL!!!');
+      let orderIdTrue, orderOpen;
+      const currentOpenOrders = await this.showUserOrders(id); //List of all orders for user_id
+      currentOpenOrders.filter(order => {
+        if (order.id == Number(orderId)) {
+          orderIdTrue = true;
+          if (order.status == 'active') {
+            orderOpen = true;
+          }
+        }
+      });
+      if (!orderIdTrue) {
+        return `Order id ${orderId} does not match to user Id ${id}`;
+      }
+      if (!orderOpen) {
+        return `Order id ${orderId} has been closed! Order status is marked as closed`;
+      }
+      const sql = 'DELETE FROM order_products WHERE id=($1);';
+      const conn = await client.connect();
+      const result = await conn.query(sql, [order_productId]);
+      conn.release();
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(
+        `Could not add product ${productId} to order ${orderId}: ${err}`
+      );
+    }
+  }
 }
