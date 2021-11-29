@@ -73,8 +73,18 @@ export class OrderStore {
     }
   }
 
-  async create(id: string, status: string): Promise<Order> {
+  async create(id: string, status: string): Promise<Order | string> {
     try {
+      const currentActiveOrder = await this.showUserOrders(id);
+      const hasActiveOrder = currentActiveOrder.filter(order => {
+        if (order.status == 'active') {
+          return order;
+        }
+      });
+      if (hasActiveOrder) {
+        return `User has an active order! Order No. : ${hasActiveOrder[0].id} is active. Cannot create a new order, until this order is complete.`;
+      }
+
       const sql =
         'INSERT INTO orders (user_id, status) VALUES ($1, $2) RETURNING *;';
       const conn = await client.connect();

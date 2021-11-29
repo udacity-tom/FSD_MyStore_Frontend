@@ -43,6 +43,7 @@ const showUserOrders = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
   try {
+    console.log('In create order handler');
     let status: string = req.body.status;
     if (status == undefined) {
       status = 'active';
