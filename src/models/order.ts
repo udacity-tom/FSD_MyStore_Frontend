@@ -75,13 +75,15 @@ export class OrderStore {
 
   async create(id: string, status: string): Promise<Order | string> {
     try {
+      console.log('in create model userid, status', id, status);
       const currentActiveOrder = await this.showUserOrders(id);
       const hasActiveOrder = currentActiveOrder.filter(order => {
         if (order.status == 'active') {
           return order;
         }
       });
-      if (hasActiveOrder) {
+      console.log('active orders collated! ', hasActiveOrder);
+      if (hasActiveOrder.length > 0) {
         return `User has an active order! Order No. : ${hasActiveOrder[0].id} is active. Cannot create a new order, until this order is complete.`;
       }
 
@@ -89,6 +91,7 @@ export class OrderStore {
         'INSERT INTO orders (user_id, status) VALUES ($1, $2) RETURNING *;';
       const conn = await client.connect();
       const result = await conn.query(sql, [id, status]);
+      console.log('SQL ran?');
       conn.release();
       return result.rows[0];
     } catch (err) {
