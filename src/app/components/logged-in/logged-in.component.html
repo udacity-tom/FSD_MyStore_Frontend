@@ -1,14 +1,13 @@
 <form #form="ngForm"  class="login-container" >
     <h2 *ngIf="loginStatus">Currently {{username}} is logged in!</h2>
     <!-- <h1 *ngIf()>Login Here!</h1> -->
-    <h1>Logout</h1>
-    <br>
+    <h1>Logout Here</h1>
+
     <input type="submit" (click)="logout()" value="Log out" class="btn btn-primary">
     <br>
     <br>
     <br>
-    <br>
-    <input type="submit" (click)="onSubmit()" value="orders" class="btn btn-primary">
+    <!-- <input type="submit" (click)="onSubmit()" value="orders" class="btn btn-primary"> -->
     <!-- <input type="submit" [disabled]="form.invalid" value="Submit" class="btn btn-primary"> -->
 </form>
 <!-- <p *ngIf="loading" class="signin-text">Currently logging in as: {{username}}</p> -->
@@ -20,8 +19,7 @@
 <div>
     <!-- {{currentOrders.filter()}} -->
     <p>You have {{(currentOrders.length == 0 ? 'no' : currentOrders.length)}} orders on file. {{(noOfCompletedOrders.length == 0 ? 'No orders' : (noOfCompletedOrders.length == 1 ? 'One Order' : noOfCompletedOrders.length+' orders')) }} {{(noOfCompletedOrders.length == 1 ? 'is' : 'are')}} complete.</p>
-    <p>Click order below to see order details.</p>
-    <br>
+    <p *ngIf="currentOrders.length">Click order below to see order details.</p>
     <table Cols="3">
         <thead>
         <tr>

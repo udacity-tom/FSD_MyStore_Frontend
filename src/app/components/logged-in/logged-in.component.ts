@@ -27,6 +27,7 @@ export class LoggedInComponent implements OnInit {
   @Input() currentOrderDetails: Order_products[] = [ {id: 0, product_id: 0, quantity: 0, order_id: 0}];
   showOrderDetails: boolean = false;
   loginStatus: boolean;
+  order: Order = {id: 0, user_id: 0, status: ''};
 
 
   apiServer: string = environment.API_SERVER_IP;
@@ -35,7 +36,7 @@ export class LoggedInComponent implements OnInit {
 
   constructor(
     private http: HttpClient, 
-    private loginAuth: LoginService, 
+    private loginService: LoginService, 
     private tokenService: TokenService, 
     private router: Router, 
     private route: ActivatedRoute,
@@ -50,7 +51,7 @@ export class LoggedInComponent implements OnInit {
     // this.noOfCompletedOrders = this.currentOrders.filter(item => {
     //   item.status == 'complete';
     // });
-    this.completedOrders(this.currentOrders);
+    // this.completedOrders(this.currentOrders);
     this.updateLoginStatus();
     this.tokenService.getToken();
   }
@@ -61,7 +62,7 @@ export class LoggedInComponent implements OnInit {
   }
 
   updateLoginStatus(): void {
-    this.loginAuth.loginStatus().subscribe(res => {
+    this.loginService.loginStatus().subscribe(res => {
       this.loginStatus = res;
       if(!this.loginStatus){
         console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
@@ -77,37 +78,37 @@ export class LoggedInComponent implements OnInit {
 
   existingOrdersService () {
     this.orderService.getOrders().subscribe(res => {
+      console.log('logged-in component, res from this.orderService.getOrders() observable', res, res.length);
+      if(res.length == 0 || res == undefined){
+
+        this.orderService.createOrder().subscribe(res => {
+          console.log('orderService res in logged-in ', res);
+          const orderServiceResult = res;
+          return orderServiceResult;
+        });
+        this.existingOrdersService ();
+      } 
       this.currentOrders = res;
       this.completedOrders(res);
+      console.log('this.noOfCompletedOrders',this.noOfCompletedOrders);
     });
   }
   
-  completedOrders(currentOrders: Order[]) {
+  completedOrders(currentOrders: Order[]) {//just return the length, not all the objects
     this.noOfCompletedOrders = currentOrders.filter(item => {
       return item.status == "complete";
     })
   }
 
-  onSubmit(): void {
-    this.loading = true;
-    this.orderService.getOrders().subscribe(res => {
-      this.currentOrders = res;
-    });
-    this.noOfCompletedOrders = Array.from(this.currentOrders.filter(el => {
-      return el.status == 'complete'
-    })); 
-    this.updateLoginStatus();
-    this.loading = false;
-    // this.router.navigate(['loggedin', {relativeTo: this.route}])
-    // this.router.navigate(['loggedin'])
-  }
-
   orderDetails(oid:number): void {
     this.orderService.orderDetails(oid).subscribe(res => {
-      console.log('res from orderDetails', res);
+      console.log('orderDetails method on logged-in component res from orderDetails', res);
       this.currentOrderDetails = res;
     });
     this.showOrderDetails = true;
+    if( this.currentOrderDetails.length ==0) {
+      alert('You haven\'t added anything to your order yet. Visit our products page' );
+    }
     console.log('orderDetails', oid);
   }
 
