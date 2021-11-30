@@ -71,11 +71,7 @@ export class LoginComponent implements OnInit {
       })
 
     })
-    // this.loginStatus = of(this.loginAuth.loginStatus().subscribe());
-    // this.loginAuth.logStatus().subscribe();
   }
-
-  // getUsername()
 
   getLogin(username: string, password: string) {
     return this.loginAuth.authUser(username, password)//something fishy going on here this shouldn't be this.

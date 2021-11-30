@@ -42,20 +42,6 @@ export class ProductService {
     console.log('headers', this.httpOptions);
     return this.http.post<Product>(`${this.protocol}${this.apiServer}:${this.apiPort}/products/create`, {newProduct: newProduct});
   }
-  // , {observe: 'body', responseType: 'json' }
-
-  // getSomething(route: string, route2?: string, id?: number): Observable<Product> {
-  //   return this.http.get
-  // }
-
-
-
-
-
-
-  // postProuct(product: Product){
-  //   return this.http.post<Product>(`http)
-  // }
 
   getDescription(link: string, itemName: string): Observable<object> {
     return this.itemDescription = from(

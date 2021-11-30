@@ -47,6 +47,7 @@ export class LoginService {
         if(this.expiry > currentTime) {
           this.userIsLoggedIn = true;
         } else {
+          this.userIsLoggedIn = false;
           this.logOut();
         }
       } else {
@@ -57,7 +58,7 @@ export class LoginService {
 
   authUser(username: string, password: string): Observable<ArrayBuffer>{
     this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/authenticate`;
-      return this.http.post< any >(this.url, {username: username, password: password}, {observe: 'body', responseType: 'json'});
+      return this.http.post< any >(this.url, {username: username, password: password});
     }
 
  
