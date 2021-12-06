@@ -43,8 +43,7 @@ const showUserOrders = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
   try {
-    console.log('In create order handler');
-
+    // console.log('In create order handler');
     let status: string = req.body.status;
     if (status == undefined) {
       status = 'active';
@@ -70,13 +69,13 @@ const destroy = async (req: Request, res: Response) => {
 
 const addProduct = async (req: Request, res: Response) => {
   try {
-    console.log(
-      'addProduct called info ',
-      req.params.id, //userid
-      req.body.quantity, //product quantity
-      req.params.oid, //orderid
-      req.body.id //productid
-    );
+    // console.log(
+    //   'addProduct called info ',
+    //   req.params.id, //userid
+    //   req.body.quantity, //product quantity
+    //   req.params.oid, //orderid
+    //   req.body.id //productid
+    // );
     const addProducts = await orderStore.addProduct(
       Number(req.params.id), //user id
       req.body.quantity,
@@ -91,14 +90,14 @@ const addProduct = async (req: Request, res: Response) => {
 
 const removeProduct = async (req: Request, res: Response) => {
   try {
-    console.log(
-      'orders.ts handler removeProduct called info ',
-      req.params.id,
-      req.body.quantity,
-      req.params.oid,
-      req.body.id,
-      req.params.opid
-    );
+    // console.log(
+    //   'orders.ts handler removeProduct called info ',
+    //   req.params.id,
+    //   req.body.quantity,
+    //   req.params.oid,
+    //   req.body.id,
+    //   req.params.opid
+    // );
     const removeProduct = await orderStore.removeProduct(
       req.params.id, //user id
       req.body.quantity,

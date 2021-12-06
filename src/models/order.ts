@@ -175,14 +175,17 @@ export class OrderStore {
         orderId,
         productId
       );
-      console.log('doesExist', doesExist);
+      // console.log('doesExist', doesExist);
       if (doesExist) {
+        // const productOrder = doesExist;
+        // console.log('doesExist returned to addProduct()', doesExist);
         sql =
           'SELECT * FROM order_products WHERE order_id=($1) AND product_id=($2);';
         const conn = await client.connect();
         const result = await conn.query(sql, [orderId, productId]);
         conn.release();
-        console.log('it doesExist, result', result.rows[0]);
+        // console.log('it doesExist, result', result.rows[0]);
+        // return doesExist;
         return result.rows[0];
       } else {
         sql =
@@ -190,7 +193,7 @@ export class OrderStore {
         const conn = await client.connect();
         const result = await conn.query(sql, [quantity, orderId, productId]);
         conn.release();
-        console.log("It doesn't exist result", result.rows[0]);
+        // console.log("It doesn't exist result", result.rows[0]);
         return result.rows[0];
       }
     } catch (err) {
@@ -201,21 +204,20 @@ export class OrderStore {
   }
 
   async checkExistingItem(
-    //Checks adProduct and sees if an order in basket already exists, IID it increase quantity
     id: number,
     quantity: number,
     orderId: number,
     productId: number
-  ): Promise<boolean> {
-    console.log('in the checkexistingitem()', quantity, orderId, productId);
+  ): Promise<boolean | Order_products> {
+    // console.log('in the checkexistingitem()', quantity, orderId, productId);
     let sql =
       'SELECT * FROM order_products WHERE order_id=($1) AND product_id=($2);';
     const conn = await client.connect();
     const result = await conn.query(sql, [orderId, productId]);
     const newResult = result;
-    console.log('check existing cart products', result.rows[0]);
+    // console.log('check existing cart products', result.rows[0]);
     if (result.rows[0] == undefined) {
-      console.log('result.rows[0] equals zero, returning an empty object');
+      // console.log('result.rows[0] equals zero, returning an empty object');
       return false;
     } else {
       sql =
@@ -228,8 +230,8 @@ export class OrderStore {
       ]);
       conn.release();
 
-      console.log('yes, resutl.rows[0] does not equal zero!');
-      return true;
+      // console.log('yes, resutl.rows[0] does not equal zero!');
+      return result.rows[0];
     }
   }
 
@@ -241,7 +243,7 @@ export class OrderStore {
     order_productId: string
   ): Promise<Order | string> {
     try {
-      console.log('in the removeProduct model for SQL!!!');
+      // console.log('in the removeProduct model for SQL!!!');
       let orderIdTrue, orderOpen;
       const currentOpenOrders = await this.showUserOrders(id); //List of all orders for user_id
       currentOpenOrders.filter(order => {

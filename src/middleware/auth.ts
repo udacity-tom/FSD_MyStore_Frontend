@@ -27,7 +27,7 @@ export class AuthStore {
     const sql = 'SELECT * FROM users WHERE username = ($1)';
     const result = await conn.query(sql, [username]);
     const user: User = result.rows[0];
-    console.log('sql response', result.rows[0]);
+    // console.log('auth.ts sql response', result.rows[0]);
     if (result.rows.length) {
       const userPassword = result.rows[0].password;
       const passwordCheck = bcrypt.compareSync(password + pepper, userPassword);
@@ -123,23 +123,35 @@ export class AuthStore {
     next: () => void
   ): Promise<void> {
     const routeUid = Number(req.params.id);
-    console.log('verifyUserAuth id', req.params.id);
+    // console.log('verifyUserAuth id', req.params.id);
+    // console.log('auth.ts in verifyUserAuth');
     const authorisationHeader = String(req.headers.authorization);
-    console.log('authorisations ID', authorisationHeader);
+    // console.log('authorisationHeader verifyUserAuth', authorisationHeader);
+    // console.log('authorisations ID', authorisationHeader);
     const jwtToken: string = authorisationHeader.split(' ')[1];
     const jwtPayload = jwt.decode(jwtToken, { complete: true });
-    console.log('jwtPayload', jwtPayload);
+    // console.log('jwtPayload', jwtPayload);
     try {
       if (
         jwtPayload?.payload.id == routeUid ||
         (await dashboardService.isUserAdmin(jwtPayload?.payload.id))
       ) {
+        // console.log(
+        //   'yes jwtpayload.payload.id',
+        //   jwtPayload?.payload.id,
+        //   routeUid
+        // );
         next();
       } else {
-        res.status(403).json({ message: 'Unauthorized Access' });
+        res.status(403).json({
+          message:
+            'Unauthorized Access verifyUserAuth payload.id doesnt match given route uid'
+        });
       }
     } catch (err) {
-      res.status(403).json({ message: 'Unauthorized Access' });
+      res
+        .status(403)
+        .json({ message: 'Unauthorized Access-some other problem' });
     }
   }
 
@@ -150,15 +162,19 @@ export class AuthStore {
   ): Promise<void> {
     try {
       const authorisationHeader = String(req.headers.authorization);
-      console.log('authorisationHeader ', authorisationHeader);
+      // console.log(
+      //   'authorisationHeader verifyAuthToken',
+      //   authorisationHeader,
+      //   req.headers.authorization
+      // );
       const jwtToken: string = authorisationHeader.split(' ')[1];
-      console.log('jwtToken from auth', jwtToken);
+      // console.log('jwtToken from auth', jwtToken);
       const decoded = jwt.verify(jwtToken, tokenSecret);
       if (decoded) {
         next();
       }
     } catch (err) {
-      res.status(401).json({ message: 'Invalid Token!' });
+      res.status(401).json({ message: 'Invalid Token! verifyAuthToken' });
     }
   }
 }
