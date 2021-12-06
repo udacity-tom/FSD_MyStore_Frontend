@@ -33,11 +33,14 @@ export class CartService {
   ) { }
 
 
-  addProductToActiveOrder(pid: number, quantity: number): Observable<object> {
+  addProductToActiveOrder(pid: number, quantity: number, oid: number): Observable<object> {
+    console.log('addProductToActiveOrder(), cart service, params', pid, quantity, oid);
       this.productId = pid;
-      this.orderService.currentActiveOrder().subscribe(res => {
-        this.orderId = res;
-      });
+      this.currentActiveOrder();
+      // this.orderService.currentActiveOrder().subscribe(res => {
+      //   this.orderId = res;
+      //   console.log('addProductToActiveOrder() this.orderId, res', this.orderId, res );
+      // });
       const body = { "id": pid, "quantity": quantity }
       this.addAuthorisation();
       this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/${this.jwtToken.uid}/orders/${this.orderId}/add-product`;
@@ -59,6 +62,12 @@ export class CartService {
     })
   }
 
+  currentActiveOrder(): void {
+    this.orderService.currentActiveOrder().subscribe(res => {
+        console.log('cart.service.ts currentActiveOrder() this.orderId, res', this.orderId, res );
+      return this.orderId = res
+    })
+  }
 
 
 }
