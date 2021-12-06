@@ -21,10 +21,6 @@ export class ProductItemComponent implements OnInit {
     this.value = false;
   }
 
-  // pid: number = 0;
-  // response: object = {};
-  // quantity: number = 1;
-
   constructor(private cartService: CartService) { 
     this.product = {
       id: 0,
@@ -40,23 +36,4 @@ export class ProductItemComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  // increaseItems() {
-  //   this.noOfItems +=1
-  // }
-  // decreaseItems() {
-  //   if(this.noOfItems==1) return;
-  //   this.noOfItems -=1
-  // }
-  addToCart() {
-
-  }
-  // addProductsToCart(pid: number, quantity: number){
-  //   console.log('product ', pid, ' added to order. Quantity is ', quantity)
-  //   this.cartService.addProductToActiveOrder(pid, quantity).subscribe(res => {
-  //     this.response = res;
-  //     console.log('product-list add to cart res', res);
-  //   })
-  // }
-
 }
