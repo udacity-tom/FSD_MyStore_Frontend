@@ -1,5 +1,7 @@
+import { Console } from 'console';
 import client from '../database';
 import { User, UserStore } from './user';
+// import { product_}
 
 const user = new UserStore();
 
@@ -8,7 +10,12 @@ export type Order = {
   user_id: number;
   status: string;
 };
-
+export type Order_products = {
+  id: number; //order_products ID
+  product_id: number;
+  quantity: number;
+  order_id: number;
+};
 export class OrderStore {
   async index(): Promise<Order[]> {
     try {
@@ -82,18 +89,18 @@ export class OrderStore {
           return order;
         }
       });
-      console.log('active orders collated! ', hasActiveOrder);
+      // console.log('active orders collated! ', hasActiveOrder);
       if (hasActiveOrder.length > 0) {
         return `User has an active order! Order No. : ${hasActiveOrder[0].id} is active. Cannot create a new order, until this order is complete.`;
+      } else {
+        const sql =
+          'INSERT INTO orders (user_id, status) VALUES ($1, $2) RETURNING *;';
+        const conn = await client.connect();
+        const result = await conn.query(sql, [id, status]);
+        console.log('SQL ran?');
+        conn.release();
+        return result.rows[0];
       }
-
-      const sql =
-        'INSERT INTO orders (user_id, status) VALUES ($1, $2) RETURNING *;';
-      const conn = await client.connect();
-      const result = await conn.query(sql, [id, status]);
-      console.log('SQL ran?');
-      conn.release();
-      return result.rows[0];
     } catch (err) {
       throw new Error(
         `There was an error with creating order for User ID = ${id}. Error: ${err}`
@@ -136,16 +143,17 @@ export class OrderStore {
       throw new Error(`There was a problem deleting order with id = ${id}`);
     }
   }
-
+  //before adding item, check what is already there, if yes add to the quantity, dump the product to add.
   async addProduct(
-    id: string,
+    id: number,
     quantity: number,
-    orderId: string,
-    productId: string
-  ): Promise<Order | string> {
+    orderId: number,
+    productId: number
+  ): Promise<Order_products | Order[] | string> {
     try {
+      let sql;
       let orderIdTrue, orderOpen;
-      const currentOpenOrders = await this.showUserOrders(id); //List of all orders for user_id
+      const currentOpenOrders = await this.showUserOrders(String(id)); //List of all orders for user_id
       currentOpenOrders.filter(order => {
         if (order.id == Number(orderId)) {
           orderIdTrue = true;
@@ -160,16 +168,68 @@ export class OrderStore {
       if (!orderOpen) {
         return `Order id ${orderId} has been closed! Order status is marked as closed`;
       }
-      const sql =
-        'INSERT INTO order_products (quantity, order_id, product_id) VALUES($1, $2, $3) RETURNING *;';
-      const conn = await client.connect();
-      const result = await conn.query(sql, [quantity, orderId, productId]);
-      conn.release();
-      return result.rows[0];
+
+      const doesExist = await this.checkExistingItem(
+        id, //use interface order_products
+        quantity,
+        orderId,
+        productId
+      );
+      console.log('doesExist', doesExist);
+      if (doesExist) {
+        sql =
+          'SELECT * FROM order_products WHERE order_id=($1) AND product_id=($2);';
+        const conn = await client.connect();
+        const result = await conn.query(sql, [orderId, productId]);
+        conn.release();
+        console.log('it doesExist, result', result.rows[0]);
+        return result.rows[0];
+      } else {
+        sql =
+          'INSERT INTO order_products (quantity, order_id, product_id) VALUES($1,$2,$3) RETURNING *;';
+        const conn = await client.connect();
+        const result = await conn.query(sql, [quantity, orderId, productId]);
+        conn.release();
+        console.log("It doesn't exist result", result.rows[0]);
+        return result.rows[0];
+      }
     } catch (err) {
       throw new Error(
         `Could not add product ${productId} to order ${orderId}: ${err}`
       );
+    }
+  }
+
+  async checkExistingItem(
+    //Checks adProduct and sees if an order in basket already exists, IID it increase quantity
+    id: number,
+    quantity: number,
+    orderId: number,
+    productId: number
+  ): Promise<boolean> {
+    console.log('in the checkexistingitem()', quantity, orderId, productId);
+    let sql =
+      'SELECT * FROM order_products WHERE order_id=($1) AND product_id=($2);';
+    const conn = await client.connect();
+    const result = await conn.query(sql, [orderId, productId]);
+    const newResult = result;
+    console.log('check existing cart products', result.rows[0]);
+    if (result.rows[0] == undefined) {
+      console.log('result.rows[0] equals zero, returning an empty object');
+      return false;
+    } else {
+      sql =
+        'UPDATE order_products SET quantity= ($1) WHERE id= ($2) AND order_id= ($3) RETURNING *;';
+      const conn = await client.connect();
+      const result = await conn.query(sql, [
+        Number(quantity) + Number(newResult.rows[0].quantity),
+        newResult.rows[0].id,
+        orderId
+      ]);
+      conn.release();
+
+      console.log('yes, resutl.rows[0] does not equal zero!');
+      return true;
     }
   }
 

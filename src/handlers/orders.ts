@@ -44,6 +44,7 @@ const showUserOrders = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     console.log('In create order handler');
+
     let status: string = req.body.status;
     if (status == undefined) {
       status = 'active';
@@ -71,15 +72,15 @@ const addProduct = async (req: Request, res: Response) => {
   try {
     console.log(
       'addProduct called info ',
-      req.params.id,
-      req.body.quantity,
-      req.params.oid,
-      req.body.id
+      req.params.id, //userid
+      req.body.quantity, //product quantity
+      req.params.oid, //orderid
+      req.body.id //productid
     );
     const addProducts = await orderStore.addProduct(
-      req.params.id, //user id
+      Number(req.params.id), //user id
       req.body.quantity,
-      req.params.oid,
+      Number(req.params.oid),
       req.body.id //product id
     );
     res.json(addProducts);
