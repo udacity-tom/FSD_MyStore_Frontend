@@ -115,8 +115,8 @@ export class CartComponent implements OnInit {
         if(wasDeleted){
           console.log('The item ',productId, order_productId,' was deleted!')
         }
-        // this.router.navigate(['/cart']);
-        this.productsInActiveCart();
+        this.router.navigate(['/cart']);
+        // this.productsInActiveCart();
       })
   }
 }
