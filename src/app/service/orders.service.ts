@@ -43,6 +43,7 @@ export class OrdersService {
     const request = this.http.post<Order>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/create', {user_id: user_id, status: status}, this.httpOptions);
     return request;
   }
+  
   orderDetails(oid: number): Observable<Order_products[]> {
     this.addAuthorisation();
     const request = this.http.get<Order_products[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid, this.httpOptions);
@@ -63,11 +64,11 @@ export class OrdersService {
   currentActiveOrder(): Observable<number> {
     this.getOrders().subscribe(res => {
       this.allOrders = res;
-      console.log('res in currentactivOrder', res);
+      console.log('orders.service.ts res in currentactivOrder', res);
       // this.activeOrderNum = this.activeOrder(res);
 
       this.activeOrder( res ).subscribe(res => {
-        console.log('orders.service.ts activeOrder res.id', res);
+        console.log('orders.service.ts currentActiveOrder res.id', res);
         this.activeOrderNum = res.id;
       })
     });
@@ -76,17 +77,17 @@ export class OrdersService {
   }
   activeOrder(allOrders: Order[]): Observable<any> {
     // console
-  this.justOne = allOrders.filter(order => {
-       if(order.status == 'active') {
-        return order
-      } else {
-        return
-      }
-    })
+    this.justOne = allOrders.filter(order => {
+        if(order.status == 'active') {
+          return order
+        } else {
+          return
+        }
+      })
 
-  if(this.checkOrderLength(this.justOne)) {
-    console.log('orders service justone is == 0');
-    // this.createOrder();
+    if(this.checkOrderLength(this.justOne)) {
+      console.log('orders service justone is == 0');
+      // this.createOrder();
   }
 
     console.log('orders.service.ts justOne', this.justOne);
