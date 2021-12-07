@@ -3,6 +3,7 @@ import { Product } from 'src/app/models/Product';
 import { ProductService } from 'src/app/service/products.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CartService } from 'src/app/service/cart.service';
+import { OrdersService } from 'src/app/service/orders.service';
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-product-item-detail',
@@ -16,11 +17,13 @@ export class ProductItemDetailComponent implements OnInit {
   noOfItems: number;
   itemDescription: object;
   response: object = {};
+  activeOrder: number = 0;
 
   constructor(
     private productService:ProductService, 
     private route: ActivatedRoute,
-    private cartService: CartService
+    private cartService: CartService,
+    private orderService: OrdersService
     ) { 
     this.product = {
       id: 0,
@@ -35,6 +38,8 @@ export class ProductItemDetailComponent implements OnInit {
     this.givenId = 0;
     this.noOfItems = 1;
     this.itemDescription = {};
+    // this.activeOrder = this.orderService.currentActiveOrder().subscribe(res => {return Number(res)});
+
   }
   
   async ngOnInit(): Promise<void> {
@@ -42,6 +47,11 @@ export class ProductItemDetailComponent implements OnInit {
     this.productService.getProduct(this.givenId).subscribe(res => {
       this.product = res;
     });
+    this.orderService.currentActiveOrder().subscribe(res => {
+      this.activeOrder = res;
+      console.log('product-item-detail, this.activeOrder, res', this.activeOrder, res);
+    });
+
   }
 
   increaseItems(): void {
@@ -52,10 +62,10 @@ export class ProductItemDetailComponent implements OnInit {
     if(this.noOfItems==1) return;
     this.noOfItems--
   }
-  addProductsToCart(pid: number, quantity: number){
+  addProductsToCart(pid: number, quantity: number ){
     // console.log('product ', pid, ' added to order. Quantity is ', quantity)
     // this.cartService.addProductToActiveOrder(pid, quantity);
-    this.cartService.addProductToActiveOrder(pid, quantity).subscribe(res => {
+    this.cartService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
       this.response = res;
       console.log('product-list-item component, add product to cart res =',res);
     })

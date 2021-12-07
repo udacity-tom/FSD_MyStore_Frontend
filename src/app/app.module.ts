@@ -19,6 +19,7 @@ import { ProductItemButtonsComponent } from './components/product-item-buttons/p
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
+import { CartContentComponent } from './components/cart-content/cart-content.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { LoggedInComponent } from './components/logged-in/logged-in.component';
     ProductItemButtonsComponent,
     LoginComponent,
     RegisterComponent,
-    LoggedInComponent
+    LoggedInComponent,
+    CartContentComponent
   ],
   imports: [
     BrowserModule,
