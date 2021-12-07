@@ -24,11 +24,11 @@ interface Cart_product extends Product {
 export class CartComponent implements OnInit {
   @Input() cart: Cart_product[] = [];  //products in cart
   // @Output() removeItemFromCart: EventEmitter<Product> = new EventEmitter;
-  cartTotal: number = 0.00;
-
-
-  currentOrder: Order = {id: 0, user_id: 0, status: ''}; //The DB order where status ='active'
   @Input() cartOrder: Order = {id: 0, user_id: 0, status: ''}; //the current user cart to update to DB onChange
+  
+  
+  cartTotal: number = 0.00;
+  currentOrder: Order = {id: 0, user_id: 0, status: ''}; //The DB order where status ='active'
   allOrders: Order[] = []; //all user orders on DB
   orderProducts: Order_products[] = [{id: 0, product_id: 0, quantity: 0, order_id: 0}];//order transactions
   product: Product = {id: 0, name: '', url: '', price: 0, snippet:'', description: '', accreditation: '', category: '' };
@@ -108,14 +108,17 @@ export class CartComponent implements OnInit {
     });
   }
 
-  removeCartItem(quantity: number, orderId: number, productId: number, order_productId: number) {
+  // removeCartItem(quantity: number, orderId: number, productId: number, order_productId: number) {
+    // removeItemFromCart(quantity: number, orderId: number, productId: number, order_productId: number) {
+    removeItemFromCart(product: Cart_product) {
     // console.log('Remove the item with Product ID of ', order_productId);
-      this.ordersService.removeCartItem(quantity, orderId, productId, order_productId).subscribe(res => {
+      this.ordersService.removeCartItem(product.quantity, product.orderId, product.id, product.order_productsId).subscribe(res => {
         const wasDeleted = res;
         if(wasDeleted){
-          console.log('The item ',productId, order_productId,' was deleted!')
+          console.log('The item ',product.id, product.order_productsId,' was deleted!')
         }
-        this.router.navigate(['/cart']);
+        location.reload();
+        // this.router.navigate(['/cart']);
         // this.productsInActiveCart();
       })
   }
