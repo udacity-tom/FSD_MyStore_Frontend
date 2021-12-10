@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/service/cart.service';
 import { OrdersService } from 'src/app/service/orders.service';
@@ -10,12 +10,17 @@ import { OrdersService } from 'src/app/service/orders.service';
 })
 export class ProductItemButtonsComponent implements OnInit {
   @Input() product: Product;
+  @Output() addProductToCart: EventEmitter<object> = new EventEmitter();
 
   showCss: boolean = false;
   pid: number = 0;
   response: object = {};
   quantity: number = 1;
   activeOrder: number = 0;
+  item: {pid: number, quantity: number} = {
+    pid: 0,
+    quantity: 0
+  };
 
   constructor(private cartService: CartService, private orderService: OrdersService) { 
     this.product = {
@@ -33,14 +38,26 @@ export class ProductItemButtonsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addProductsToCart(pid: number, quantity: number){
-    console.log('product ', pid, ' added to order. Quantity is ', quantity, 'activeOrder number', this.activeOrder);
-    this.orderService.currentActiveOrder().subscribe(res => {
-      this.activeOrder = res;
-    })
-    this.cartService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
-      this.response = res;
-      console.log('product-list add to cart res', res);
-    })
+  addProduct(){
+    this.item = {pid: this.product.id, quantity: 1};
+    console.log("product-item-buttons addproductotcart, item", this.item);
+    this.addProductToCart.emit(this.product);
+
   }
+  // addProductToCart(pid: number, quantity: number ){
+  //   const item = {pid, quantity};
+  //   console.log("product-item-detail addproductotcart")
+  //   this.addProductsToCart.emit(item);
+
+  // }
+  // addProductsToCart(pid: number, quantity: number){
+  //   console.log('product ', pid, ' added to order. Quantity is ', quantity, 'activeOrder number', this.activeOrder);
+  //   this.orderService.currentActiveOrder().subscribe(res => {
+  //     this.activeOrder = res;
+  //   })
+  //   this.cartService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
+  //     this.response = res;
+  //     console.log('product-list add to cart res', res);
+  //   })
+  // }
 }

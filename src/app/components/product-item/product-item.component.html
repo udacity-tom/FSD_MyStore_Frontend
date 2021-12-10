@@ -6,7 +6,7 @@
     <br>
     <br>
     <div *ngIf=(showButtons)>
-        <app-product-item-buttons [product]="product" ></app-product-item-buttons>
+        <app-product-item-buttons [product]="product" (addProductToCart)="addProductToCart(product)"></app-product-item-buttons>
         
     </div>
 </div>
