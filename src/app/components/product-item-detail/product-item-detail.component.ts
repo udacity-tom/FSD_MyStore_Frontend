@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { ProductService } from 'src/app/service/products.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -12,12 +12,15 @@ import { Observable } from 'rxjs';
 })
 export class ProductItemDetailComponent implements OnInit {
   @Input() products: Product[] = [];
+  @Output() yes: EventEmitter<any> = new EventEmitter();
+  // @Output() addProductsToCart: EventEmitter<object> = new EventEmitter();
   product: Product;
   givenId: number;
   noOfItems: number;
   itemDescription: object;
   response: object = {};
   activeOrder: number = 0;
+  state: string = 'child';
 
   constructor(
     private productService:ProductService, 
@@ -62,8 +65,22 @@ export class ProductItemDetailComponent implements OnInit {
     if(this.noOfItems==1) return;
     this.noOfItems--
   }
-  addProductsToCart(pid: number, quantity: number ){
-    // console.log('product ', pid, ' added to order. Quantity is ', quantity)
+
+  
+
+
+  addProductToCart(pid: number, quantity: number ){
+    const item = {pid, quantity};
+    console.log("product-item-detail addproductotcart", item);
+    
+    // this.addProductToCart.emit(item);
+
+
+    //Cghange this to an emitter to push the changes up to product list 
+    //In this way there is only one call to the addProductToActiveOrder funciton for both product-detail and proudct list
+
+
+    console.log('product ', pid, ' added to order. Quantity is ', quantity)
     // this.cartService.addProductToActiveOrder(pid, quantity);
     this.cartService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
       this.response = res;

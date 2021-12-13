@@ -36,24 +36,23 @@ export class CartService {
   addProductToActiveOrder(pid: number, quantity: number, oid: number): Observable<object> {
     console.log('addProductToActiveOrder(), cart service, params', pid, quantity, oid);
       this.productId = pid;
+      // console.log('cart.service.ts, pid, oid', pid, oid);
       this.currentActiveOrder();
-      // this.orderService.currentActiveOrder().subscribe(res => {
-      //   this.orderId = res;
-      //   console.log('addProductToActiveOrder() this.orderId, res', this.orderId, res );
-      // });
       const body = { "id": pid, "quantity": quantity }
       this.addAuthorisation();
-      this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/${this.jwtToken.uid}/orders/${this.orderId}/add-product`;
+      // this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/${this.jwtToken.uid}/orders/${this.orderId}/add-product`;
+      this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/${this.jwtToken.uid}/orders/${oid}/add-product`;
       return this.http.post<Product> (this.url, body, this.httpOptions);
     }
 
   addProductService(): Observable<number> {
     return of(this.productId);
   }
+  
   addAuthorisation(): void {
     this.currentToken(); //invoke method to update token before submission to API
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.jwtToken.token);
-    console.log('cartService jwtToken.token', this.jwtToken.token)
+    // console.log('cartService jwtToken.token', this.jwtToken.token)
   }
 
   currentToken(): void {

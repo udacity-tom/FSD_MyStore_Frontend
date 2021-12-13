@@ -34,6 +34,7 @@ export class CartContentComponent implements OnInit {
 
   removeItem() {
     this.removeItemFromCart.emit(this.product);
+    location.reload();
   }
 
 //   removeItemFromCart(quantity: number, orderId: number, productId: number, order_productId: number) {

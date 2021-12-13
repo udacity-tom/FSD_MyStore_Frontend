@@ -97,7 +97,7 @@ export class CartComponent implements OnInit {
     })
   }
   
-  productsInActiveCart(): void { //gets the individual products and pushes them into the cart.
+  productsInActiveCart(): void { //gets the individual products in the active order and pushes them into the cart.
     // console.log('productsinactiveCart, this.orderProducts', this.orderProducts);
     this.orderProducts.forEach(item => {
       this.productService.getProduct(item.product_id).subscribe(res => {
@@ -111,15 +111,12 @@ export class CartComponent implements OnInit {
   // removeCartItem(quantity: number, orderId: number, productId: number, order_productId: number) {
     // removeItemFromCart(quantity: number, orderId: number, productId: number, order_productId: number) {
     removeItemFromCart(product: Cart_product) {
-    // console.log('Remove the item with Product ID of ', order_productId);
+    console.log('Remove the item with Product ID of product.id, product.order_productsId ', product.id, product.order_productsId);
       this.ordersService.removeCartItem(product.quantity, product.orderId, product.id, product.order_productsId).subscribe(res => {
         const wasDeleted = res;
         if(wasDeleted){
           console.log('The item ',product.id, product.order_productsId,' was deleted!')
         }
-        location.reload();
-        // this.router.navigate(['/cart']);
-        // this.productsInActiveCart();
       })
   }
 }
