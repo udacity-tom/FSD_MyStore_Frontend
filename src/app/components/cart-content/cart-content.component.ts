@@ -18,14 +18,20 @@ interface Cart_product extends Product {
 export class CartContentComponent implements OnInit {
   @Input() product: Cart_product = {id: 0, name: '', url: '', price: 0, snippet:'', description: '', accreditation: '', category: '', quantity: 0, order_productsId: 0, orderId: 0 };
   // @Input() product: Product;
+  @Input() cart: Cart_product[] = [];
   @Output() removeItemFromCart: EventEmitter<Cart_product> = new EventEmitter();
-  
+  currentCartStatus = false;
   
   // product: Product = {id: 0, name: '', url: '', price: 0, snippet:'', description: '', accreditation: '', category: '' };
 
   constructor(private ordersService: OrdersService) { }
 
   ngOnInit(): void {
+    // if(this.cart.length != 0) {
+    //   this.currentCartStatus = true;
+    // }
+    // console.log('Cart-content component, currentCartStatus', this.currentCartStatus);
+    // console.log('cart-content component the value of cart is', this.cart, this.cart.length);
   }
 
   ngOnChanges(): void {
@@ -34,7 +40,13 @@ export class CartContentComponent implements OnInit {
 
   removeItem() {
     this.removeItemFromCart.emit(this.product);
-    location.reload();
+    setTimeout(() => {
+      location.reload();
+    }, 100);
+    
+      // location.reload();
+    
+    // location.reload();
   }
 
 //   removeItemFromCart(quantity: number, orderId: number, productId: number, order_productId: number) {
