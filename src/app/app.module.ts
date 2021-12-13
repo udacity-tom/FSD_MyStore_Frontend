@@ -20,6 +20,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
 import { CartContentComponent } from './components/cart-content/cart-content.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CartContentComponent } from './components/cart-content/cart-content.com
     LoginComponent,
     RegisterComponent,
     LoggedInComponent,
-    CartContentComponent
+    CartContentComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,

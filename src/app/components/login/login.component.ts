@@ -57,10 +57,12 @@ export class LoginComponent implements OnInit {
     // this.router.navigate(['loggedin']);
     this.loading = false;
     this.reRouteUser();
+    // location.reload();
     // this.router.navigate(['loggedin']);
   }
   reRouteUser(): void {
     this.router.navigate(['loggedin']);
+    // location.reload();
   }
 
   updateLoginStatus():void { 
