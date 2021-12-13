@@ -36,6 +36,8 @@ export class CartComponent implements OnInit {
   username: string = '';
   addedCartItem: number = 0;
 
+  currentCartStatus = false;
+
   constructor(
     private loginService: LoginService, 
     private tokenService: TokenService, 
@@ -51,6 +53,11 @@ export class CartComponent implements OnInit {
     // if(this.loginStatus){
       this.userOrders();//get all orders on system for user
     // }
+  //   if(this.cart.length != 0) {
+  //     this.currentCartStatus = true;
+  //   }
+  //   console.log('Cart component, currentCartStatus', this.currentCartStatus);
+  //   console.log('cart component the value of cart is', this.cart, this.cart.length);
   }
   
   onChanges() {
@@ -106,17 +113,30 @@ export class CartComponent implements OnInit {
         this.cart.push(res);
       });
     });
+    if(this.orderProducts.length != 0) {
+      this.currentCartStatus = true;
+    }
+    // console.log('cart component the value of cart is', this.cart, this.cart.length);
   }
 
   // removeCartItem(quantity: number, orderId: number, productId: number, order_productId: number) {
     // removeItemFromCart(quantity: number, orderId: number, productId: number, order_productId: number) {
-    removeItemFromCart(product: Cart_product) {
+    removeItemFromCart(product: Cart_product): boolean {
     console.log('Remove the item with Product ID of product.id, product.order_productsId ', product.id, product.order_productsId);
       this.ordersService.removeCartItem(product.quantity, product.orderId, product.id, product.order_productsId).subscribe(res => {
         const wasDeleted = res;
         if(wasDeleted){
           console.log('The item ',product.id, product.order_productsId,' was deleted!')
+         
         }
+        return true;
       })
+      return false;
+  }
+
+  checkout(){
+    //provide a redirect to a new component for checkout. 
+    //User can provide account details, address etc, and form submission is verified.
+    console.log('user checkout started');
   }
 }

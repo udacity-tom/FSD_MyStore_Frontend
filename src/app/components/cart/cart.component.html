@@ -27,7 +27,7 @@
     </thead>
     <br>
     <tbody>
-    <app-cart-content *ngFor="let product of cart" [product]="product"  (removeItemFromCart)="removeItemFromCart($event)" height=70px></app-cart-content>
+    <app-cart-content *ngFor="let product of cart" [product]="product" [cart]="cart" (removeItemFromCart)="removeItemFromCart($event)" height=70px></app-cart-content>
     <!-- <span *ngFor="let order of currentOrders" > -->
         <!-- <tr *ngFor="let product of cart">
                 <td width="80px">PID:{{product.id}}/<br>OPID:{{product.order_productsId}}</td>
@@ -46,5 +46,8 @@
         <!-- </tr> -->
     </tbody>
     </table>
-    <h2>Your Cart Total is: USD {{cartTotal}}</h2>
+    <h2 *ngIf="!currentCartStatus">You have no items in your cart! <br> Please visit the <a routerLink="/products">Products page</a> to add Products to your Cart</h2>
+    <h2 *ngIf="currentCartStatus">Your Cart Total is: USD {{cartTotal}}</h2>
+    <br>
+    <button *ngIf="currentCartStatus" class="btn btn-primary" (click)="checkout()">Checkout</button>
 </form>
