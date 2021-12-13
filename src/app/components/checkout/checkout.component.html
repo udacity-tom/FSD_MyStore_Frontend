@@ -1,1 +1,112 @@
-<p>checkout works!</p>
+<form #form="ngForm" (ngSubmit)="onSubmit()" class="checkout-container" >
+    <!-- <h2 *ngIf="loginStatus">{{username}} is logged in!</h2> -->
+    <!-- <h1 *ngIf()>Login Here!</h1> -->
+    <h1>{{title}}</h1>
+    <h2>{{text}}</h2>
+    
+    <br>
+    <br>
+
+    <input 
+    type="text" 
+    name="firstname" 
+    required 
+    minlength="3" 
+    [(ngModel)]="firstname"
+    placeholder="Enter First Name" 
+    #firstName="ngModel">
+    <br>
+    <input
+    type="text" 
+    name="lastname" 
+    required 
+    minlength="3" 
+    placeholder="Enter Last Name" 
+    [(ngModel)]="lastname"
+    #lastName="ngModel">
+    <br>
+    <input
+    type="text" 
+    name="houseNumber" 
+    required 
+    placeholder="Enter House Number/Name" 
+    [(ngModel)]="houseNumber"
+    #housenum="ngModel">
+    <br>
+    <input
+    type="text" 
+    name="streetAddress" 
+    required 
+    minlength="5" 
+    placeholder="Enter Street Address" 
+    [(ngModel)]="streetAddress"
+    #street1="ngModel">
+    <br>
+    <input
+    type="text" 
+    name="streetAddress2" 
+    minlength="5" 
+    placeholder="Enter 2nd Street Address" 
+    [(ngModel)]="streetAddress2"
+    #street2="ngModel">
+    <br>
+    <input
+    type="text" 
+    name="city" 
+    minlength="5" 
+    placeholder="Enter City" 
+    [(ngModel)]="city"
+    #City="ngModel">
+    <br>
+    <input
+    type="text" 
+    name="postcode" 
+    minlength="3" 
+    placeholder="Enter PostCode" 
+    [(ngModel)]="postcode"
+    #PostCode="ngModel">
+    <br>
+    <input
+    type="text" 
+    name="country" 
+    minlength="5" 
+    placeholder="Enter Country" 
+    [(ngModel)]="country"
+    #Country="ngModel">
+    <br>
+    <input type="submit" [disabled]="form.invalid" value="Submit" class="btn btn-primary">
+</form>
+<br>
+    <div *ngIf="firstName.invalid && firstName.dirty">
+        <div *ngIf="firstName.errors?.required">
+            Please enter your firstName, it must be at least 3 characters long.
+        </div>
+    </div>
+    <br>
+    <div *ngIf="housenum.invalid && housenum.dirty">
+        You must enter a house number or name.
+    </div>
+    <br>
+    <div *ngIf="lastName.invalid && lastName.dirty">
+        You must enter a lastName and it must be at least 3 characters long.
+    </div>
+    <br>
+    <div *ngIf="street1.invalid && street1.dirty">
+        You must enter a street and it must be at least 5 characters long.
+    </div>
+    <br>
+    <div *ngIf="street2.invalid && street2.dirty">
+        You may enter a second street address, but it is not required.
+    </div>
+    <br>
+    <div *ngIf="City.invalid && City.dirty">
+        You must enter a city and it must be at least 5 characters long.
+    </div>
+    <br>
+    <div *ngIf="PostCode.invalid && PostCode.dirty">
+        You may enter a postcode, and it must be at least 3 characters long.
+    </div>
+    <br>
+    <div *ngIf="Country.invalid && Country.dirty">
+        You may enter a second street address, but it is not required.
+    </div>
