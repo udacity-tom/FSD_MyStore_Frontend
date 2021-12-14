@@ -2,15 +2,6 @@
     <h2 *ngIf="loginStatus">Currently {{username}} is logged in!</h2>
     <br>
     <h3>Your current Cart Contents</h3>
-
-    <!-- <ul *ngFor="let product of orderProducts">
-        <li>
-            {{product.product_id}}
-            {{product.quantity}}
-        </li>
-    </ul> -->
-
-
     <br>
     <table Cols="7">
         <thead>
@@ -24,26 +15,10 @@
                 <th scope="col" align="left" width="190px"></th>
                 <th scope="col" align="center" width="190px">Remove?</th>
             </tr>
-    </thead>
+        </thead>
     <br>
     <tbody>
     <app-cart-content *ngFor="let product of cart" [product]="product" [cart]="cart" (removeItemFromCart)="removeItemFromCart($event)" height=70px></app-cart-content>
-    <!-- <span *ngFor="let order of currentOrders" > -->
-        <!-- <tr *ngFor="let product of cart">
-                <td width="80px">PID:{{product.id}}/<br>OPID:{{product.order_productsId}}</td>
-                <td width="80px" align="left"><img src = "{{product.url}}" width=60px; height=60px;></td>
-                <td width="250px" align="left">{{product.name}}</td>
-                <td width="150px" align="left">{{product.category}}</td>
-                <td width="190px" align="right">{{product.price}}</td>
-                <td width="190px" align="right">{{product.quantity}}</td>
-                <td width="190px"></td>
-                <td width="190px" align="left"><button class="btn btn-primary" (click)="removeCartItem(product.quantity, product.orderId, product.id, product.order_productsId)">Remove</button></td>
-                <br>
-        </tr> -->
-        <!-- <tr> -->
-            <!-- <td width=600px>Total Value is: </td> -->
-            <!-- <tr width=600px>Total Value is: {{cartTotal}}</tr> -->
-        <!-- </tr> -->
     </tbody>
     </table>
     <h2 *ngIf="!currentCartStatus">You have no items in your cart! <br> Please visit the <a routerLink="/products">Products page</a> to add Products to your Cart</h2>

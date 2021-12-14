@@ -50,14 +50,7 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     //check if user is logged in, if yes update cart with active order
     this.updateLoginStatus()
-    // if(this.loginStatus){
       this.userOrders();//get all orders on system for user
-    // }
-  //   if(this.cart.length != 0) {
-  //     this.currentCartStatus = true;
-  //   }
-  //   console.log('Cart component, currentCartStatus', this.currentCartStatus);
-  //   console.log('cart component the value of cart is', this.cart, this.cart.length);
   }
   
   onChanges() {
@@ -71,7 +64,7 @@ export class CartComponent implements OnInit {
       if(!this.loginStatus){
         console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
         // this.router.navigate(['/', {relativeTo: this.route}]);
-        // this.router.navigate(['/']);
+        this.router.navigate(['/']);
         return;
       }
       this.tokenService.getToken().subscribe(res => {
@@ -138,5 +131,6 @@ export class CartComponent implements OnInit {
     //provide a redirect to a new component for checkout. 
     //User can provide account details, address etc, and form submission is verified.
     console.log('user checkout started');
+    this.router.navigate(['/checkout']);
   }
 }
