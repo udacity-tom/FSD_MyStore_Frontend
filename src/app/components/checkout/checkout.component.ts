@@ -8,8 +8,9 @@ import { OrdersService } from 'src/app/service/orders.service';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
-  title: string = 'Checkout';
+  title: string = 'Checkout Here';
   text: string = 'Please input your address to checkout';
+  explanation: string = 'In order to provide a seemless checkout process we need your full details.'
   firstname: string = '';
   lastname: string = '';
   houseNumber: string = '';
@@ -34,7 +35,15 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('Checkout Submit button pressed!');
-    //start checkout process, update DB, print summary confirmation.    
+    console.log('Checkout button pressed!');
+    //start checkout process, update DB, print summary confirmation.   
+    //update order as completed
+    //clear cart return user to products.
+
   }
+
+  currentCssClass (){
+    
+  }
+
 }
