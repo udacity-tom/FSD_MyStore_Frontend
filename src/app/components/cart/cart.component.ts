@@ -8,8 +8,6 @@ import { TokenService } from 'src/app/service/token.service';
 import { OrdersService } from 'src/app/service/orders.service';
 import { ProductService } from 'src/app/service/products.service';
 import { CartService } from 'src/app/service/cart.service';
-import { of } from 'rxjs';
-// import { CartService }
 
 interface Cart_product extends Product {
   quantity: number;
@@ -23,7 +21,6 @@ interface Cart_product extends Product {
 })
 export class CartComponent implements OnInit {
   @Input() cart: Cart_product[] = [];  //products in cart
-  // @Output() removeItemFromCart: EventEmitter<Product> = new EventEmitter;
   @Input() cartOrder: Order = {id: 0, user_id: 0, status: ''}; //the current user cart to update to DB onChange
   
   
@@ -48,13 +45,11 @@ export class CartComponent implements OnInit {
      ) { }
 
   ngOnInit(): void {
-    //check if user is logged in, if yes update cart with active order
-    this.updateLoginStatus()
+    this.updateLoginStatus()//check if user is logged in, if yes update cart with active order
       this.userOrders();//get all orders on system for user
   }
   
   onChanges() {
-
     //update the cart with changes: adding products, removing products, checkout, etc...if necessary
   }
 
@@ -63,7 +58,6 @@ export class CartComponent implements OnInit {
       this.loginStatus = res;
       if(!this.loginStatus){
         console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
-        // this.router.navigate(['/', {relativeTo: this.route}]);
         this.router.navigate(['/']);
         return;
       }
@@ -77,28 +71,23 @@ export class CartComponent implements OnInit {
     this.ordersService.getOrders().subscribe(res => {
       this.allOrders = res;
       if(res.length == 0) {
-        // console.log('the res.length in userOrders is 0');
         this.ordersService.createOrder();
       }
       this.ordersService.activeOrder( res ).subscribe(response => {
         this.currentOrder = response;//this.allOrders[response.id];
-        console.log('respoonse', response)
         this.productsInActiveOrder(response);
       })
     });
   }
   
   productsInActiveOrder(currentOrder: object): void { //gets the products in the active order
-    // console.log('cart componene, this currentOrder, arg currentOrder', this.currentOrder, currentOrder);
     this.ordersService.orderDetails(this.currentOrder.id).subscribe(res => {
-      // console.log('res in proudctsInActiveOrder', res);
       this.orderProducts = res;
       this.productsInActiveCart();
     })
   }
   
-  productsInActiveCart(): void { //gets the individual products in the active order and pushes them into the cart.
-    // console.log('productsinactiveCart, this.orderProducts', this.orderProducts);
+  productsInActiveCart(): void { //gets products in  active order and pushes them to cart.
     this.orderProducts.forEach(item => {
       this.productService.getProduct(item.product_id).subscribe(res => {
         res = Object.assign(res, {quantity: item.quantity, order_productsId: item.id, orderId: item.order_id});
@@ -109,13 +98,9 @@ export class CartComponent implements OnInit {
     if(this.orderProducts.length != 0) {
       this.currentCartStatus = true;
     }
-    // console.log('cart component the value of cart is', this.cart, this.cart.length);
   }
 
-  // removeCartItem(quantity: number, orderId: number, productId: number, order_productId: number) {
-    // removeItemFromCart(quantity: number, orderId: number, productId: number, order_productId: number) {
     removeItemFromCart(product: Cart_product): boolean {
-    console.log('Remove the item with Product ID of product.id, product.order_productsId ', product.id, product.order_productsId);
       this.ordersService.removeCartItem(product.quantity, product.orderId, product.id, product.order_productsId).subscribe(res => {
         const wasDeleted = res;
         if(wasDeleted){
@@ -128,9 +113,6 @@ export class CartComponent implements OnInit {
   }
 
   checkout(){
-    //provide a redirect to a new component for checkout. 
-    //User can provide account details, address etc, and form submission is verified.
-    console.log('user checkout started');
     this.router.navigate(['/checkout']);
   }
 }

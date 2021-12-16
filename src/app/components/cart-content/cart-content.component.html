@@ -1,9 +1,4 @@
-
-<!-- <tr *ngFor="let product of cart"> -->
-<!-- <tr [product]="product"> -->
 <tr>
-    <!-- <a (click)="orderDetails(order.id)"> -->
-        <!-- <td align="center" >{{product.id}}</td> -->
         <p *ngIf="currentCartStatus">You have no items in your cart!</p>
         <td width="80px">PID:{{product.id}}/<br>OPID:{{product.order_productsId}}</td>
         <td width="80px" align="left"><img src = "{{product.url}}" width=60px; height=60px;></td>
@@ -13,7 +8,5 @@
         <td width="190px" align="right">{{product.price}}</td>
         <td width="190px"></td>
         <td width="190px" align="left"><button class="btn btn-primary" (click)="removeItem()">Remove</button></td>
-        <!-- <td width="190px" align="left"><button class="btn btn-primary" (click)="removeItemFromCart(product.orderId, product.id, product.order_productsId)">Remove</button></td> -->
         <br>
-    <!-- </a> -->
 </tr>

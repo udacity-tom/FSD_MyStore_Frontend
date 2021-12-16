@@ -39,7 +39,6 @@ export class OrdersService {
   
   createOrder(user_id?: string, status?: string): Observable<Order> {
     this.addAuthorisation();
-    console.log('createOrder()', `${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/create');
     const request = this.http.post<Order>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/create', {user_id: user_id, status: status}, this.httpOptions);
     return request;
   }
@@ -52,7 +51,6 @@ export class OrdersService {
 
   removeCartItem(quantity: number, oid: number, productId: number, opid: number): Observable<{id: number ,quantity: number, orderId: number, productId: number, order_productId: number}>{
     this.addAuthorisation();
-    // console.log((`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid+'/delete-product/'+opid, this.httpOptions));
     const body = {
       "id": productId,
       "quantity": quantity
@@ -64,11 +62,7 @@ export class OrdersService {
   currentActiveOrder(): Observable<number> {
     this.getOrders().subscribe(res => {
       this.allOrders = res;
-      console.log('orders.service.ts res in currentactivOrder', res);
-      // this.activeOrderNum = this.activeOrder(res);
-
       this.activeOrder( res ).subscribe(res => {
-        console.log('orders.service.ts currentActiveOrder res.id', res);
         this.activeOrderNum = res.id;
       })
     });
@@ -76,7 +70,6 @@ export class OrdersService {
     return of(this.activeOrderNum);
   }
   activeOrder(allOrders: Order[]): Observable<any> {
-    // console
     this.justOne = allOrders.filter(order => {
         if(order.status == 'active') {
           return order
@@ -86,11 +79,7 @@ export class OrdersService {
       })
 
     if(this.checkOrderLength(this.justOne)) {
-      console.log('orders service justone is == 0');
-      // this.createOrder();
   }
-
-    console.log('orders.service.ts justOne', this.justOne);
     return of(this.justOne[0]);
   }
 
@@ -98,7 +87,6 @@ export class OrdersService {
   checkOrderLength(orderArrayLength: Order[]): Observable<boolean> {
     const isTrue: boolean = orderArrayLength.length == 0;
     return of(isTrue)
-
   }
 
   productsInOrder(oid: number) {
@@ -107,9 +95,7 @@ export class OrdersService {
 
   addAuthorisation(): void {
     this.currentToken(); //invoke method to update token before submission to API
-    console.log('order service, add authorisation current token', this.currentToken());
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.jwtToken.token);
-    console.log('order service, add authorisation current token -headers', this.httpOptions);
   }
 
   currentToken(): void {
