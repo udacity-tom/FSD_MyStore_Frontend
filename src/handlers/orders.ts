@@ -90,14 +90,14 @@ const addProduct = async (req: Request, res: Response) => {
 
 const removeProduct = async (req: Request, res: Response) => {
   try {
-    // console.log(
-    //   'orders.ts handler removeProduct called info ',
-    //   req.params.id,
-    //   req.body.quantity,
-    //   req.params.oid,
-    //   req.body.id,
-    //   req.params.opid
-    // );
+    console.log(
+      'orders.ts handler removeProduct called info ',
+      req.params.id,
+      req.body.quantity,
+      req.params.oid,
+      req.body.id,
+      req.params.opid
+    );
     const removeProduct = await orderStore.removeProduct(
       req.params.id, //user id
       req.body.quantity,
