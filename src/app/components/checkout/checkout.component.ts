@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/service/cart.service';
 import { OrdersService } from 'src/app/service/orders.service';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-checkout',
@@ -19,31 +21,30 @@ export class CheckoutComponent implements OnInit {
   city: string = '';
   postcode: string = '';
   country: string = '';
-
-
-  // returnedJWT: object = {};
-  // token: string = '';
-  // authFn: object = {};
   loading: boolean = false;
-  // stream: Observable<string> = '';
   loginStatus: boolean = false;
 
-
-  constructor(private cartService: CartService, private orderService: OrdersService) { }
+  constructor(
+    private cartService: CartService, 
+    private orderService: OrdersService, 
+    private router: Router,
+    private userService: UserService 
+    ) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(): void {
     console.log('Checkout button pressed!');
+    //process user details to DB
+
+
+
     //start checkout process, update DB, print summary confirmation.   
     //update order as completed
     //clear cart return user to products.
-
-  }
-
-  currentCssClass (){
-    
+    //show confirmation page
+    this.router.navigate(['/confirmation']);
   }
 
 }
