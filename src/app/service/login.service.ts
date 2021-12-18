@@ -64,12 +64,7 @@ export class LoginService {
  
   logOut() {
     this.tokenService.deleteToken();
-  //   //logs user out, essentially deleting localstorage token, but updates logged in status
+    //logs user out, removes localstorage token, updates logged in status
   }
-  
-  // registerNewUser(username: string, firstname: string, lastname: string, password: string): Observable<object> {
-  //   this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/create`;
-  //   console.log('login service user register', {username: username, firstname: firstname, lastname:lastname, password: password});
-  //   return this.http.post<{newUser:object, newToken: string, payload: object}> (this.url, {username: username, firstname: firstname, lastname:lastname, password: password}, );
-  // }
+
 }

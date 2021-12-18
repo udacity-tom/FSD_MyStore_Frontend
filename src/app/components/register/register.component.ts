@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,7 @@ export class RegisterComponent implements OnInit {
   exp: number = 0;
 
 
-  constructor(private loginAuth: LoginService, private tokenService: TokenService) { }
+  constructor(private userService: UserService, private tokenService: TokenService) { }
 
   ngOnInit(): void {
   }
@@ -39,8 +40,8 @@ export class RegisterComponent implements OnInit {
   
   registerUser(username: string, firstname: string, lastname: string, password: string ): object {
     // console.log('register component', username, firstname, lastname, password);
-    return this.loginAuth.registerNewUser( username, firstname, lastname, password ).subscribe(
-      res => {   //TO-DO: this MUST be refactored, something to with the interface?
+    return this.userService.registerNewUser( username, firstname, lastname, password ).subscribe(
+      res => {   //TO-DO: this MUST be refactored, accessing via array method, better way?, something to with the interface?
         this.returnedRes = res;
         this.newtoken = Object.values(this.returnedRes)[1];
         this.payload = Object.values(this.returnedRes)[2].payload;
