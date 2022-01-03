@@ -17,7 +17,7 @@ export class CheckoutComponent implements OnInit {
   lastname: string = '';
   houseNumber: string = '';
   streetAddress: string = '';
-  streetAddress2: string = '';
+  // streetAddress2: string = '';
   city: string = '';
   postcode: string = '';
   country: string = '';
@@ -37,7 +37,17 @@ export class CheckoutComponent implements OnInit {
   onSubmit(): void {
     console.log('Checkout button pressed!');
     //process user details to DB
-
+    this.userService.updateUserDetails(
+      this.firstname,
+      this.lastname,
+      this.houseNumber,
+      this.streetAddress,
+      this.city,
+      this.postcode,
+      this.country      
+      ).subscribe(res => {
+        console.log('checkout.component.ts', res);
+      })
 
 
     //start checkout process, update DB, print summary confirmation.   

@@ -42,15 +42,6 @@
         <br>
         <input
         type="text" 
-        name="streetAddress2"
-        required 
-        minlength="5" 
-        placeholder="Enter 2nd Street Address" 
-        [(ngModel)]="streetAddress2"
-        #street2="ngModel">
-        <br>
-        <input
-        type="text" 
         name="city" 
         required
         minlength="5" 
@@ -102,12 +93,6 @@
     <div *ngIf="street1.invalid && street1.dirty">
         <div *ngIf="street1.errors?.required">
             You must enter a street and it must be at least 5 characters long.
-        </div>
-    </div>
-    <br>
-    <div *ngIf="street2.invalid && street2.dirty">
-        <div *ngIf="street2.errors?.required">
-            You must enter a second street address and it must be at least 5 characters long.
         </div>
     </div>
     <br>
