@@ -33,7 +33,7 @@ const create = async (req: Request, res: Response) => {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       password: req.body.password,
-      houseNum: req.body.houseNum || '',
+      housenum: req.body.housenum || '',
       street1: req.body.street1 || '',
       street2: req.body.street2 || '',
       city: req.body.city || '',
@@ -49,7 +49,7 @@ const create = async (req: Request, res: Response) => {
       firstname: newUser.firstname,
       lastname: newUser.lastname,
       password: '',
-      houseNum: '',
+      housenum: '',
       street1: '',
       street2: '',
       city: '',
@@ -91,6 +91,7 @@ const authenticate = async (req: Request, res: Response) => {
 const update = async (req: Request, res: Response) => {
   try {
     const currentUserDetails = await userStore.show(req.params.id);
+    console.log('users.ts currentUserDetails', currentUserDetails);
     if (req.body.username) {
       currentUserDetails.username = req.body.username;
     }
@@ -103,15 +104,15 @@ const update = async (req: Request, res: Response) => {
     if (req.body.password) {
       currentUserDetails.password = req.body.password;
     }
-    if (req.body.houseNum) {
-      currentUserDetails.houseNum = req.body.houseNum;
+    if (req.body.housenum) {
+      currentUserDetails.housenum = req.body.housenum;
     }
     if (req.body.street1) {
       currentUserDetails.street1 = req.body.street1;
     }
-    if (req.body.street2) {
-      currentUserDetails.street2 = req.body.street2;
-    }
+    // if (req.body.street2) {
+    //   currentUserDetails.street2 = req.body.street2;
+    // }
     if (req.body.city) {
       currentUserDetails.city = req.body.city;
     }

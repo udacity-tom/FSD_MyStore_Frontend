@@ -10,7 +10,7 @@ export type User = {
   firstname: string;
   lastname: string;
   password: string;
-  houseNum?: string;
+  housenum?: string;
   street1?: string;
   street2?: string;
   city?: string;
@@ -47,16 +47,15 @@ export class UserStore {
     try {
       user.password = await auth.hashPassword(user.password);
       const sql =
-        'INSERT INTO users (username, firstname, lastname, password, houseNum, street1, street2, city, postcode, country) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;';
+        'INSERT INTO users (username, firstname, lastname, password, housenum, street1, street2, city, postcode, country) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;';
       const conn = await client.connect();
       const result = await conn.query(sql, [
         user.username,
         user.firstname,
         user.lastname,
         user.password,
-        user.houseNum,
+        user.housenum,
         user.street1,
-        user.street2,
         user.city,
         user.postcode,
         user.country
@@ -72,9 +71,10 @@ export class UserStore {
   }
 
   async update(user: User): Promise<User> {
+    console.log('user.ts update function', user);
     try {
       const sql =
-        'UPDATE users SET username= ($1), firstname= ($2), lastname=($3) WHERE users.id = ($4) RETURNING *;';
+        'UPDATE users SET username= ($1), firstname= ($2), lastname=($3), password=($5), housenum=($6), street1=($7), city=($8), postcode=($9), country=($10)  WHERE users.id = ($4) RETURNING *;';
       const conn = await client.connect();
       const result = await conn.query(sql, [
         user.username,
@@ -82,9 +82,8 @@ export class UserStore {
         user.lastname,
         user.id,
         user.password,
-        user.houseNum,
+        user.housenum,
         user.street1,
-        user.street2,
         user.city,
         user.postcode,
         user.country
