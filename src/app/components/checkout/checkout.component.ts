@@ -3,6 +3,7 @@ import { CartService } from 'src/app/service/cart.service';
 import { OrdersService } from 'src/app/service/orders.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
+import { Order } from 'src/app/models/Order';
 
 @Component({
   selector: 'app-checkout',
@@ -21,6 +22,14 @@ export class CheckoutComponent implements OnInit {
   city: string = '';
   postcode: string = '';
   country: string = '';
+
+  currentOrderId: number = 0;
+  orderStatus: Order = {
+    "id": 0,
+    "user_id": 0,
+    "status": "active"
+};
+
   loading: boolean = false;
   loginStatus: boolean = false;
 
@@ -37,6 +46,20 @@ export class CheckoutComponent implements OnInit {
   onSubmit(): void {
     console.log('Checkout button pressed!');
     //process user details to DB
+    this.updateUserDetails();
+    this.currentOrder();
+    this.completeOrder();
+    
+    //start checkout process
+    // show current user address details, 
+    // update DB, 
+    //update order as completed
+    //show confirmation page: print summary confirmation of dispatch address/order details
+    //clear cart return user to products.
+    this.router.navigate(['/confirmation']);
+  }
+
+  updateUserDetails(){
     this.userService.updateUserDetails(
       this.firstname,
       this.lastname,
@@ -48,13 +71,16 @@ export class CheckoutComponent implements OnInit {
       ).subscribe(res => {
         console.log('checkout.component.ts', res);
       })
-
-
-    //start checkout process, update DB, print summary confirmation.   
-    //update order as completed
-    //clear cart return user to products.
-    //show confirmation page
-    this.router.navigate(['/confirmation']);
-  }
+    }
+    currentOrder(): void {
+      this.orderService.currentActiveOrder().subscribe((res: number) => {
+        this.currentOrderId = res;
+      })
+    }
+    completeOrder() {
+      this.orderService.completeOrder(this.userService.getUserId(), this.currentOrderId).subscribe(res => {
+        this.orderStatus = res;
+      })
+    }
 
 }

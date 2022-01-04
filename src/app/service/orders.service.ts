@@ -42,6 +42,12 @@ export class OrdersService {
     const request = this.http.post<Order>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/create', {user_id: user_id, status: status}, this.httpOptions);
     return request;
   }
+
+  completeOrder(uid: number, oid: number): Observable<Order> {
+    this.addAuthorisation();
+    const request = this.http.put<Order>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid, this.httpOptions)
+    return request;
+  }
   
   orderDetails(oid: number): Observable<Order_products[]> {
     this.addAuthorisation();
@@ -63,6 +69,9 @@ export class OrdersService {
     this.getOrders().subscribe(res => {
       this.allOrders = res;
       this.activeOrder( res ).subscribe(res => {
+        if(res == undefined){
+          this.createOrder();
+        }
         this.activeOrderNum = res.id;
       })
     });
