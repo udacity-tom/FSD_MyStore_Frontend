@@ -108,18 +108,30 @@ export class OrderStore {
     }
   }
 
-  async update(order: Order): Promise<Order> {
+  async update(uid: string, oid: string): Promise<Order | string> {
+    //updates order status
     try {
-      const sql =
-        'UPDATE orders SET user_id= ($1), status= ($2) WHERE users.id= ($3) RETURNING *;';
-      const conn = await client.connect();
-      const result = await conn.query(sql, [order.user_id, order.status]);
-      conn.release();
-      return result.rows[0];
+      //do sanity check on order/user
+      const currentActiveOrder = await this.showUserOrders(uid);
+      const hasActiveOrder = currentActiveOrder.filter(order => {
+        if (order.status == 'active') {
+          return order;
+        }
+      });
+      if (hasActiveOrder[0].id != Number(oid)) {
+        return `User has no active order! Order No. : ${oid}`;
+      } else {
+        const sql =
+          'UPDATE orders SET status= ($2) WHERE id= ($1) RETURNING *;';
+        //user_id -> id of user users
+        const conn = await client.connect();
+        const result = await conn.query(sql, [oid, 'complete']);
+        conn.release();
+        console.log('order.ts result.rows[0] from update', result.rows[0]);
+        return result.rows[0];
+      }
     } catch (err) {
-      throw new Error(
-        `There was an error with updating the order: ${order.id}`
-      );
+      throw new Error(`There was an error with updating the order: ${oid}`);
     }
   }
 

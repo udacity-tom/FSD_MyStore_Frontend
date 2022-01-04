@@ -66,6 +66,19 @@ const destroy = async (req: Request, res: Response) => {
     res.status(400).send(err);
   }
 };
+const update = async (req: Request, res: Response) => {
+  //updates order status
+  console.log('api request to update orders.ts');
+  try {
+    const orderToUpdate = await orderStore.update(
+      req.params.id,
+      req.params.oid
+    );
+    res.json(orderToUpdate);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+};
 
 const addProduct = async (req: Request, res: Response) => {
   try {
@@ -143,6 +156,13 @@ const orderRoutes = (app: express.Application): void => {
     auth.verifyAuthToken,
     auth.verifyUserAuth,
     removeProduct
+  );
+  app.put(
+    //updates order status
+    '/users/:id/orders/:oid',
+    auth.verifyAuthToken,
+    auth.verifyUserAuth,
+    update
   );
   app.delete(
     '/users/:id/orders/:oid',
