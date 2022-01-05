@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { of, Observable } from 'rxjs';
 import { CartService } from 'src/app/service/cart.service';
 import { OrdersService } from 'src/app/service/orders.service';
 import { Router } from '@angular/router';
@@ -23,15 +24,16 @@ export class CheckoutComponent implements OnInit {
   postcode: string = '';
   country: string = '';
 
-  currentOrderId: number = 0;
+  activeOrder: number = 0;
   orderStatus: Order = {
-    "id": 0,
-    "user_id": 0,
-    "status": "active"
+    'id': 0,
+    'user_id': 0,
+    'status': "active"
 };
 
   loading: boolean = false;
   loginStatus: boolean = false;
+  userId: number = 0;
 
   constructor(
     private cartService: CartService, 
@@ -41,15 +43,28 @@ export class CheckoutComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.userId = this.currentUserId();
+    console.log('ngOnIt()-checkout component this.userId', this.userId);
+    // this.currentOrderId = this.currentOrder();
+    this.orderService.currentActiveOrder().subscribe(res => {
+      this.activeOrder = res;
+      console.log('checkout component, this.activeOrder, res', this.activeOrder, res);
+    });
+    // console.log('checkout component ngOnIt()', this.activeOrder)
   }
 
   onSubmit(): void {
     console.log('Checkout button pressed!');
     //process user details to DB
     this.updateUserDetails();
-    this.currentOrder();
+    // this.orderService.completeOrder(this.activeOrder).subscribe(res => {
+    //   console.log('update order completeOrder res', res);
+    //   // this.orderStatus = res;
+    // })
     this.completeOrder();
     
+    console.log('update order completeOrder this.orderStatus', this.orderStatus);
+
     //start checkout process
     // show current user address details, 
     // update DB, 
@@ -59,7 +74,7 @@ export class CheckoutComponent implements OnInit {
     this.router.navigate(['/confirmation']);
   }
 
-  updateUserDetails(){
+  updateUserDetails(): void{
     this.userService.updateUserDetails(
       this.firstname,
       this.lastname,
@@ -72,15 +87,39 @@ export class CheckoutComponent implements OnInit {
         console.log('checkout.component.ts', res);
       })
     }
-    currentOrder(): void {
-      this.orderService.currentActiveOrder().subscribe((res: number) => {
-        this.currentOrderId = res;
+    // currentOrder(): number {
+    //   let currentOrder: number;
+    //   return Number(this.orderService.currentActiveOrder().subscribe((res) => {
+    //     currentOrder = res;
+    //     console.log('checkout.component, currentOrderId', currentOrder, this.currentOrderId, res);
+    //     // return res;
+    //     // return of(res);
+    //     return currentOrder;
+    //   }))
+    // }
+
+    currentUserId(): number {
+      return this.userService.getUserId();
+    }
+    completeOrder(): void {
+      // this.currentOrderId = this.currentOrder();
+      // console.log('completeOrder()', this.currentOrder());
+      console.log('completeOrder(), checkout component this.userId, this.activeOrder', this.userId, this.activeOrder)
+      this.orderService.completeOrder(this.activeOrder).subscribe(res => {
+          console.log('update order completeOrder res', res);
+          // this.orderStatus = {id: res.id};
+          this.orderStatus = res;
+          if(res.status == 'complete') {
+            this.createNewActiveOrder();
+          }
+
       })
     }
-    completeOrder() {
-      this.orderService.completeOrder(this.userService.getUserId(), this.currentOrderId).subscribe(res => {
-        this.orderStatus = res;
-      })
+    createNewActiveOrder():void {
+      this.currentUserId();
+      this.orderService.createOrder(String(this.userId)).subscribe(res => {
+        console.log('createNewActiveOrder()', res);
+      });
     }
 
 }

@@ -39,13 +39,16 @@ export class OrdersService {
   
   createOrder(user_id?: string, status?: string): Observable<Order> {
     this.addAuthorisation();
+    console.log('order.service new create order requested');
     const request = this.http.post<Order>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/create', {user_id: user_id, status: status}, this.httpOptions);
     return request;
   }
 
-  completeOrder(uid: number, oid: number): Observable<Order> {
+  completeOrder(oid: number): Observable<Order> {
     this.addAuthorisation();
-    const request = this.http.put<Order>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid, this.httpOptions)
+    const body = {};//required for http put request (modification) RFC7231-not sure?!
+    const request = this.http.put<Order>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid, body, this.httpOptions);
+    // console.log('completeOrder httpOptions', this.httpOptions);
     return request;
   }
   
