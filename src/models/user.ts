@@ -71,7 +71,7 @@ export class UserStore {
   }
 
   async update(user: User): Promise<User> {
-    console.log('user.ts update function', user);
+    //updates user details
     try {
       const sql =
         'UPDATE users SET username= ($1), firstname= ($2), lastname=($3), password=($5), housenum=($6), street1=($7), city=($8), postcode=($9), country=($10)  WHERE users.id = ($4) RETURNING *;';

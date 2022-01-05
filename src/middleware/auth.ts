@@ -27,7 +27,6 @@ export class AuthStore {
     const sql = 'SELECT * FROM users WHERE username = ($1)';
     const result = await conn.query(sql, [username]);
     const user: User = result.rows[0];
-    // console.log('auth.ts sql response', result.rows[0]);
     if (result.rows.length) {
       const userPassword = result.rows[0].password;
       const passwordCheck = bcrypt.compareSync(password + pepper, userPassword);
@@ -48,12 +47,6 @@ export class AuthStore {
     }
     return { err: 'Unknown user, have you registered an account?' };
   }
-
-  // async renewToken/refreshToken (as middleware)
-  // async jwtexpiry(token: string): Promise<object> {
-  //   const jwtPayload = jwt.decode(token, { complete: true });
-  //   return jwtPayload;
-  // }
 
   async hashPassword(password: string): Promise<string> {
     const hash = bcrypt.hashSync(password + pepper, saltRounds);
@@ -81,18 +74,6 @@ export class AuthStore {
     }
     return token;
   }
-
-  // async authorise(token: string): Promise<string> {
-  //   try {
-  //     jwt.verify(token, tokenSecret);
-  //   } catch (err) {
-  //     throw new Error(`Invalid Token!!`);
-  //   }
-  //   return 'valid';
-  // }
-  // async isAdmin(jwtID: number): Promise<boolean> {
-  //   return await dashboardService.isUserAdmin(jwtID);
-  // }
 
   async verifyAdmin(
     req: express.Request,
@@ -123,24 +104,14 @@ export class AuthStore {
     next: () => void
   ): Promise<void> {
     const routeUid = Number(req.params.id);
-    // console.log('verifyUserAuth id', req.params.id);
-    // console.log('auth.ts in verifyUserAuth');
     const authorisationHeader = String(req.headers.authorization);
-    // console.log('authorisationHeader verifyUserAuth', authorisationHeader);
-    // console.log('authorisations ID', authorisationHeader);
     const jwtToken: string = authorisationHeader.split(' ')[1];
     const jwtPayload = jwt.decode(jwtToken, { complete: true });
-    // console.log('jwtPayload', jwtPayload);
     try {
       if (
         jwtPayload?.payload.id == routeUid ||
         (await dashboardService.isUserAdmin(jwtPayload?.payload.id))
       ) {
-        // console.log(
-        //   'yes jwtpayload.payload.id',
-        //   jwtPayload?.payload.id,
-        //   routeUid
-        // );
         next();
       } else {
         res.status(403).json({
@@ -162,13 +133,7 @@ export class AuthStore {
   ): Promise<void> {
     try {
       const authorisationHeader = String(req.headers.authorization);
-      // console.log(
-      //   'authorisationHeader verifyAuthToken',
-      //   authorisationHeader,
-      //   req.headers.authorization
-      // );
       const jwtToken: string = authorisationHeader.split(' ')[1];
-      // console.log('jwtToken from auth', jwtToken);
       const decoded = jwt.verify(jwtToken, tokenSecret);
       if (decoded) {
         next();

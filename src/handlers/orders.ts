@@ -43,7 +43,6 @@ const showUserOrders = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
   try {
-    // console.log('In create order handler');
     let status: string = req.body.status;
     if (status == undefined) {
       status = 'active';
@@ -68,7 +67,6 @@ const destroy = async (req: Request, res: Response) => {
 };
 const update = async (req: Request, res: Response) => {
   //updates order status
-  console.log('api request to update orders.ts');
   try {
     const orderToUpdate = await orderStore.update(
       req.params.id,
@@ -82,13 +80,6 @@ const update = async (req: Request, res: Response) => {
 
 const addProduct = async (req: Request, res: Response) => {
   try {
-    // console.log(
-    //   'addProduct called info ',
-    //   req.params.id, //userid
-    //   req.body.quantity, //product quantity
-    //   req.params.oid, //orderid
-    //   req.body.id //productid
-    // );
     const addProducts = await orderStore.addProduct(
       Number(req.params.id), //user id
       req.body.quantity,
@@ -157,8 +148,8 @@ const orderRoutes = (app: express.Application): void => {
     auth.verifyUserAuth,
     removeProduct
   );
+  //updates order status
   app.put(
-    //updates order status
     '/users/:id/orders/:oid',
     auth.verifyAuthToken,
     auth.verifyUserAuth,

@@ -91,7 +91,6 @@ const authenticate = async (req: Request, res: Response) => {
 const update = async (req: Request, res: Response) => {
   try {
     const currentUserDetails = await userStore.show(req.params.id);
-    console.log('users.ts currentUserDetails', currentUserDetails);
     if (req.body.username) {
       currentUserDetails.username = req.body.username;
     }
