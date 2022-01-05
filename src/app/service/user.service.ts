@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of  } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TokenService } from './token.service';
+import { Order } from '../models/Order';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,6 @@ export class UserService {
 
   registerNewUser(username: string, firstname: string, lastname: string, password: string): Observable<object> {
     this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/create`;
-    // console.log('login service user register', {username: username, firstname: firstname, lastname:lastname, password: password});
     return this.http.post<{newUser:object, newToken: string, payload: object}> (this.url, {username: username, firstname: firstname, lastname:lastname, password: password}, );
   }
 
@@ -55,8 +55,6 @@ export class UserService {
     postcode: string,
     country: string
   ): Observable<object> {
-    console.log('user.service.ts In updateUserDetails function', )
-    // this.uid = Number(this.getUserId());
     this.addAuthorisation();
     const body = {
       "firstname": firstname,
@@ -67,14 +65,9 @@ export class UserService {
       "postcode": postcode,
       "country": country
     }
-    // this.url = `${this.protocol,this.apiServer}:${this.apiPort}/users/${this.jwtToken.uid}`
-    // const request = this.http.put<{}
     const request = this.http.put<{uid: number}> (`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid, body, this.httpOptions);
     const requestURL =  (`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid, body, this.httpOptions);
-    // return this.http.put<{uid: number}>
-    console.log('user.service.ts requst URL', request);
     return request;
-    // return ;
   }
 
   getUserId(): number {

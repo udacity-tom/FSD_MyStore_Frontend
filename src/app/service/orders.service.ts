@@ -6,7 +6,6 @@ import { Order } from '../models/Order';
 import { Order_products } from '../models/Order_products';
 import { TokenService } from './token.service';
 import { InterceptorService } from './interceptor.service';
-// import { request } from 'http';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +38,6 @@ export class OrdersService {
   
   createOrder(user_id?: string, status?: string): Observable<Order> {
     this.addAuthorisation();
-    console.log('order.service new create order requested');
     const request = this.http.post<Order>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/create', {user_id: user_id, status: status}, this.httpOptions);
     return request;
   }
@@ -48,7 +46,6 @@ export class OrdersService {
     this.addAuthorisation();
     const body = {};//required for http put request (modification) RFC7231-not sure?!
     const request = this.http.put<Order>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders/'+oid, body, this.httpOptions);
-    // console.log('completeOrder httpOptions', this.httpOptions);
     return request;
   }
   
@@ -89,7 +86,6 @@ export class OrdersService {
           return
         }
       })
-
     if(this.checkOrderLength(this.justOne)) {
   }
     return of(this.justOne[0]);

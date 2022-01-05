@@ -44,33 +44,15 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.currentUserId();
-    console.log('ngOnIt()-checkout component this.userId', this.userId);
-    // this.currentOrderId = this.currentOrder();
     this.orderService.currentActiveOrder().subscribe(res => {
       this.activeOrder = res;
       console.log('checkout component, this.activeOrder, res', this.activeOrder, res);
     });
-    // console.log('checkout component ngOnIt()', this.activeOrder)
   }
 
   onSubmit(): void {
-    console.log('Checkout button pressed!');
-    //process user details to DB
     this.updateUserDetails();
-    // this.orderService.completeOrder(this.activeOrder).subscribe(res => {
-    //   console.log('update order completeOrder res', res);
-    //   // this.orderStatus = res;
-    // })
     this.completeOrder();
-    
-    console.log('update order completeOrder this.orderStatus', this.orderStatus);
-
-    //start checkout process
-    // show current user address details, 
-    // update DB, 
-    //update order as completed
-    //show confirmation page: print summary confirmation of dispatch address/order details
-    //clear cart return user to products.
     this.router.navigate(['/confirmation']);
   }
 
@@ -87,27 +69,15 @@ export class CheckoutComponent implements OnInit {
         console.log('checkout.component.ts', res);
       })
     }
-    // currentOrder(): number {
-    //   let currentOrder: number;
-    //   return Number(this.orderService.currentActiveOrder().subscribe((res) => {
-    //     currentOrder = res;
-    //     console.log('checkout.component, currentOrderId', currentOrder, this.currentOrderId, res);
-    //     // return res;
-    //     // return of(res);
-    //     return currentOrder;
-    //   }))
-    // }
-
+   
     currentUserId(): number {
       return this.userService.getUserId();
     }
+
     completeOrder(): void {
-      // this.currentOrderId = this.currentOrder();
-      // console.log('completeOrder()', this.currentOrder());
       console.log('completeOrder(), checkout component this.userId, this.activeOrder', this.userId, this.activeOrder)
       this.orderService.completeOrder(this.activeOrder).subscribe(res => {
           console.log('update order completeOrder res', res);
-          // this.orderStatus = {id: res.id};
           this.orderStatus = res;
           if(res.status == 'complete') {
             this.createNewActiveOrder();
@@ -115,6 +85,7 @@ export class CheckoutComponent implements OnInit {
 
       })
     }
+
     createNewActiveOrder():void {
       this.currentUserId();
       this.orderService.createOrder(String(this.userId)).subscribe(res => {
