@@ -10,7 +10,7 @@
         name="firstname" 
         required 
         minlength="3" 
-        [(ngModel)]="firstname"
+        [(ngModel)]="user.firstname"
         placeholder="Enter First Name" 
         #firstName="ngModel">
         <br>
@@ -20,7 +20,7 @@
         required 
         minlength="3" 
         placeholder="Enter Last Name" 
-        [(ngModel)]="lastname"
+        [(ngModel)]="user.lastname"
         #lastName="ngModel">
         <br>
         <input
@@ -28,7 +28,7 @@
         name="houseNumber" 
         required 
         placeholder="Enter House Number/Name" 
-        [(ngModel)]="houseNumber"
+        [(ngModel)]="user.housenum"
         #housenum="ngModel">
         <br>
         <input
@@ -37,7 +37,7 @@
         required 
         minlength="5" 
         placeholder="Enter Street Address" 
-        [(ngModel)]="streetAddress"
+        [(ngModel)]="user.street1"
         #street1="ngModel">
         <br>
         <input
@@ -46,7 +46,7 @@
         required
         minlength="5" 
         placeholder="Enter City" 
-        [(ngModel)]="city"
+        [(ngModel)]="user.city"
         #City="ngModel">
         <br>
         <input
@@ -55,7 +55,7 @@
         required 
         minlength="3" 
         placeholder="Enter PostCode" 
-        [(ngModel)]="postcode"
+        [(ngModel)]="user.postcode"
         #PostCode="ngModel">
         <br>
         <input
@@ -64,7 +64,7 @@
         required 
         minlength="5" 
         placeholder="Enter Country" 
-        [(ngModel)]="country"
+        [(ngModel)]="user.country"
         #Country="ngModel">
         <br>
     </section>

@@ -4,9 +4,9 @@ export class User {
  firstname: string;
  lastname: string;
  password: string;
- houseNum: string;
+ housenum: string;
  street1: string;
- street2: string;
+//  street2: string;
  city: string;
  postcode: string;
  country: string;
@@ -17,9 +17,9 @@ export class User {
      this.firstname = '';
      this.lastname = '';
      this.password = '';
-     this.houseNum = '';
+     this.housenum = '';
      this.street1 = '';
-     this.street2 = '';
+    //  this.street2 = '';
      this.city = '';
      this.postcode = '';
      this.country = '';

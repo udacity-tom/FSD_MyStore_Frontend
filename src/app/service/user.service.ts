@@ -4,6 +4,7 @@ import { Observable, of  } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TokenService } from './token.service';
 import { Order } from '../models/Order';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +17,14 @@ export class UserService {
   password: string;
   url: string;
   // uid: number = 0;
-  firstname: string = '';
-  lastname: string = '';
-  houseNumber: string = '';
-  streetAddress: string = '';
-  streetAddress2: string = '';
-  city: string = '';
-  postcode: string = '';
-  country: string = '';
+  // firstname: string = '';
+  // lastname: string = '';
+  // houseNumber: string = '';
+  // streetAddress: string = '';
+  // streetAddress2: string = '';
+  // city: string = '';
+  // postcode: string = '';
+  // country: string = '';
   loading: boolean = false;
   loginStatus: boolean = false;
   httpOptions = {
@@ -46,25 +47,19 @@ export class UserService {
     return this.http.post<{newUser:object, newToken: string, payload: object}> (this.url, {username: username, firstname: firstname, lastname:lastname, password: password}, );
   }
 
-  updateUserDetails(
-    firstname: string,
-    lastname: string,
-    houseNumber: string,
-    streetAddress: string,
-    city: string,
-    postcode: string,
-    country: string
+  updateUserDetails( user: User
   ): Observable<object> {
     this.addAuthorisation();
-    const body = {
-      "firstname": firstname,
-      "lastname": lastname,
-      "housenum": houseNumber,
-      "street1": streetAddress,
-      "city": city,
-      "postcode": postcode,
-      "country": country
-    }
+    // const body = {
+    //   "firstname": firstname,
+    //   "lastname": lastname,
+    //   "housenum": houseNumber,
+    //   "street1": streetAddress,
+    //   "city": city,
+    //   "postcode": postcode,
+    //   "country": country
+    // }
+    const body = User;
     const request = this.http.put<{uid: number}> (`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid, body, this.httpOptions);
     const requestURL =  (`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid, body, this.httpOptions);
     return request;
@@ -86,6 +81,12 @@ export class UserService {
     this.tokenService.getToken().subscribe(res => {
       this.jwtToken = res;
     })
+  }
+
+  show(uid: number): Observable<User> {
+    this.addAuthorisation();
+    const request = this.http.get<User> (`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid, this.httpOptions);
+    return request;
   }
 
 }

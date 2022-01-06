@@ -5,25 +5,27 @@ import { OrdersService } from 'src/app/service/orders.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 import { Order } from 'src/app/models/Order';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
+
 export class CheckoutComponent implements OnInit {
   title: string = 'Checkout Here';
   text: string = 'Please input your address to checkout';
   explanation: string = 'In order to provide a seemless checkout process we need your full details.'
-  firstname: string = '';
-  lastname: string = '';
-  houseNumber: string = '';
-  streetAddress: string = '';
-  // streetAddress2: string = '';
-  city: string = '';
-  postcode: string = '';
-  country: string = '';
-
+  // firstname: string = '';
+  // lastname: string = '';
+  // houseNumber: string = '';
+  // streetAddress: string = '';
+  // // streetAddress2: string = '';
+  // city: string = '';
+  // postcode: string = '';
+  // country: string = '';
+  user: User = {id: 0, username: '', firstname: '', lastname: '', password: '', housenum: '', street1: '', city: '', postcode: '', country: ''};
   activeOrder: number = 0;
   orderStatus: Order = {
     'id': 0,
@@ -48,6 +50,12 @@ export class CheckoutComponent implements OnInit {
       this.activeOrder = res;
       console.log('checkout component, this.activeOrder, res', this.activeOrder, res);
     });
+
+    this.userService.show(this.userId).subscribe(res => {
+      console.log('res from show user', res);
+      this.user = res;
+    })
+    // console.log(this.userService.show(this.userId));
   }
 
   onSubmit(): void {
@@ -57,14 +65,14 @@ export class CheckoutComponent implements OnInit {
   }
 
   updateUserDetails(): void{
-    this.userService.updateUserDetails(
-      this.firstname,
-      this.lastname,
-      this.houseNumber,
-      this.streetAddress,
-      this.city,
-      this.postcode,
-      this.country      
+    this.userService.updateUserDetails(this.user
+      // this.firstname,
+      // this.lastname,
+      // this.houseNumber,
+      // this.streetAddress,
+      // this.city,
+      // this.postcode,
+      // this.country      
       ).subscribe(res => {
         console.log('checkout.component.ts', res);
       })
