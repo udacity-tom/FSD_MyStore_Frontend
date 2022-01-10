@@ -15,16 +15,10 @@ import { User } from 'src/app/models/User';
 
 export class CheckoutComponent implements OnInit {
   title: string = 'Checkout Here';
-  text: string = 'Please input your address to checkout';
-  explanation: string = 'In order to provide a seemless checkout process we need your full details.'
-  // firstname: string = '';
-  // lastname: string = '';
-  // houseNumber: string = '';
-  // streetAddress: string = '';
-  // // streetAddress2: string = '';
-  // city: string = '';
-  // postcode: string = '';
-  // country: string = '';
+  text: string = 'Please update/confirm your address to checkout';
+  explanation: string = `Click on any entry below that needs changing.`
+  explanation1: string = `This information is required in order to provide a seemless checkout process.`
+  explanation2: string = `We need your full details.`;
   user: User = {id: 0, username: '', firstname: '', lastname: '', password: '', housenum: '', street1: '', city: '', postcode: '', country: ''};
   activeOrder: number = 0;
   orderStatus: Order = {
