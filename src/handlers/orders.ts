@@ -138,8 +138,8 @@ const orderRoutes = (app: express.Application): void => {
   );
   app.post(
     '/users/:id/orders/:oid/add-product',
-    auth.verifyAuthToken,
-    auth.verifyUserAuth,
+    // auth.verifyAuthToken,
+    // auth.verifyUserAuth,
     addProduct
   );
   app.post(
