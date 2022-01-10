@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of  } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TokenService } from './token.service';
-import { Order } from '../models/Order';
 import { User } from '../models/User';
 
 @Injectable({
@@ -16,15 +15,6 @@ export class UserService {
   username: string;
   password: string;
   url: string;
-  // uid: number = 0;
-  // firstname: string = '';
-  // lastname: string = '';
-  // houseNumber: string = '';
-  // streetAddress: string = '';
-  // streetAddress2: string = '';
-  // city: string = '';
-  // postcode: string = '';
-  // country: string = '';
   loading: boolean = false;
   loginStatus: boolean = false;
   httpOptions = {
@@ -50,18 +40,8 @@ export class UserService {
   updateUserDetails( user: User
   ): Observable<object> {
     this.addAuthorisation();
-    // const body = {
-    //   "firstname": firstname,
-    //   "lastname": lastname,
-    //   "housenum": houseNumber,
-    //   "street1": streetAddress,
-    //   "city": city,
-    //   "postcode": postcode,
-    //   "country": country
-    // }
     const body = User;
     const request = this.http.put<{uid: number}> (`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid, body, this.httpOptions);
-    const requestURL =  (`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid, body, this.httpOptions);
     return request;
   }
 
