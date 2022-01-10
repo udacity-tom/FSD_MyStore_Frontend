@@ -9,7 +9,7 @@ export class Product {
     category: string;
 
     constructor() {
-        this.id = 1;
+        this.id = 0;
         this.name = '';
         this.url = '';
         this.price = 0;
