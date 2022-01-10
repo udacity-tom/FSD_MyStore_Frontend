@@ -11,12 +11,12 @@ import { LoginService } from 'src/app/service/login.service';
 export class HomeComponent implements OnInit {
   //setup login name based on login status
   loginStatus: boolean = false;
-  blurb:string = 'Our range of products will entice your desires.'
-  moreBlurb:string = 'When you\'ve filled your Cart with our wares, please check out for a rapid delivery. \nRegister now to speed the check-out process.';
+  blurb:string = 'View our range of products.'
+  moreBlurb:string = 'Please register to fill the Cart. When finished, click checkout please check out for a rapid delivery. \nRegister now to speed the check-out process.';
   username: string = '';
 
 
-  constructor(private loginAuth: LoginService, private router: Router, private tokenService: TokenService) { }
+  constructor(private loginService: LoginService, private router: Router, private tokenService: TokenService) { }
 
   ngOnInit(): void {
     this.updateLoginStatus();
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   }
 
   updateLoginStatus(): void {
-    this.loginAuth.loginStatus().subscribe(res => {
+    this.loginService.loginStatus().subscribe(res => {
       this.loginStatus = res;
       if(!this.loginStatus){
         console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
