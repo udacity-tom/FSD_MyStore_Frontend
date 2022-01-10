@@ -32,6 +32,9 @@ export class OrdersService {
   
   getOrders(): Observable<Order[]> {  //gets the results of orders DB
     this.addAuthorisation();
+    if(this.jwtToken.uid == 0){//gets round error of calling API for orders
+      return of([{id: 0, user_id: 0, status: 'active'}]);//if user not logged in return order zero
+    }
     const request = this.http.get<Order[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/users/`+this.jwtToken.uid+'/orders', this.httpOptions);
     return request;
   }
