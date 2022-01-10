@@ -47,6 +47,10 @@ img {
     margin-top: 8px;
   }
 
+  .btn-primary {
+    margin: 10px;
+  }
+
   .btn-primary:hover {
     color: #007bff;
     background-color: #fff;

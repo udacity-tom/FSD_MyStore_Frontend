@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/service/cart.service';
+import { LoginService } from 'src/app/service/login.service';
 import { OrdersService } from 'src/app/service/orders.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { OrdersService } from 'src/app/service/orders.service';
 })
 export class ProductItemButtonsComponent implements OnInit {
   @Input() product: Product;
-  @Output() addProductToCart: EventEmitter<object> = new EventEmitter();
+  @Output() addProductToCart: EventEmitter<object> = new EventEmitter(); 
 
   showCss: boolean = false;
   pid: number = 0;
@@ -21,8 +22,9 @@ export class ProductItemButtonsComponent implements OnInit {
     pid: 0,
     quantity: 0
   };
+  loginStatus = true;
 
-  constructor(private cartService: CartService, private orderService: OrdersService) { 
+  constructor(private cartService: CartService, private orderService: OrdersService, private loginService: LoginService) { 
     this.product = {
       id: 0,
       name: '',
@@ -36,6 +38,10 @@ export class ProductItemButtonsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.loginService.loginStatus().subscribe(res => {
+    //   this.loginStatus = res;
+    // });
+    console.log('product-item-buttons loginStatus', this.loginStatus);
   }
 
   addProduct(){

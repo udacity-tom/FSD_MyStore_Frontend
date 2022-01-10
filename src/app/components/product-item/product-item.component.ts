@@ -52,7 +52,6 @@ export class ProductItemComponent implements OnInit {
     // });
   }
 
-  // addProductToCart({pid: number, quantity: number}) {
   addProductToCart(product: Product) {
     console.log('product-list compont, item', product);
     this.getActiveOrder();
@@ -68,7 +67,4 @@ export class ProductItemComponent implements OnInit {
       console.log('product-item, this.activeOrder, res', this.activeOrder, res);
     });
   }
-
-
-
 }
