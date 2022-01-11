@@ -23,7 +23,7 @@ export class CheckoutComponent implements OnInit {
   activeOrder = 0;
   orderStatus: Order = {
     id: 0,
-    user_id: 0,
+    userId: 0,
     status: 'active'
 };
 
@@ -74,7 +74,7 @@ export class CheckoutComponent implements OnInit {
       this.orderService.completeOrder(this.activeOrder).subscribe(res => {
           console.log('update order completeOrder res', res);
           this.orderStatus = res;
-          if (res.status == 'complete') {
+          if (res.status === 'complete') {
             this.createNewActiveOrder();
           }
 
