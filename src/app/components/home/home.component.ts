@@ -8,12 +8,12 @@ import { LoginService } from 'src/app/service/login.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-  //setup login name based on login status
-  loginStatus: boolean = false;
-  blurb:string = 'View our range of products.'
-  moreBlurb:string = 'Please register to fill the Cart. When finished, click checkout please check out for a rapid delivery. \nRegister now to speed the check-out process.';
-  username: string = '';
+export class HomeComponent implements OnInit, OnChanges {
+  // setup login name based on login status
+  loginStatus = false;
+  blurb = 'View our range of products.';
+  moreBlurb = 'Please register to fill the Cart. When finished, click checkout please check out for a rapid delivery. \nRegister now to speed the check-out process.';
+  username = '';
 
 
   constructor(private loginService: LoginService, private router: Router, private tokenService: TokenService) { }
@@ -22,8 +22,8 @@ export class HomeComponent implements OnInit {
     this.updateLoginStatus();
     this.tokenService.getToken();
   }
-  
-  onChanges(): void {
+
+  ngOnChanges(): void {
     this.updateLoginStatus();
     this.tokenService.getToken();
   }
@@ -31,16 +31,16 @@ export class HomeComponent implements OnInit {
   updateLoginStatus(): void {
     this.loginService.loginStatus().subscribe(res => {
       this.loginStatus = res;
-      if(!this.loginStatus){
+      if (!this.loginStatus){
         console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
         // this.router.navigate(['/', {relativeTo: this.route}]);
         this.router.navigate(['/']);
         return;
       }
-      this.tokenService.getToken().subscribe(res => {
-              this.username = res.user;
-            })
-    })
+      this.tokenService.getToken().subscribe(token => {
+              this.username = token.user;
+            });
+    });
     console.log('logged-in componet loginStatus', this.loginStatus);
   }
 
