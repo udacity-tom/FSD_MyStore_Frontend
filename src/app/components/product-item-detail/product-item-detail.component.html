@@ -10,7 +10,7 @@
     <p class="description">Full Description: {{ product.description }}</p>
     <br>
     <br>
-    <p *ngIf=(!loginStatus)>Please login to add this item to your cart.</p>
+    <a routerLink="/login"><p *ngIf=(!loginStatus)><br>Please login to add this item to your cart.</p></a>
     <div *ngIf=(loginStatus)>
         <div class="quantity">
             <button (click)="decreaseItems()">-</button>

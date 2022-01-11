@@ -15,22 +15,22 @@ export class ProductItemDetailComponent implements OnInit {
   @Input() products: Product[] = [];
   @Output() yes: EventEmitter<any> = new EventEmitter();
   // @Output() addProductsToCart: EventEmitter<object> = new EventEmitter();
-  @Input() loginStatus: boolean = false;
+  @Input() loginStatus = false;
   product: Product;
   givenId: number;
   noOfItems: number;
   itemDescription: object;
   response: object = {};
-  activeOrder: number = 0;
-  state: string = 'child';
+  activeOrder = 0;
+  state = 'child';
 
   constructor(
-    private productService:ProductService, 
+    private productService: ProductService,
     private route: ActivatedRoute,
     private cartService: CartService,
     private orderService: OrdersService,
     private loginService: LoginService
-    ) { 
+    ) {
     this.product = {
       id: 0,
       name: '',
@@ -45,11 +45,11 @@ export class ProductItemDetailComponent implements OnInit {
     this.noOfItems = 1;
     this.itemDescription = {};
   }
-  
+
   async ngOnInit(): Promise<void> {
     this.loginService.loginStatus().subscribe(res => {
       this.loginStatus = res;
-    })
+    });
     this.givenId = Number(this.route.snapshot.paramMap.get('id'));
     this.productService.getProduct(this.givenId).subscribe(res => {
       this.product = res;
@@ -63,28 +63,28 @@ export class ProductItemDetailComponent implements OnInit {
   }
 
   increaseItems(): void {
-    this.noOfItems++
+    this.noOfItems++;
   }
 
   decreaseItems() {
-    if(this.noOfItems==1) return;
-    this.noOfItems--
+    if (this.noOfItems == 1) { return; }
+    this.noOfItems--;
   }
 
   addProductToCart(pid: number, quantity: number ){
     const item = {pid, quantity};
-    console.log("product-item-detail addproductotcart", item); 
+    console.log('product-item-detail addproductotcart', item);
     // this.addProductToCart.emit(item);
-    //Cghange this to an emitter to push the changes up to product list 
-    //In this way there is only one call to the addProductToActiveOrder funciton for both product-detail and proudct list
+    // Cghange this to an emitter to push the changes up to product list
+    // In this way there is only one call to the addProductToActiveOrder funciton for both product-detail and proudct list
 
-    console.log('product ', pid, ' added to order. Quantity is ', quantity)
+    console.log('product ', pid, ' added to order. Quantity is ', quantity);
     // this.cartService.addProductToActiveOrder(pid, quantity);
     // if()
     this.cartService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
       this.response = res;
-      console.log('product-list-item component, add product to cart res =',res);
-    })
+      console.log('product-list-item component, add product to cart res =', res);
+    });
   }
 
 }
