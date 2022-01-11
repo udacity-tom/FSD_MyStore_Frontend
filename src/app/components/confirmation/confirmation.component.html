@@ -1,7 +1,16 @@
 <br>
-<h1>Thank you for your order</h1>
+<h1>Thank you {{currentUser.firstname}} for your order</h1>
 <br>
-<h2>Your items will be dispatched within two business days</h2>
+<!-- <p>{{activeOrder.firstname}} {{currentUser.lastname}}</p> -->
+<h2>Your items will be dispatched within two business days to the following address: </h2>
+<br>
+<div class="address">
+    <p>{{currentUser.firstname}} {{currentUser.lastname}}</p>
+    <p>{{currentUser.housenum}} {{currentUser.street1}}</p>
+    <p>{{currentUser.city}}</p>
+    <p>{{currentUser.postcode}}</p>
+    <p>{{currentUser.country}}</p>
+</div>
 <br>
 <a routerLink="/products">
     <button class="btn btn-primary button-style">
@@ -12,4 +21,5 @@
 <a routerLink="/loggedin">
     <button class="btn btn-primary button-style">
         Return to your order page
-    </button></a>
+    </button>
+</a>

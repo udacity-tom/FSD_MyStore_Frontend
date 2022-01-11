@@ -14,28 +14,28 @@ import { User } from 'src/app/models/User';
 })
 
 export class CheckoutComponent implements OnInit {
-  title: string = 'Checkout Here';
-  text: string = 'Please update/confirm your address to checkout';
-  explanation: string = `Click on any entry below that needs changing.`
-  explanation1: string = `This information is required in order to provide a seemless checkout process.`
-  explanation2: string = `We need your full details.`;
+  title = 'Checkout Here';
+  text = 'Please update/confirm your address to checkout';
+  explanation = `Click on any entry below that needs changing.`;
+  explanation1 = `This information is required in order to provide a seemless checkout process.`;
+  explanation2 = `We need your full details.`;
   user: User = {id: 0, username: '', firstname: '', lastname: '', password: '', housenum: '', street1: '', city: '', postcode: '', country: ''};
-  activeOrder: number = 0;
+  activeOrder = 0;
   orderStatus: Order = {
-    'id': 0,
-    'user_id': 0,
-    'status': "active"
+    id: 0,
+    user_id: 0,
+    status: 'active'
 };
 
-  loading: boolean = false;
-  loginStatus: boolean = false;
-  userId: number = 0;
+  loading = false;
+  loginStatus = false;
+  userId = 0;
 
   constructor(
-    private cartService: CartService, 
-    private orderService: OrdersService, 
+    private cartService: CartService,
+    private orderService: OrdersService,
     private router: Router,
-    private userService: UserService 
+    private userService: UserService
     ) { }
 
   ngOnInit(): void {
@@ -45,10 +45,10 @@ export class CheckoutComponent implements OnInit {
       console.log('checkout component, this.activeOrder, res', this.activeOrder, res);
     });
 
-    this.userService.show(this.userId).subscribe(res => {
+    this.userService.showUser(this.userId).subscribe(res => {
       console.log('res from show user', res);
       this.user = res;
-    })
+    });
     // console.log(this.userService.show(this.userId));
   }
 
@@ -60,35 +60,28 @@ export class CheckoutComponent implements OnInit {
 
   updateUserDetails(): void{
     this.userService.updateUserDetails(this.user
-      // this.firstname,
-      // this.lastname,
-      // this.houseNumber,
-      // this.streetAddress,
-      // this.city,
-      // this.postcode,
-      // this.country      
       ).subscribe(res => {
         console.log('checkout.component.ts', res);
-      })
+      });
     }
-   
+
     currentUserId(): number {
       return this.userService.getUserId();
     }
 
     completeOrder(): void {
-      console.log('completeOrder(), checkout component this.userId, this.activeOrder', this.userId, this.activeOrder)
+      console.log('completeOrder(), checkout component this.userId, this.activeOrder', this.userId, this.activeOrder);
       this.orderService.completeOrder(this.activeOrder).subscribe(res => {
           console.log('update order completeOrder res', res);
           this.orderStatus = res;
-          if(res.status == 'complete') {
+          if (res.status == 'complete') {
             this.createNewActiveOrder();
           }
 
-      })
+      });
     }
 
-    createNewActiveOrder():void {
+    createNewActiveOrder(): void {
       this.currentUserId();
       this.orderService.createOrder(String(this.userId)).subscribe(res => {
         console.log('createNewActiveOrder()', res);
