@@ -12,30 +12,30 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  username: string = '';
-  password: string = '';
+  username = '';
+  password = '';
   returnedJWT: object = {};
-  token: string = '';
+  token = '';
   authFn: object = {};
-  loading: boolean = false;
+  loading = false;
   // stream: Observable<string> = '';
-  loginStatus: boolean = false;
-  
+  loginStatus = false;
+
   constructor(
-    private loginAuth: LoginService, 
-    private tokenService: TokenService, 
-    private router: Router, 
-    private route: ActivatedRoute) { 
+    private loginAuth: LoginService,
+    private tokenService: TokenService,
+    private router: Router,
+    private route: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
     this.updateLoginStatus();
-    
+
   }
 
   onChanges(): void {
-    if(!this.loginStatus){
+    if (!this.loginStatus){
       console.log('login component re-route page, this.loginStatus is ', this.loginStatus);
       // this.router.navigate(['/', {relativeTo: this.route}]);
       this.router.navigate(['/']);
@@ -43,11 +43,11 @@ export class LoginComponent implements OnInit {
     }
     this.tokenService.getToken().subscribe(res => {
             this.username = res.user;
-          })
-          this.router.navigate(['loggedin']);  
+          });
+    this.router.navigate(['loggedin']);
   }
 
-//To-do: Refactor
+// To-do: Refactor
   onSubmit(): void {
     this.loading = true;
     this.returnedJWT = this.getLogin(this.username, this.password);
@@ -65,18 +65,18 @@ export class LoginComponent implements OnInit {
     // location.reload();
   }
 
-  updateLoginStatus():void { 
+  updateLoginStatus(): void {
     this.loginAuth.loginStatus().subscribe(res => {
       this.loginStatus = res;
       this.tokenService.getToken().subscribe(res => {
         this.username = res.user;
-      })
+      });
 
-    })
+    });
   }
 
   getLogin(username: string, password: string) {
-    return this.loginAuth.authUser(username, password)//something fishy going on here this shouldn't be this.
+    return this.loginAuth.authUser(username, password)// something fishy going on here this shouldn't be this.
     .subscribe(
       res => {
         this.returnedJWT = res;
