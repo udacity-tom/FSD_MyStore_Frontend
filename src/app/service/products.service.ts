@@ -19,17 +19,17 @@ export class ProductService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer '
+      Authorization: 'Bearer '
     })
-  }
+  };
 
   constructor(private http: HttpClient, private tokenService: TokenService) {
     this.itemDescription = {};
    }
    userState = new BehaviorSubject(false);
-   
-  getProducts():  Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/products`)
+
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/products`);
   }
 
   getProduct(id: number): Observable<any> {
@@ -37,10 +37,10 @@ export class ProductService {
   }
 
   addProduct(newProduct: Product): Observable<Product> {
-    //checked signed in & check current user
-    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.tokenService.getToken());
+    // checked signed in & check current user
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.tokenService.getToken());
     console.log('headers', this.httpOptions);
-    return this.http.post<Product>(`${this.protocol}${this.apiServer}:${this.apiPort}/products/create`, {newProduct: newProduct});
+    return this.http.post<Product>(`${this.protocol}${this.apiServer}:${this.apiPort}/products/create`, {newProduct});
   }
 
   getDescription(link: string, itemName: string): Observable<object> {

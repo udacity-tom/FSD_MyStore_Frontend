@@ -10,17 +10,17 @@ import { OrdersService } from 'src/app/service/orders.service';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  title: string = 'Product List component';
+  title = 'Product List component';
   @Input() products: Product[] = [];
-  pid: number = 0;
-  quantity: number = 0;
+  pid = 0;
+  quantity = 0;
   response: object = {};
-  activeOrder: number = 0;
+  activeOrder = 0;
 
   constructor(private productService: ProductService, private cartService: CartService, private orderService: OrdersService) { }
 
   ngOnInit(): void {
-    //raw data return for setting up View, move to backend later
+    // raw data return for setting up View, move to backend later
     this.productService.getProducts().subscribe(res => {
       this.products = res;
     });

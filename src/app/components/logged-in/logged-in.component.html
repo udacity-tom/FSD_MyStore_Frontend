@@ -41,7 +41,7 @@
     </table>
     <div *ngIf="showOrderDetails">
         <br>
-        <div *ngIf="!currentOrderDetails[0]">This is your current active order. <br> You have no products in your basket. <br><span style="font-size: largest;">Visit our <a [routerLink]="[ '/', 'products']">products page.</a></span></div>
+        <div *ngIf="!currentOrderDetails[0]">This is your current active order. <br> You have no products in your basket. <br><span style="font-size: largest;">Visit our <a [routerLink]="[ '/', 'products']">products page and add some items.</a></span></div>
         <div *ngIf="currentOrderDetails[0]" >
             <h1>Order Details for Order with ID {{currentOrderDetails[0].orderid}}</h1>
             <div *ngFor="let product of currentOrderDetails">

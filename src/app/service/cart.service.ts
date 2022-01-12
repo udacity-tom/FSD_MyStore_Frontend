@@ -16,16 +16,16 @@ export class CartService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer '
+      Authorization: 'Bearer '
     })
-  }
+  };
 
-  productId: number = 0;
-  orderId: number = 0;
-  url: string = '';
+  productId = 0;
+  orderId = 0;
+  url = '';
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private tokenService: TokenService,
     private orderService: OrdersService
   ) { }
@@ -33,33 +33,33 @@ export class CartService {
 
   addProductToActiveOrder(pid: number, quantity: number, oid: number): Observable<object> {
     console.log('addProductToActiveOrder(), cart service, params', pid, quantity, oid);
-      this.productId = pid;
-      this.currentActiveOrder();
-      const body = { "id": pid, "quantity": quantity }
-      this.addAuthorisation();
-      this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/${this.jwtToken.uid}/orders/${oid}/add-product`;
-      return this.http.post<Product> (this.url, body, this.httpOptions);
+    this.productId = pid;
+    this.currentActiveOrder();
+    const body = { id: pid, quantity };
+    this.addAuthorisation();
+    this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/${this.jwtToken.uid}/orders/${oid}/add-product`;
+    return this.http.post<Product> (this.url, body, this.httpOptions);
     }
 
   addProductService(): Observable<number> {
     return of(this.productId);
   }
-  
+
   addAuthorisation(): void {
-    this.currentToken(); //invoke method to update token before submission to API
-    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer '+this.jwtToken.token);
+    this.currentToken(); // invoke method to update token before submission to API
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.jwtToken.token);
   }
 
   currentToken(): void {
     this.tokenService.getToken().subscribe(res => {
       this.jwtToken = res;
-    })
+    });
   }
 
   currentActiveOrder(): void {
     this.orderService.currentActiveOrder().subscribe(res => {
-      return this.orderId = res
-    })
+      return this.orderId = res;
+    });
   }
 
 

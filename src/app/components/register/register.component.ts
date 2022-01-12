@@ -9,20 +9,20 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  username: string = '';
-  firstname: string = '';
-  lastname: string = '';
-  password: string = '';
+  username = '';
+  firstname = '';
+  lastname = '';
+  password = '';
   returnedJWT: object = {};
-  token: string = '';
+  token = '';
   authFn: object = {};
-  loading: boolean = false;
+  loading = false;
   returnedRes: object = {};
   newUser: object = {};
-  newtoken: string = '';
+  newtoken = '';
   payload: object = {};
   tokenToSet: object = {};
-  exp: number = 0;
+  exp = 0;
 
 
   constructor(private userService: UserService, private tokenService: TokenService) { }
@@ -37,11 +37,11 @@ export class RegisterComponent implements OnInit {
     // console.log('returned res from api on user create', this.returnedRes);
     this.loading = false;
   }
-  
+
   registerUser(username: string, firstname: string, lastname: string, password: string ): object {
     // console.log('register component', username, firstname, lastname, password);
     return this.userService.registerNewUser( username, firstname, lastname, password ).subscribe(
-      res => {   //TO-DO: this MUST be refactored, accessing via array method, better way?, something to with the interface?
+      res => {   // TO-DO: this MUST be refactored, accessing via array method, better way?, something to with the interface?
         this.returnedRes = res;
         this.newtoken = Object.values(this.returnedRes)[1];
         this.payload = Object.values(this.returnedRes)[2].payload;

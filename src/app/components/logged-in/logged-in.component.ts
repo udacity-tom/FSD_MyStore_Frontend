@@ -65,7 +65,7 @@ export class LoggedInComponent implements OnInit {
     this.loginService.loginStatus().subscribe(res => {
       this.loginStatus = res;
       if (!this.loginStatus){
-        console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
+        // console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
         // this.router.navigate(['/', {relativeTo: this.route}]);
         this.router.navigate(['/']);
         return;

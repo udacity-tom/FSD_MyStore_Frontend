@@ -8,32 +8,33 @@ import { TokenService } from './token.service';
   providedIn: 'root'
 })
 export class LoginService {
-  apiServer: string = environment.API_SERVER_IP;
-  apiPort: string = environment.API_PORT;
-  protocol: string = environment.PROTOCOL;
+  // apiServer: string = environment.API_SERVER_IP;
+  // apiPort: string = environment.API_PORT;
+  // protocol: string = environment.PROTOCOL;
+  baseURL: string = environment.PROTOCOL + environment.API_SERVER_IP + ':' + environment.API_PORT; 
   username: string;
   password: string;
   currentJWT: string;
-  url: string = '';
+  url = '';
   uid: number;
-  userIsLoggedIn: boolean = false;
-  user: string = '';
-  expiry: number = 0;
-  
+  userIsLoggedIn = false;
+  user = '';
+  expiry = 0;
+
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer '
+      Authorization: 'Bearer '
     })
-  }
+  };
 
-  constructor(private http: HttpClient, private tokenService: TokenService) { 
+  constructor(private http: HttpClient, private tokenService: TokenService) {
     this.username = '';
     this.password = '';
     this.currentJWT = '';
     this.uid = 0;
   }
-  
+
   loginStatus(): Observable<boolean> {
     this.tokenService.getToken().subscribe(res => {
       this.currentJWT = res.token;
@@ -42,9 +43,9 @@ export class LoginService {
       this.uid = res.uid;
     });
 
-    const currentTime = Math.floor((Number(new Date())/1000));
-      if (this.currentJWT != 'no Token') {
-        if(this.expiry > currentTime) {
+    const currentTime = Math.floor((Number(new Date()) / 1000));
+    if (this.currentJWT !== 'no Token') {
+        if (this.expiry > currentTime) {
           this.userIsLoggedIn = true;
         } else {
           this.userIsLoggedIn = false;
@@ -54,17 +55,17 @@ export class LoginService {
         this.userIsLoggedIn = false;
       }
     return of(this.userIsLoggedIn);
-  };
+  }
 
   authUser(username: string, password: string): Observable<ArrayBuffer>{
-    this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/authenticate`;
-      return this.http.post< any >(this.url, {username: username, password: password});
+    this.url = `${this.baseURL}/users/authenticate`;
+    return this.http.post< any >(this.url, {username, password});
     }
 
- 
-  logOut() {
+
+  logOut(): void {
     this.tokenService.deleteToken();
-    //logs user out, removes localstorage token, updates logged in status
+    // logs user out, removes localstorage token, updates logged in status
   }
 
 }

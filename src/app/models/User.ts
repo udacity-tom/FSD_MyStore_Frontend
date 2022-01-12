@@ -10,7 +10,7 @@ export class User {
  city: string;
  postcode: string;
  country: string;
- 
+
  constructor() {
      this.id = 0;
      this.username = '';

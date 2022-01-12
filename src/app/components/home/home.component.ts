@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit, OnChanges {
   // setup login name based on login status
   loginStatus = false;
   blurb = 'View our range of products.';
-  moreBlurb = 'Please register to fill the Cart. When finished, click checkout please check out for a rapid delivery. \nRegister now to speed the check-out process.';
+  moreBlurb = 'Please register to place items in your Cart. When finished, click checkout for delivery. \nRegister now to speed the check-out process.';
   username = '';
 
 
@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit, OnChanges {
     this.loginService.loginStatus().subscribe(res => {
       this.loginStatus = res;
       if (!this.loginStatus){
-        console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
+        // console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
         // this.router.navigate(['/', {relativeTo: this.route}]);
         this.router.navigate(['/']);
         return;
