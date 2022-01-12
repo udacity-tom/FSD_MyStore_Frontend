@@ -106,8 +106,8 @@ export class LoggedInComponent implements OnInit {
       this.currentOrderDetails = res;
     });
     this.showOrderDetails = true;
-    if ( this.currentOrderDetails.length === 0) {
-      alert('You haven\'t added anything to your order yet. Visit our products page' );
+    if ( this.currentOrderDetails === []) {
+      // alert('You haven\'t added anything to your order yet. Visit our products page' );
     }
     console.log('orderDetails', oid);
   }
@@ -118,17 +118,5 @@ export class LoggedInComponent implements OnInit {
     this.tokenService.deleteToken();
     this.router.navigate(['/']);
   }
-
-  // updateLoginStatus():void {
-  //   this.loginAuth.loginStatus().subscribe(res => {
-  //     this.loginStatus = res;
-  //     this.tokenService.getToken().subscribe(res => {
-  //       this.username = res.user;
-  //     })
-
-  //   })
-  // getAllUserOrders() {
-
-  // }
-
 }
+

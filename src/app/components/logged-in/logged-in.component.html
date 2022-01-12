@@ -18,8 +18,8 @@
 </div>
 <div>
     <!-- {{currentOrders.filter()}} -->
-    <p>You have {{(currentOrders.length == 0 ? 'no' : currentOrders.length)}} orders on file. {{(noOfCompletedOrders.length == 0 ? 'No orders' : (noOfCompletedOrders.length == 1 ? 'One Order' : noOfCompletedOrders.length+' orders')) }} {{(noOfCompletedOrders.length == 1 ? 'is' : 'are')}} complete.</p>
-    <p *ngIf="currentOrders.length">Click order below to see order details.</p>
+    <p>You have {{(currentOrders.length == 0 ? 'no' : currentOrders.length)}} orders on file. {{(noOfCompletedOrders.length == 0 ? 'No orders' : (noOfCompletedOrders.length == 1 ? 'One order' : noOfCompletedOrders.length+' orders')) }} {{(noOfCompletedOrders.length == 1 ? 'is' : 'are')}} complete.</p>
+    <p *ngIf="currentOrders.length > 1">Click order below to see order details.</p>
     <table Cols="3">
         <thead>
         <tr>
@@ -41,23 +41,17 @@
     </table>
     <div *ngIf="showOrderDetails">
         <br>
-        <h1>Order Details for Order with ID {{currentOrderDetails[0].order_id}}</h1>
-        <div *ngFor="let product of currentOrderDetails">
-            <!-- <p >ID: {{product.id}}</p> -->
-            <!-- <p>Order ID: {{product.order_id}}</p> -->
-            <p>Product ID: {{product.product_id}}</p>
-            <p>Product Quantity: {{product.quantity}}</p>
+        <div *ngIf="!currentOrderDetails[0]">This is your current active order. <br> You have no products in your basket. <br><span style="font-size: largest;">Visit our <a [routerLink]="[ '/', 'products']">products page.</a></span></div>
+        <div *ngIf="currentOrderDetails[0]" >
+            <h1>Order Details for Order with ID {{currentOrderDetails[0].orderid}}</h1>
+            <div *ngFor="let product of currentOrderDetails">
+                <!-- <p >ID: {{product.id}}</p> -->
+                <!-- <p>Order ID: {{product.orderId}}</p> -->
+                <p>Product ID: {{product.productid}}</p>
+                <p>Product Quantity: {{product.quantity}}</p>
+            </div>
         </div>
     </div>
     <!-- </span> -->
 <!-- </table> -->
 </div>
-    <!-- <div *ngIf="userName.invalid && userName.dirty">
-        <div *ngIf="userName.errors?.required">
-            Please enter your username, it must be at least  characters long.
-        </div>
-    </div>
-    <br>
-    <div *ngIf="passWord.invalid && passWord.dirty">
-        You must enter a password and it must be at least 8 characters long.
-    </div> -->
