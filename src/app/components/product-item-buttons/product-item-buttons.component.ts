@@ -1,8 +1,22 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { Product } from 'src/app/models/Product';
-import { CartService } from 'src/app/service/cart.service';
-import { LoginService } from 'src/app/service/login.service';
-import { OrdersService } from 'src/app/service/orders.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit
+} from '@angular/core';
+import {
+  Product
+} from 'src/app/models/Product';
+import {
+  CartService
+} from 'src/app/service/cart.service';
+import {
+  LoginService
+} from 'src/app/service/login.service';
+import {
+  OrdersService
+} from 'src/app/service/orders.service';
 
 @Component({
   selector: 'app-product-item-buttons',
@@ -11,20 +25,26 @@ import { OrdersService } from 'src/app/service/orders.service';
 })
 export class ProductItemButtonsComponent implements OnInit {
   @Input() product: Product;
-  @Output() addProductToCart: EventEmitter<object> = new EventEmitter(); 
+  @Output() addProductToCart: EventEmitter < object > = new EventEmitter();
 
-  showCss: boolean = false;
-  pid: number = 0;
+  showCss = false;
+  pid = 0;
   response: object = {};
-  quantity: number = 1;
-  activeOrder: number = 0;
-  item: {pid: number, quantity: number} = {
+  quantity = 1;
+  activeOrder = 0;
+  item: {
+    pid: number,
+    quantity: number
+  } = {
     pid: 0,
     quantity: 0
   };
   loginStatus = true;
 
-  constructor(private cartService: CartService, private orderService: OrdersService, private loginService: LoginService) { 
+  constructor(
+    private cartService: CartService,
+    private orderService: OrdersService,
+    private loginService: LoginService) {
     this.product = {
       id: 0,
       name: '',
@@ -34,7 +54,7 @@ export class ProductItemButtonsComponent implements OnInit {
       description: '',
       accreditation: '',
       category: ''
-    }
+    };
   }
 
   ngOnInit(): void {
@@ -44,9 +64,12 @@ export class ProductItemButtonsComponent implements OnInit {
     console.log('product-item-buttons loginStatus', this.loginStatus);
   }
 
-  addProduct(){
-    this.item = {pid: this.product.id, quantity: 1};
-    console.log("product-item-buttons addproductotcart, item", this.item);
+  addProduct(): void {
+    this.item = {
+      pid: this.product.id,
+      quantity: 1
+    };
+    console.log('product-item-buttons addproductotcart, item', this.item);
     this.addProductToCart.emit(this.product);
 
   }

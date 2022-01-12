@@ -12,26 +12,26 @@ export class ProductItemComponent implements OnInit {
   @Input() product: Product;
   // @Output() product: Product;
   // noOfItems: number = 1;
-  showButtons: boolean = false;
-  showCss: boolean = false;
-  value: boolean = false;
+  showButtons = false;
+  showCss = false;
+  value = false;
   response: object = {};
-  
+
   // response: object = {};
-  activeOrder: number = 0;
+  activeOrder = 0;
   // item: {pid:number, quantity:number} = {
   //   pid: 0,
   //   quantity: 0
   // };
 
-  mouseEnter(div: string){
+  mouseEnter(div: string): void{
     this.value = true;
   }
-  mouseLeave(div: string) {
+  mouseLeave(div: string): void {
     this.value = false;
   }
 
-  constructor(private cartService: CartService, private orderService: OrdersService) { 
+  constructor(private cartService: CartService, private orderService: OrdersService) {
     this.product = {
       id: 0,
       name: '',
@@ -41,7 +41,7 @@ export class ProductItemComponent implements OnInit {
       description: '',
       accreditation: '',
       category: ''
-    }
+    };
   }
 
   ngOnInit(): void {
@@ -52,16 +52,16 @@ export class ProductItemComponent implements OnInit {
     // });
   }
 
-  addProductToCart(product: Product) {
+  addProductToCart(product: Product): void {
     console.log('product-list compont, item', product);
     this.getActiveOrder();
     this.cartService.addProductToActiveOrder(product.id, 1, this.activeOrder).subscribe(res => {
       this.response = res;
-      console.log('product-item component, add product to cart res =',res);
-    })
+      console.log('product-item component, add product to cart res =', res);
+    });
   }
 
-  getActiveOrder() {
+  getActiveOrder(): void {
     this.orderService.currentActiveOrder().subscribe(res => {
       this.activeOrder = res;
       console.log('product-item, this.activeOrder, res', this.activeOrder, res);

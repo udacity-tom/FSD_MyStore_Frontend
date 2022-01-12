@@ -66,12 +66,12 @@ export class ProductItemDetailComponent implements OnInit {
     this.noOfItems++;
   }
 
-  decreaseItems() {
-    if (this.noOfItems == 1) { return; }
+  decreaseItems(): void {
+    if (this.noOfItems === 1) { return; }
     this.noOfItems--;
   }
 
-  addProductToCart(pid: number, quantity: number ){
+  addProductToCart(pid: number, quantity: number ): void{
     const item = {pid, quantity};
     console.log('product-item-detail addproductotcart', item);
     // this.addProductToCart.emit(item);
