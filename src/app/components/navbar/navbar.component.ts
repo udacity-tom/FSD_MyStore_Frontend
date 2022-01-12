@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
 
@@ -7,12 +7,12 @@ import { TokenService } from 'src/app/service/token.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, DoCheck {
   loginStatus: boolean;
   username: string;
 
 
-  constructor(private loginAuth: LoginService, private tokenService: TokenService  ) { 
+  constructor(private loginAuth: LoginService, private tokenService: TokenService  ) {
     this.loginStatus = false;
     this.username = '';
   }
@@ -34,18 +34,18 @@ export class NavbarComponent implements OnInit {
   updateLoginStatus(): void {
     this.loginAuth.loginStatus().subscribe(res => {
       this.loginStatus = res;
-    })
+    });
     // console.log('Navbar loginSTatus', this.loginStatus);
   }
 
   getUsername(): void {
     this.tokenService.getToken().subscribe(res => {
       this.username = res.user;
-    })
+    });
     // console.log('navbar getusername()', this.username);
 
   }
-  
+
   // getuser(): void {
   //   this.username = this.tokenService.getCurrentUser();
   // }
