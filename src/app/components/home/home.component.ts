@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit, OnChanges {
   // setup login name based on login status
   loginStatus = false;
   blurb = 'View our range of products.';
-  moreBlurb = 'Please register to place items in your Cart. When finished, click checkout for delivery. \nRegister now to speed the check-out process.';
+  moreBlurb = 'Please register to place items in your Cart. When finished, click checkout for delivery. Register now to speed the check-out process.';
   username = '';
 
 
