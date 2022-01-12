@@ -9,9 +9,11 @@ import { User } from '../models/User';
   providedIn: 'root'
 })
 export class UserService {
-  apiServer: string = environment.API_SERVER_IP;
-  apiPort: string = environment.API_PORT;
-  protocol: string = environment.PROTOCOL;
+  // apiServer: string = environment.API_SERVER_IP;
+  // apiPort: string = environment.API_PORT;
+  // protocol: string = environment.PROTOCOL;
+  baseURL: string = environment.PROTOCOL + environment.API_SERVER_IP + ':' + environment.API_PORT; 
+  // +this.protocol + this.apiServer + this.apiPort;
   username: string;
   password: string;
   url: string;
@@ -33,15 +35,15 @@ export class UserService {
 
 
   registerNewUser(username: string, firstname: string, lastname: string, password: string): Observable<object> {
-    this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/create`;
+    this.url = `${this.baseURL}/users/create`;
     return this.http.post<{newUser: object, newToken: string, payload: object}> (this.url, {username, firstname, lastname, password}, );
   }
 
   updateUserDetails( user: User
   ): Observable<object> {
     this.addAuthorisation();
-    const body = User;
-    const request = this.http.put<{uid: number}> (`${this.protocol}${this.apiServer}:${this.apiPort}/users/` + this.jwtToken.uid, body, this.httpOptions);
+    const body = user;
+    const request = this.http.put<{uid: number}> (`${this.baseURL}/users/` + this.jwtToken.uid, body, this.httpOptions);
     return request;
   }
 
@@ -54,7 +56,7 @@ export class UserService {
 
   showUser(uid: number): Observable<User> {
     this.addAuthorisation();
-    const request = this.http.get<User> (`${this.protocol}${this.apiServer}:${this.apiPort}/users/` + this.jwtToken.uid, this.httpOptions);
+    const request = this.http.get<User> (`${this.baseURL}/users/` + this.jwtToken.uid, this.httpOptions);
     return request;
   }
 
