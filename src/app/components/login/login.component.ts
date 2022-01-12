@@ -68,14 +68,14 @@ export class LoginComponent implements OnInit {
   updateLoginStatus(): void {
     this.loginAuth.loginStatus().subscribe(res => {
       this.loginStatus = res;
-      this.tokenService.getToken().subscribe(res => {
-        this.username = res.user;
+      this.tokenService.getToken().subscribe(token => {
+        this.username = token.user;
       });
 
     });
   }
 
-  getLogin(username: string, password: string) {
+  getLogin(username: string, password: string): object {
     return this.loginAuth.authUser(username, password)// something fishy going on here this shouldn't be this.
     .subscribe(
       res => {
