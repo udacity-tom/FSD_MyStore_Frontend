@@ -17,10 +17,10 @@ export class DashboardQueries {
   async popularProducts(): Promise<string[]> {
     try {
       const sql =
-        'SELECT product_id, sum(quantity) FROM order_products GROUP BY ROLLUP(product_id) ORDER BY sum(quantity) DESC LIMIT 6;';
+        'SELECT productId, sum(quantity) FROM order_products GROUP BY ROLLUP(productId) ORDER BY sum(quantity) DESC LIMIT 6;';
       const conn = await client.connect();
       const filtered = (await conn.query(sql)).rows.filter(item => {
-        if (item.product_id != null) {
+        if (item.productId != null) {
           return item;
         }
       });
@@ -46,7 +46,7 @@ export class DashboardQueries {
   async userOrdersCompleted(uid: string): Promise<Order[]> {
     try {
       const sql =
-        "SELECT * FROM orders WHERE user_id= ($1) AND orders.status='complete';";
+        "SELECT * FROM orders WHERE userId= ($1) AND orders.status='complete';";
       const conn = await client.connect();
       const results = await conn.query(sql, [uid]);
       conn.release();

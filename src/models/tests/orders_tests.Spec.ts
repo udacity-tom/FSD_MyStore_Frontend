@@ -29,42 +29,42 @@ describe('Tests Orders endpoints ', () => {
     const orderList = [
       {
         id: 1,
-        user_id: '1',
+        userId: '1',
         status: 'complete'
       },
       {
         id: 2,
-        user_id: '1',
+        userId: '1',
         status: 'complete'
       },
       {
         id: 3,
-        user_id: '1',
+        userId: '1',
         status: 'active'
       },
       {
         id: 4,
-        user_id: '2',
+        userId: '2',
         status: 'complete'
       },
       {
         id: 5,
-        user_id: '2',
+        userId: '2',
         status: 'active'
       },
       {
         id: 6,
-        user_id: '5',
+        userId: '5',
         status: 'active'
       },
       {
         id: 7,
-        user_id: '5',
+        userId: '5',
         status: 'complete'
       },
       {
         id: 8,
-        user_id: '5',
+        userId: '5',
         status: 'active'
       }
     ];
@@ -96,12 +96,12 @@ describe('Tests Orders endpoints ', () => {
     const orderTwo = [
       {
         id: 4,
-        user_id: '2',
+        userId: '2',
         status: 'complete'
       },
       {
         id: 5,
-        user_id: '2',
+        userId: '2',
         status: 'active'
       }
     ];
@@ -121,15 +121,15 @@ describe('Tests Orders endpoints ', () => {
     const userTwoOrderFour = [
       {
         id: 2,
-        product_id: '6',
+        productId: '6',
         quantity: 2,
-        order_id: '4'
+        orderId: '4'
       },
       {
         id: 7,
-        product_id: '4',
+        productId: '4',
         quantity: 2,
-        order_id: '4'
+        orderId: '4'
       }
     ];
     const result = await request
@@ -147,7 +147,7 @@ describe('Tests Orders endpoints ', () => {
   it('checks /orders/create And SQL logic returns new order', async () => {
     const checkNewOrder = {
       id: 9,
-      user_id: '2',
+      userId: '2',
       status: 'active'
     };
     const result = await request
@@ -176,7 +176,7 @@ describe('Tests Orders endpoints ', () => {
     expect(result.status).toBe(200);
     expect(result).toBeDefined();
     expect(result.body.quantity).toEqual(50);
-    expect(result.body.product_id).toEqual('2');
+    expect(result.body.productId).toEqual('2');
   });
 
   it('checks orders delete method exists', () => {
