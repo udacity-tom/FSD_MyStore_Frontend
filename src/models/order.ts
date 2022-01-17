@@ -29,6 +29,7 @@ export class OrderStore {
     }
   }
 
+  //shows a specific order
   async show(id: string): Promise<Order[]> {
     try {
       const sql = 'SELECT * FROM orders WHERE id=($1);';
@@ -42,6 +43,8 @@ export class OrderStore {
       );
     }
   }
+
+  //shows users orders
   async showUserOrders(uid: string): Promise<Order[]> {
     try {
       console.log('order.ts userid', uid);
@@ -57,8 +60,8 @@ export class OrderStore {
     }
   }
 
+  //checks for orders for users-> then returns products in order
   async showOrder(id: string, oid: string): Promise<Order[] | string> {
-    //checks for orders for users-> then returns products in order
     try {
       const currentOpenOrders = await this.showUserOrders(id);
       const hasOrder = currentOpenOrders.filter(order => {
@@ -78,6 +81,25 @@ export class OrderStore {
       throw new Error(
         `There was an error with finding order ID=${id}. Err: ${err}`
       );
+    }
+  }
+
+  //gets active order id number
+  async showActiveOrder(uid: string): Promise<Order | string> {
+    try {
+      const currentActiveOrder = await this.showUserOrders(uid);
+      const hasActiveOrder = currentActiveOrder.filter(order => {
+        if (order.status == 'active') {
+          return order;
+        }
+      });
+      console.log(
+        'showActivOrder, order.ts, hasActiveOrder[0]',
+        hasActiveOrder[0]
+      );
+      return hasActiveOrder[0];
+    } catch (err) {
+      throw new Error(`User has no active order!`);
     }
   }
 

@@ -12,7 +12,7 @@ const index = async (req: Request, res: Response) => {
   } catch (err) {
     res.status(400).json(err);
   }
-};
+}; //shows all orders
 
 const show = async (req: Request, res: Response) => {
   try {
@@ -21,25 +21,39 @@ const show = async (req: Request, res: Response) => {
   } catch (err) {
     res.status(400).json(err);
   }
-};
+}; //returns only one order
 
 const showOrder = async (req: Request, res: Response) => {
   try {
+    console.log('showOrder req', req.params);
     const orders = await orderStore.showOrder(req.params.id, req.params.oid);
+    console.log('showOrder return from DB', orders);
     res.json(orders);
   } catch (err) {
     res.status(400).json(err);
   }
-};
+}; //returns items in one user order
 
 const showUserOrders = async (req: Request, res: Response) => {
   try {
+    // console.log('showUserOrder req', req.params.id);
     const orders = await orderStore.showUserOrders(req.params.id);
+    console.log('showUserOrder return from DB', orders);
     res.json(orders);
   } catch (err) {
     res.status(400).json(err);
   }
-};
+}; //returns all users orders
+
+const showActiveOrder = async (req: Request, res: Response) => {
+  try {
+    const activeOrder = await orderStore.showActiveOrder(req.params.id);
+    console.log('orders.ts showActiveOrder()', activeOrder);
+    res.json(activeOrder);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}; //returns activeOrder
 
 const create = async (req: Request, res: Response) => {
   try {
@@ -125,6 +139,12 @@ const orderRoutes = (app: express.Application): void => {
     showUserOrders
   ); //show current orders for user (id)
   app.get(
+    '/users/:id/activeorder',
+    // auth.verifyAuthToken,
+    // auth.verifyUserAuth,
+    showActiveOrder
+  );
+  app.get(
     '/users/:id/orders/:oid',
     auth.verifyAuthToken,
     auth.verifyUserAuth,
@@ -138,8 +158,8 @@ const orderRoutes = (app: express.Application): void => {
   );
   app.post(
     '/users/:id/orders/:oid/add-product',
-    // auth.verifyAuthToken,
-    // auth.verifyUserAuth,
+    auth.verifyAuthToken,
+    auth.verifyUserAuth,
     addProduct
   );
   app.post(
