@@ -9,9 +9,10 @@ import { OrdersService } from './orders.service';
   providedIn: 'root'
 })
 export class CartService {
-  apiServer: string = environment.API_SERVER_IP;
-  apiPort: string = environment.API_PORT;
-  protocol: string = environment.PROTOCOL;
+  // apiServer: string = environment.API_SERVER_IP;
+  // apiPort: string = environment.API_PORT;
+  // protocol: string = environment.PROTOCOL;
+  baseURL: string = environment.PROTOCOL + environment.API_SERVER_IP + ':' + environment.API_PORT; 
   jwtToken: {token: string, expiry: number, user: string, uid: number} = {token: '', expiry: 0, user: '', uid: 0};
   httpOptions = {
     headers: new HttpHeaders({
@@ -37,7 +38,7 @@ export class CartService {
     this.currentActiveOrder();
     const body = { id: pid, quantity };
     this.addAuthorisation();
-    this.url = `${this.protocol}${this.apiServer}:${this.apiPort}/users/${this.jwtToken.uid}/orders/${oid}/add-product`;
+    this.url = `${this.baseURL}/users/${this.jwtToken.uid}/orders/${oid}/add-product`;
     return this.http.post<Product> (this.url, body, this.httpOptions);
     }
 
@@ -57,8 +58,8 @@ export class CartService {
   }
 
   currentActiveOrder(): void {
-    this.orderService.currentActiveOrder().subscribe(res => {
-      return this.orderId = res;
+    this.orderService.activeOrder().subscribe(res => {
+      return this.orderId = res.id;
     });
   }
 

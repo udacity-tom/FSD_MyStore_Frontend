@@ -8,6 +8,7 @@ import { TokenService } from 'src/app/service/token.service';
 import { OrdersService } from 'src/app/service/orders.service';
 import { ProductService } from 'src/app/service/products.service';
 import { CartService } from 'src/app/service/cart.service';
+import { of } from 'rxjs';
 
 interface CartProduct extends Product {
   quantity: number;
@@ -28,26 +29,28 @@ export class CartComponent implements OnInit {
  cartTotal = 0.00;
  currentOrder: Order = {id: 0, userId: 0, status: ''}; // The DB order where status ='active'
  allOrders: Order[] = []; // all user orders on DB
-  orderProducts: OrderProducts[] = [{id: 0, productid: 0, quantity: 0, orderid: 0}]; // order transactions
-  product: Product = {id: 0, name: '', url: '', price: 0, snippet: '', description: '', accreditation: '', category: '' };
-  loginStatus = false;
-  username = '';
-  addedCartItem = 0;
+ activeOrderNum: number = 0;
+ orderProducts: OrderProducts[] = [{id: 0, productid: 0, quantity: 0, orderid: 0}]; // order transactions
+ product: Product = {id: 0, name: '', url: '', price: 0, snippet: '', description: '', accreditation: '', category: '' };
+ loginStatus = false;
+ username = '';
+ addedCartItem = 0;
 
-  currentCartStatus = false;
+ currentCartStatus = false;
 
-  constructor(
-    private loginService: LoginService,
-    private tokenService: TokenService,
-    private router: Router,
-    private ordersService: OrdersService,
-    private productService: ProductService,
-    private cartService: CartService
-     ) { }
+ constructor(
+  private loginService: LoginService,
+  private tokenService: TokenService,
+  private router: Router,
+  private ordersService: OrdersService,
+  private productService: ProductService,
+  private cartService: CartService
+  ) { }
 
   ngOnInit(): void {
-    this.updateLoginStatus(); // check if user is logged in, if yes update cart with active order
-    this.userOrders(); // get all orders on system for user
+    this.updateLoginStatus(); // check if user is logged in, (if yes update cart with active order)
+    this.getActiveOrder();
+     // get all orders on system BE for user
   }
 
   onChanges(): void {
@@ -58,7 +61,6 @@ export class CartComponent implements OnInit {
     this.loginService.loginStatus().subscribe(res => {
       this.loginStatus = res;
       if (!this.loginStatus){
-        // console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
         this.router.navigate(['/']);
         return;
       }
@@ -68,27 +70,21 @@ export class CartComponent implements OnInit {
     });
   }
 
-  userOrders(): void {
-    this.ordersService.getOrders().subscribe(res => {
-      this.allOrders = res;
-      if (res.length === 0) {
-        this.ordersService.createOrder();
-      }
-      this.ordersService.activeOrder( res ).subscribe(response => {
-        this.currentOrder = response; // this.allOrders[response.id];
-        this.productsInActiveOrder(response);
-      });
-    });
+  getActiveOrder(): void {
+    this.ordersService.activeOrder().subscribe(order => {
+      this.activeOrderNum = order.id;
+      this.productsInActiveOrder(order.id);
+    })
   }
 
-  productsInActiveOrder(currentOrder: object): void { // gets the products in the active order
-    this.ordersService.orderDetails(this.currentOrder.id).subscribe(res => {
+  productsInActiveOrder(oid: number): void { // gets the products in the active order (list)
+    this.ordersService.orderDetails(oid).subscribe(res => {
       this.orderProducts = res;
       this.productsInActiveCart();
     });
   }
 
-  productsInActiveCart(): void { // gets products in  active order and pushes them to cart.
+  productsInActiveCart(): void { //  pushes products in active order to cart.
     this.orderProducts.forEach(item => {
       this.productService.getProduct(item.productid).subscribe(res => {
         res = Object.assign(res, {quantity: item.quantity, order_productsId: item.id, orderId: item.orderid});

@@ -55,8 +55,8 @@ export class ProductItemDetailComponent implements OnInit {
       this.product = res;
     });
     console.log('subscribing to the current activeorder() function from orderService');
-    this.orderService.currentActiveOrder().subscribe(res => {
-      this.activeOrder = res;
+    this.orderService.activeOrder().subscribe(res => {
+      this.activeOrder = res.id;
       console.log('product-item-detail, this.activeOrder, res', this.activeOrder, res);
     });
 

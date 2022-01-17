@@ -29,10 +29,6 @@ import {
   providedIn: 'root'
 })
 export class OrdersService {
-
-  // apiServer: string = environment.API_SERVER_IP;
-  // apiPort: string = environment.API_PORT;
-  // protocol: string = environment.PROTOCOL;
   baseURL: string = environment.PROTOCOL + environment.API_SERVER_IP + ':' + environment.API_PORT; 
   jwtToken: {
     token: string,
@@ -57,8 +53,9 @@ export class OrdersService {
     status: ''
   }; // The DB order where status ='active'
   allOrders: Order[] = []; // all user orders on DB
-  activeOrderNum = 0;
+  // activeOrderNum: number = 0;
   justOne: Order[] = [];
+  orderProducts: OrderProducts[] = [{id: 0, productid: 0, quantity: 0, orderid: 0}]; // order transactions
 
 
   constructor(
@@ -128,40 +125,21 @@ export class OrdersService {
     return request;
   }
 
-  currentActiveOrder(): Observable < number > {
-    this.getOrders().subscribe(res => {
-      this.allOrders = res;
-      this.activeOrder(res).subscribe(order => {
-        if (order === undefined) {
-          this.createOrder();
-        }
-        this.activeOrderNum = order.id;
-      });
-    });
-
-    return of(this.activeOrderNum);
+activeOrder(): Observable < Order > {
+  this.addAuthorisation();
+  const request = this.http.get < Order > (`${this.baseURL}/users/` + this.jwtToken.uid + 
+  '/activeorder', this.httpOptions);
+  if(request === undefined) {
+    this.createOrder();
+    this.activeOrder();
   }
-  activeOrder(allOrders: Order[]): Observable < any > {
-    this.justOne = allOrders.filter(order => {
-      if (order.status === 'active') {
-        return order;
-      } else {
-        return;
-      }
-    });
-    if (this.checkOrderLength(this.justOne)) {}
-    return of(this.justOne[0]);
-  }
-
+  return request;
+}
 
   checkOrderLength(orderArrayLength: Order[]): Observable < boolean > {
     const isTrue: boolean = orderArrayLength.length === 0;
     return of(isTrue);
   }
-
-  // productsInOrder(oid: number): void {
-
-  // }
 
   addAuthorisation(): void {
     this.currentToken(); // invoke method to update token before submission to API

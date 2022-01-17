@@ -40,8 +40,8 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.currentUserId();
-    this.orderService.currentActiveOrder().subscribe(res => {
-      this.activeOrder = res;
+    this.orderService.activeOrder().subscribe(res => {
+      this.activeOrder = Number(res.id);
       console.log('checkout component, this.activeOrder, res', this.activeOrder, res);
     });
 

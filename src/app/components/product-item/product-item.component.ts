@@ -62,8 +62,8 @@ export class ProductItemComponent implements OnInit {
   }
 
   getActiveOrder(): void {
-    this.orderService.currentActiveOrder().subscribe(res => {
-      this.activeOrder = res;
+    this.orderService.activeOrder().subscribe(res => {
+      this.activeOrder = res.id;
       console.log('product-item, this.activeOrder, res', this.activeOrder, res);
     });
   }

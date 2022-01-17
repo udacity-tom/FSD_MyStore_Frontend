@@ -42,8 +42,8 @@ export class ConfirmationComponent implements OnInit {
       console.log('res from show user', res);
       this.currentUser = res;
     });
-    this.orderService.currentActiveOrder().subscribe(res => {
-      this.activeOrder = res;
+    this.orderService.activeOrder().subscribe(res => {
+      this.activeOrder = res.id;
       console.log('checkout component, this.activeOrder, res', this.activeOrder, res);
     });
 
