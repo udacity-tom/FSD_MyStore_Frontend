@@ -1,0 +1,62 @@
+.cartContent, tbody {
+    margin: 20px auto;
+}
+
+.cartContent th{
+    font-size: 1.1em;
+    border: 1px solid #c5c5c5;
+    margin-bottom: 20px;
+    padding: 3px 7px 20px 7px;
+}
+
+th {
+    margin-bottom: 20px;
+    height: 20px;
+    padding-bottom: 20px;
+}
+
+table {
+    width: 100%;
+}
+
+
+.pid {
+    width: 100px;;
+}
+
+.image {
+    width: 80px;
+}
+
+.description {
+    width: 250px;
+}
+
+.category {
+    width: 180px;
+}
+
+.quantity {
+    width: 190px;
+    text-align: center;
+}
+
+.price {
+    width: 190px;
+    text-align: center;
+}
+
+.quantity.th, .quantity > td {
+    text-align: right;
+}
+
+.spacer {
+    width: 190px;
+    text-align: right;
+}
+
+.remove {
+    width: 190px;
+    text-align: center;
+    margin: auto;
+}

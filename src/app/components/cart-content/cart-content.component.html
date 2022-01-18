@@ -1,12 +1,9 @@
-<tr>
         <p *ngIf="currentCartStatus">You have no items in your cart!</p>
-        <td width="80px">PID:{{product.id}}/<br>OPID:{{product.order_productsId}}</td>
-        <td width="80px" align="left"><img src = "{{product.url}}" width=60px; height=60px;></td>
-        <td width="250px" align="left">{{product.name}}</td>
-        <td width="150px" align="left">{{product.category}}</td>
-        <td width="190px" align="right">{{product.quantity}}</td>
-        <td width="190px" align="right">{{product.price}}</td>
-        <td width="190px"></td>
-        <td width="190px" align="left"><button class="btn btn-primary" (click)="removeItem()">Remove</button></td>
-        <br>
-</tr>
+        <td class="pid" title={{titleText1}} [routerLink]="'/detail/'+product.id">PID:{{product.id}}/<br>OPID:{{product.order_productsId}}</td>
+        <td class="image" title={{titleText1}} [routerLink]="'/detail/'+product.id"><img src = "{{product.url}}" width=60px; height=60px;></td>
+        <td class="description" title={{titleText1}} [routerLink]="'/detail/'+product.id">{{product.name}}</td>
+        <td class="category" title={{titleText1}} [routerLink]="'/detail/'+product.id">{{product.category}}</td>
+        <td class="quantity">{{product.quantity}}</td>
+        <td class="price">{{product.price}}</td>
+        <td class="space">{{product.price * product.quantity}}</td>
+        <td class="remove"><button class="btn btn-primary" (click)="removeItem()">Remove</button></td>

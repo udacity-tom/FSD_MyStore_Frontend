@@ -1,28 +1,40 @@
-<form #form="ngForm"  class="login-container" >
+<div>
     <h2 *ngIf="loginStatus">Currently {{username}} is logged in!</h2>
     <br>
-    <h3>Your current Cart Contents</h3>
+    <h3 *ngIf="currentCartStatus">Your current Cart Contents</h3>
     <br>
-    <table Cols="7">
+    <table *ngIf="currentCartStatus" Cols="8" class="cartContent">
+        <colgroup>
+            <col class="pid" />
+            <col class="image" />
+            <col class="description" />
+            <col class="category" />
+            <col class="quantity" />
+            <col class="price" />
+            <col class="spacer" />
+            <col class="remove" />
+        </colgroup>
         <thead>
             <tr>
-                <th scope="col" width="80px"></th>
-                <th scope="col" width="80px"></th>
-                <th scope="col" width="250px">Description</th>
-                <th scope="col" align="left" width="190px">Category</th>
-                <th scope="col" align="right" width="190px">Price</th>
-                <th scope="col" align="right" width="190px">Quantity</th>
-                <th scope="col" align="left" width="190px"></th>
-                <th scope="col" align="center" width="190px">Remove?</th>
+                <th class="pid" scope="col"></th>
+                <th class="image" scope="col"></th>
+                <th class="description" scope="col">Description</th>
+                <th class="category" scope="col">Category</th>
+                <th class="quantity" scope="col">Quantity</th>
+                <th class="price" scope="col">Price<br>(unit)</th>
+                <th class="spacer" scope="col">SubTotal</th>
+                <th class="remove" scope="col">Remove?</th>
             </tr>
         </thead>
-    <br>
-    <tbody>
-    <app-cart-content *ngFor="let product of cart" [product]="product" [cart]="cart" (removeItemFromCart)="removeItemFromCart($event)" height=70px></app-cart-content>
-    </tbody>
+        <tbody>
+            <tr app-cart-content *ngFor="let product of cart" [product]="product" [cart]="cart" (removeItemFromCart)="removeItemFromCart($event)" height=70px>
+            </tr>
+
+        </tbody>
     </table>
+    <br>
     <h2 *ngIf="!currentCartStatus">You have no items in your cart! <br> Please visit the <a routerLink="/products">Products page</a> to add Products to your Cart</h2>
-    <h2 *ngIf="currentCartStatus">Your Cart Total is: USD {{cartTotal}}</h2>
+    <h2 class="total" *ngIf="currentCartStatus">Your Cart Total is: USD {{cartTotal.toFixed(2)}}</h2>
     <br>
     <button *ngIf="currentCartStatus" class="btn btn-primary" (click)="checkout()">Checkout</button>
-</form>
+</div>

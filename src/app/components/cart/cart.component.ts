@@ -8,7 +8,6 @@ import { TokenService } from 'src/app/service/token.service';
 import { OrdersService } from 'src/app/service/orders.service';
 import { ProductService } from 'src/app/service/products.service';
 import { CartService } from 'src/app/service/cart.service';
-import { of } from 'rxjs';
 
 interface CartProduct extends Product {
   quantity: number;
@@ -25,11 +24,10 @@ export class CartComponent implements OnInit {
  @Input() cart: CartProduct[] = [];  // products in cart
  @Input() cartOrder: Order = {id: 0, userId: 0, status: ''}; // the current user cart to update to DB onChange
 
-
  cartTotal = 0.00;
  currentOrder: Order = {id: 0, userId: 0, status: ''}; // The DB order where status ='active'
  allOrders: Order[] = []; // all user orders on DB
- activeOrderNum: number = 0;
+ activeOrderNum = 0;
  orderProducts: OrderProducts[] = [{id: 0, productid: 0, quantity: 0, orderid: 0}]; // order transactions
  product: Product = {id: 0, name: '', url: '', price: 0, snippet: '', description: '', accreditation: '', category: '' };
  loginStatus = false;
@@ -74,7 +72,7 @@ export class CartComponent implements OnInit {
     this.ordersService.activeOrder().subscribe(order => {
       this.activeOrderNum = order.id;
       this.productsInActiveOrder(order.id);
-    })
+    });
   }
 
   productsInActiveOrder(oid: number): void { // gets the products in the active order (list)
@@ -88,7 +86,7 @@ export class CartComponent implements OnInit {
     this.orderProducts.forEach(item => {
       this.productService.getProduct(item.productid).subscribe(res => {
         res = Object.assign(res, {quantity: item.quantity, order_productsId: item.id, orderId: item.orderid});
-        this.cartTotal += Number((res.price * Number(res.quantity)).toFixed(2));
+        this.cartTotal += Number(res.price) * Number(res.quantity);
         this.cart.push(res);
       });
     });
