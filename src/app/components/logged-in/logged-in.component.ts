@@ -8,6 +8,8 @@ import { Order } from 'src/app/models/Order';
 import { Observable } from 'rxjs';
 import { OrdersService } from 'src/app/service/orders.service';
 import { OrderProducts } from 'src/app/models/OrderProducts';
+import { ProductService } from 'src/app/service/products.service';
+import { Product } from 'src/app/models/Product';
 // import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
@@ -24,6 +26,17 @@ export class LoggedInComponent implements OnInit {
   authFn: object = {};
   loading = false;
   currentOrders: Order[] = [];
+  products: Product[] = [];
+  currentProduct: Product = {
+    id: 0, 
+    name: '',
+    price: 0,
+    url: '',
+    snippet: '',
+    description: '',
+    accreditation: '',
+    category: '',
+  };
   noOfCompletedOrders: Order[] = [];
   showOrderDetails = false;
   loginStatus: boolean;
@@ -40,10 +53,10 @@ export class LoggedInComponent implements OnInit {
     private tokenService: TokenService,
     private router: Router,
     private route: ActivatedRoute,
-    private orderService: OrdersService
+    private orderService: OrdersService,
+    private productsService: ProductService
     ) {
     this.loginStatus = false;
-
   }
 
   ngOnInit(): void {
@@ -72,18 +85,19 @@ export class LoggedInComponent implements OnInit {
 
   existingOrdersService(): void {
     this.orderService.getOrders().subscribe(res => {
-      console.log('logged-in component, res from this.orderService.getOrders() observable', res, res.length);
+      // console.log('logged-in component, res from this.orderService.getOrders() observable', res, res.length);
       if (res.length === 0 || res === undefined){
         this.orderService.createOrder().subscribe(order => {
           console.log('orderService res in logged-in ', order);
           const orderServiceResult = order;
           return orderServiceResult;
         });
-        this.existingOrdersService ();
+        this.existingOrdersService();
       }
       this.currentOrders = res;
       this.completedOrders(res);
       console.log('this.noOfCompletedOrders', this.noOfCompletedOrders);
+      
     });
   }
 
@@ -94,17 +108,36 @@ export class LoggedInComponent implements OnInit {
   }
 
   orderDetails(oid: number): void {
+    this.products = [];
     this.orderService.orderDetails(oid).subscribe(res => {
       console.log('orderDetails method on logged-in component res from orderDetails', res);
       this.currentOrderDetails = res;
+      res.forEach(item => {
+        this.productsService.getProduct(item.productid).subscribe(product => {
+          this.products.push(product);
+        })
+
+        // this.products.push(this.showProduct(item.productid));
+      });
+
     });
     this.showOrderDetails = true;
     if ( this.currentOrderDetails === []) {
       // alert('You haven\'t added anything to your order yet. Visit our products page' );
     }
     console.log('orderDetails', oid);
+    console.log('orderDetails, this.products', this.products);
   }
 
+  // showProduct(pid: number): Product {
+  //   this.productsService.getProduct(pid).subscribe(product => {
+  //     this.currentProduct = product; 
+  //     // this.products.push(product);
+  //     console.log('logged-in comp showProduct(), product, this.currentProduct',  this.currentProduct)
+  //     return product;
+  //   });
+  //   return this.currentProduct;
+  // }
 
   logout(): void {
     console.log('logout() run from logged-in component');

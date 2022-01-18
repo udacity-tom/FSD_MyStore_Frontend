@@ -44,12 +44,40 @@
         <div *ngIf="!currentOrderDetails[0]">This is your current active order. <br> You have no products in your basket. <br><span style="font-size: largest;">Visit our <a [routerLink]="[ '/', 'products']">products page and add some items.</a></span></div>
         <div *ngIf="currentOrderDetails[0]" >
             <h1>Order Details for Order with ID {{currentOrderDetails[0].orderid}}</h1>
-            <div *ngFor="let product of currentOrderDetails">
-                <!-- <p >ID: {{product.id}}</p> -->
-                <!-- <p>Order ID: {{product.orderId}}</p> -->
-                <p>Product ID: {{product.productid}}</p>
-                <p>Product Quantity: {{product.quantity}}</p>
-            </div>
+            <!-- <div *ngFor="let order of currentOrderDetails"> -->
+                <div *ngFor="let product of products">
+                    <!-- <p >ID: {{product.id}}</p> -->
+                    <!-- <p>Order ID: {{product.orderId}}</p> -->
+                    <!-- <p>Product ID: {{product.productid}}</p>
+                    <p>Product Quantity: {{product.quantity}}</p> -->
+                    <table>
+                        <colgroup>
+                            <col class="image" />
+                            <col class="description" />
+                            <col class="quantity" />
+                            <col class="price" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th class="image" scope="col"></th>
+                                <th class="description" scope="col">Description</th>
+                                <th class="quantity" scope="col">Quantity</th>
+                                <th class="price" scope="col">Price<br></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src = "{{product.url}}" width=60px; height=60px;></td>
+                                <td>{{product.name}}</td>
+                                <td>{{currentOrderDetails[0].quantity}}</td>
+                                <td>{{product.price}}</td>
+                            </tr>
+                            <!-- <td class="image" title={{titleText1}} [routerLink]="'/detail/'+product.id"><img src = "{{product.url}}" width=60px; height=60px;></td>
+                            <td class="description" title={{titleText1}} [routerLink]="'/detail/'+product.id">{{product.name}}</td> -->
+                        </tbody>
+                    </table>
+                </div>
+            <!-- </div> -->
         </div>
     </div>
     <!-- </span> -->

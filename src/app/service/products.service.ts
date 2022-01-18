@@ -39,20 +39,20 @@ export class ProductService {
   addProduct(newProduct: Product): Observable<Product> {
     // checked signed in & check current user
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.tokenService.getToken());
-    console.log('headers', this.httpOptions);
+    // console.log('headers', this.httpOptions);
     return this.http.post<Product>(`${this.protocol}${this.apiServer}:${this.apiPort}/products/create`, {newProduct});
   }
 
   getDescription(link: string, itemName: string): Observable<object> {
     return this.itemDescription = from(
       fetch(`${link}${itemName}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'GET',
-        mode: 'no-cors'
-      }
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'GET',
+          mode: 'no-cors'
+        }
       )
     );
   }
