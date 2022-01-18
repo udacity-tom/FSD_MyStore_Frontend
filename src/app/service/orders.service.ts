@@ -29,7 +29,7 @@ import {
   providedIn: 'root'
 })
 export class OrdersService {
-  baseURL: string = environment.PROTOCOL + environment.API_SERVER_IP + ':' + environment.API_PORT; 
+  baseURL: string = environment.PROTOCOL + environment.API_SERVER_IP + ':' + environment.API_PORT;
   jwtToken: {
     token: string,
     expiry: number,
@@ -127,19 +127,18 @@ export class OrdersService {
 
 activeOrder(): Observable < Order > {
   this.addAuthorisation();
-  const request = this.http.get < Order > (`${this.baseURL}/users/` + this.jwtToken.uid + 
-  '/activeorder', this.httpOptions);
-  if(request === undefined) {
+  const request = this.http.get < Order > (`${this.baseURL}/users/` + this.jwtToken.uid + '/activeorder', this.httpOptions);
+  if ( request === undefined ) {
     this.createOrder();
     this.activeOrder();
   }
   return request;
 }
 
-  checkOrderLength(orderArrayLength: Order[]): Observable < boolean > {
-    const isTrue: boolean = orderArrayLength.length === 0;
-    return of(isTrue);
-  }
+  // checkOrderLength(orderArrayLength: Order[]): Observable < boolean > {
+  //   const isTrue: boolean = orderArrayLength.length === 0;
+  //   return of(isTrue);
+  // }
 
   addAuthorisation(): void {
     this.currentToken(); // invoke method to update token before submission to API

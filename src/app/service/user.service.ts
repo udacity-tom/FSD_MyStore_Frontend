@@ -12,7 +12,7 @@ export class UserService {
   // apiServer: string = environment.API_SERVER_IP;
   // apiPort: string = environment.API_PORT;
   // protocol: string = environment.PROTOCOL;
-  baseURL: string = environment.PROTOCOL + environment.API_SERVER_IP + ':' + environment.API_PORT; 
+  baseURL: string = environment.PROTOCOL + environment.API_SERVER_IP + ':' + environment.API_PORT;
   // +this.protocol + this.apiServer + this.apiPort;
   username: string;
   password: string;

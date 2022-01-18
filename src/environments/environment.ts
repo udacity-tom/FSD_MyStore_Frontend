@@ -7,8 +7,6 @@ export const environment = {
   API_SERVER_IP: '127.0.0.1',
   API_PORT: '3002',
   PROTOCOL: 'http://',
-
-
 };
 
 /*

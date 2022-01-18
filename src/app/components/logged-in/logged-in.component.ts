@@ -48,10 +48,6 @@ export class LoggedInComponent implements OnInit {
 
   ngOnInit(): void {
     this.existingOrdersService();
-    // this.noOfCompletedOrders = this.currentOrders.filter(item => {
-    //   item.status == 'complete';
-    // });
-    // this.completedOrders(this.currentOrders);
     this.updateLoginStatus();
     this.tokenService.getToken();
   }
@@ -65,8 +61,6 @@ export class LoggedInComponent implements OnInit {
     this.loginService.loginStatus().subscribe(res => {
       this.loginStatus = res;
       if (!this.loginStatus){
-        // console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
-        // this.router.navigate(['/', {relativeTo: this.route}]);
         this.router.navigate(['/']);
         return;
       }
@@ -80,7 +74,6 @@ export class LoggedInComponent implements OnInit {
     this.orderService.getOrders().subscribe(res => {
       console.log('logged-in component, res from this.orderService.getOrders() observable', res, res.length);
       if (res.length === 0 || res === undefined){
-
         this.orderService.createOrder().subscribe(order => {
           console.log('orderService res in logged-in ', order);
           const orderServiceResult = order;

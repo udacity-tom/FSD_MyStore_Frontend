@@ -8,10 +8,7 @@ import { TokenService } from './token.service';
   providedIn: 'root'
 })
 export class LoginService {
-  // apiServer: string = environment.API_SERVER_IP;
-  // apiPort: string = environment.API_PORT;
-  // protocol: string = environment.PROTOCOL;
-  baseURL: string = environment.PROTOCOL + environment.API_SERVER_IP + ':' + environment.API_PORT; 
+  baseURL: string = environment.PROTOCOL + environment.API_SERVER_IP + ':' + environment.API_PORT;
   username: string;
   password: string;
   currentJWT: string;
@@ -65,7 +62,7 @@ export class LoginService {
 
   logOut(): void {
     this.tokenService.deleteToken();
-    // logs user out, removes localstorage token, updates logged in status
+    // logs user out: removes localstorage token, eventually updates logged in status
   }
 
 }
