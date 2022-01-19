@@ -61,7 +61,7 @@ export class LoggedInComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.existingOrdersService();
+    this.existingOrders();
     this.updateLoginStatus();
     this.tokenService.getToken();
   }
@@ -84,7 +84,7 @@ export class LoggedInComponent implements OnInit {
     });
   }
 
-  existingOrdersService(): void {
+  existingOrders(): void {
     this.orderService.getOrders().subscribe(res => {
       // console.log('logged-in component, res from this.orderService.getOrders() observable', res, res.length);
       if (res.length === 0 || res === undefined){
@@ -93,7 +93,7 @@ export class LoggedInComponent implements OnInit {
           const orderServiceResult = order;
           return orderServiceResult;
         });
-        this.existingOrdersService();
+        this.existingOrders();
       }
       this.currentOrders = res;
       this.completedOrders(res);

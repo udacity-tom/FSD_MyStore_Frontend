@@ -1,7 +1,7 @@
 <div>
     <h2 *ngIf="loginStatus">Currently {{username}} is logged in!</h2>
     <h1>Logout Here</h1>
-    <input type="submit" (click)="logout()" value="Log out" class="btn btn-primary">
+    <button type="submit" (click)="logout()" class="btn btn-primary">Log out</button>
     <br>
     <br>
     <br>
@@ -12,7 +12,7 @@
     <div>
         <p>You have {{(currentOrders.length == 0 ? 'no' : currentOrders.length)}} orders on file. {{(noOfCompletedOrders.length == 0 ? 'No orders' : (noOfCompletedOrders.length == 1 ? 'One order' : noOfCompletedOrders.length+' orders')) }} {{(noOfCompletedOrders.length == 1 ? 'is' : 'are')}} complete.</p>
         <p *ngIf="currentOrders.length > 1">Click order below to see order details.</p>
-        <table Cols="3">
+        <table>
             <thead>
                 <tr>
                     <th class="orderid">Order ID</th>
