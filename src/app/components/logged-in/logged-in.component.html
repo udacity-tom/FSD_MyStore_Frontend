@@ -1,55 +1,39 @@
-<form #form="ngForm"  class="login-container" >
+<div>
     <h2 *ngIf="loginStatus">Currently {{username}} is logged in!</h2>
-    <!-- <h1 *ngIf()>Login Here!</h1> -->
     <h1>Logout Here</h1>
-
     <input type="submit" (click)="logout()" value="Log out" class="btn btn-primary">
     <br>
     <br>
     <br>
-    <!-- <input type="submit" (click)="onSubmit()" value="orders" class="btn btn-primary"> -->
-    <!-- <input type="submit" [disabled]="form.invalid" value="Submit" class="btn btn-primary"> -->
-</form>
-<!-- <p *ngIf="loading" class="signin-text">Currently logging in as: {{username}}</p> -->
-<br>
-
-<div>
-    <h1>Your previous orders: </h1>
-</div>
-<div>
-    <!-- {{currentOrders.filter()}} -->
-    <p>You have {{(currentOrders.length == 0 ? 'no' : currentOrders.length)}} orders on file. {{(noOfCompletedOrders.length == 0 ? 'No orders' : (noOfCompletedOrders.length == 1 ? 'One order' : noOfCompletedOrders.length+' orders')) }} {{(noOfCompletedOrders.length == 1 ? 'is' : 'are')}} complete.</p>
-    <p *ngIf="currentOrders.length > 1">Click order below to see order details.</p>
-    <table Cols="3">
-        <thead>
-        <tr>
-            <th colspan="2" width="80px">Order ID</th>
-            <!-- <th colspan="3"></th> -->
-            <th colspan="2">Order status</th>
-        </tr>
-    </thead>
-    <tbody>
-    <!-- <span *ngFor="let order of currentOrders" > -->
-        <tr *ngFor="let order of currentOrders" (click)="orderDetails(order.id)">
-            <!-- <a (click)="orderDetails(order.id)"> -->
-                <td align="center" >{{order.id}}</td>
-                <td></td>
-                <td align="right">{{order.status}}</td>
-            <!-- </a> -->
-        </tr>
-    </tbody>
-    </table>
-    <div *ngIf="showOrderDetails">
-        <br>
-        <div *ngIf="!currentOrderDetails[0]">This is your current active order. <br> You have no products in your basket. <br><span style="font-size: largest;">Visit our <a [routerLink]="[ '/', 'products']">products page and add some items.</a></span></div>
-        <div *ngIf="currentOrderDetails[0]" >
-            <h1>Order Details for Order with ID {{currentOrderDetails[0].orderid}}</h1>
-            <!-- <div *ngFor="let order of currentOrderDetails"> -->
+    <br>
+    <div>
+        <h1>Your previous orders: </h1>
+    </div>
+    <div>
+        <p>You have {{(currentOrders.length == 0 ? 'no' : currentOrders.length)}} orders on file. {{(noOfCompletedOrders.length == 0 ? 'No orders' : (noOfCompletedOrders.length == 1 ? 'One order' : noOfCompletedOrders.length+' orders')) }} {{(noOfCompletedOrders.length == 1 ? 'is' : 'are')}} complete.</p>
+        <p *ngIf="currentOrders.length > 1">Click order below to see order details.</p>
+        <table Cols="3">
+            <thead>
+                <tr>
+                    <th class="orderid">Order ID</th>
+                    <th class="spacer"></th>
+                    <th class="orderStatus">Order status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of currentOrders" (click)="orderDetails(order.id)">
+                    <td class="orderid" >{{order.id}}</td>
+                    <td class="spacer"></td>
+                    <td class="orderStatus">{{order.status}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="showOrderDetails">
+            <br>
+            <div *ngIf="!currentOrderDetails[0]">This is your current active order. <br> You have no products in your basket. <br><span style="font-size: largest;">Visit our <a [routerLink]="[ '/', 'products']">products page and add some items.</a></span></div>
+            <div *ngIf="currentOrderDetails[0]" >
+                <h1>Order Details for Order with ID {{currentOrderDetails[0].orderid}}</h1>
                 <div *ngFor="let product of products">
-                    <!-- <p >ID: {{product.id}}</p> -->
-                    <!-- <p>Order ID: {{product.orderId}}</p> -->
-                    <!-- <p>Product ID: {{product.productid}}</p>
-                    <p>Product Quantity: {{product.quantity}}</p> -->
                     <table>
                         <colgroup>
                             <col class="image" />
@@ -66,20 +50,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><img src = "{{product.url}}" width=60px; height=60px;></td>
-                                <td>{{product.name}}</td>
-                                <td>{{currentOrderDetails[0].quantity}}</td>
-                                <td>{{product.price}}</td>
+                            <tr title='View Product {{product.name}}' [routerLink]="'/detail/'+product.id" >
+                                <td class="image"><img src = "{{product.url}}" width=60px; height=60px;></td>
+                                <td class="description">{{product.name}}</td>
+                                <td class="quantity">{{currentOrderDetails[0].quantity}}</td>
+                                <td class="price">{{product.price}}</td>
                             </tr>
-                            <!-- <td class="image" title={{titleText1}} [routerLink]="'/detail/'+product.id"><img src = "{{product.url}}" width=60px; height=60px;></td>
-                            <td class="description" title={{titleText1}} [routerLink]="'/detail/'+product.id">{{product.name}}</td> -->
                         </tbody>
                     </table>
                 </div>
-            <!-- </div> -->
+            </div>
         </div>
     </div>
-    <!-- </span> -->
-<!-- </table> -->
 </div>

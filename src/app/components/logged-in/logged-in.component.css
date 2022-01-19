@@ -1,3 +1,37 @@
 tr:hover {
     background-color: lightblue;
 }
+
+.orderid {
+    width: 80px;
+    text-align: center;
+    /* outline: 1px solid black; */
+}
+
+.spacer {
+    width: 50px;
+}
+
+.orderStatus {
+    width: 180px;
+    text-align: center;
+    /* outline: 1px solid black; */
+}
+
+.image {
+    width: 100px;
+}
+
+.description {
+    width: 220px;
+}
+
+.quantity {
+    width: 80px;
+    text-align: center;
+}
+
+.price {
+    width: 120px;
+    text-align: center;
+}

@@ -21,6 +21,7 @@ export class LoggedInComponent implements OnInit {
   @Input() currentOrderDetails: OrderProducts[] = [ {id: 0, productid: 0, quantity: 0, orderid: 0}];
   username = '';
   password = '';
+  firstname = '';
   returnedJWT: object = {};
   token = '';
   authFn: object = {};
@@ -116,8 +117,6 @@ export class LoggedInComponent implements OnInit {
         this.productsService.getProduct(item.productid).subscribe(product => {
           this.products.push(product);
         })
-
-        // this.products.push(this.showProduct(item.productid));
       });
 
     });
@@ -128,16 +127,6 @@ export class LoggedInComponent implements OnInit {
     console.log('orderDetails', oid);
     console.log('orderDetails, this.products', this.products);
   }
-
-  // showProduct(pid: number): Product {
-  //   this.productsService.getProduct(pid).subscribe(product => {
-  //     this.currentProduct = product; 
-  //     // this.products.push(product);
-  //     console.log('logged-in comp showProduct(), product, this.currentProduct',  this.currentProduct)
-  //     return product;
-  //   });
-  //   return this.currentProduct;
-  // }
 
   logout(): void {
     console.log('logout() run from logged-in component');
