@@ -6,6 +6,7 @@ import { CartService } from 'src/app/service/cart.service';
 import { OrdersService } from 'src/app/service/orders.service';
 import { Observable } from 'rxjs';
 import { LoginService } from 'src/app/service/login.service';
+import { ToastService } from 'src/app/service/toast.service';
 @Component({
   selector: 'app-product-item-detail',
   templateUrl: './product-item-detail.component.html',
@@ -29,7 +30,8 @@ export class ProductItemDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private cartService: CartService,
     private orderService: OrdersService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private toastService: ToastService
     ) {
     this.product = {
       id: 0,
@@ -84,6 +86,7 @@ export class ProductItemDetailComponent implements OnInit {
     this.cartService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
       this.response = res;
       console.log('product-list-item component, add product to cart res =', res);
+      this.toastService.show(this.product.name, `We have put ${quantity} ${this.product.name} into your Cart!` )
     });
   }
 
