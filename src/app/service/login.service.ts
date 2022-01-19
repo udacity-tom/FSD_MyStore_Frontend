@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TokenService } from './token.service';
@@ -39,10 +39,9 @@ export class LoginService {
       this.user = res.user;
       this.uid = res.uid;
     });
-
     const currentTime = Math.floor((Number(new Date()) / 1000));
     if (this.currentJWT !== 'no Token') {
-        if (this.expiry > currentTime) {
+        if (this.expiry > currentTime) { //add additional checking
           this.userIsLoggedIn = true;
         } else {
           this.userIsLoggedIn = false;
@@ -54,9 +53,10 @@ export class LoginService {
     return of(this.userIsLoggedIn);
   }
 
-  authUser(username: string, password: string): Observable<ArrayBuffer>{
+  authUser(username: string, password: string): Observable< {token: string, expiry: number, uid: number, user: string}>{
+    // console.log('login service, authUser() username, password', username, password);
     this.url = `${this.baseURL}/users/authenticate`;
-    return this.http.post< any >(this.url, {username, password});
+    return this.http.post< any >(this.url, {"username": username, "password":password});
     }
 
 
