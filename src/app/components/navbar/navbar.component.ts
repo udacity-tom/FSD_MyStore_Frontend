@@ -17,14 +17,8 @@ export class NavbarComponent implements OnInit, DoCheck {
     this.username = '';
   }
 
-  // ngOnChanges(): void {
-  //   this.updateLoginStatus();
-  //   this.getUsername();
-  // }
-
   ngOnInit(): void {
     this.updateLoginStatus();
-    this.getUsername();
   }
 
   ngDoCheck(): void {
@@ -34,20 +28,13 @@ export class NavbarComponent implements OnInit, DoCheck {
   updateLoginStatus(): void {
     this.loginAuth.loginStatus().subscribe(res => {
       this.loginStatus = res;
+      if(this.loginStatus){
+        this.tokenService.getToken().subscribe(token => {
+          this.username = token.user;
+        })
+      } else {
+        this.username = '';
+      }
     });
-    // console.log('Navbar loginSTatus', this.loginStatus);
   }
-
-  getUsername(): void {
-    this.tokenService.getToken().subscribe(res => {
-      this.username = res.user;
-    });
-    // console.log('navbar getusername()', this.username);
-
-  }
-
-  // getuser(): void {
-  //   this.username = this.tokenService.getCurrentUser();
-  // }
-
 }
