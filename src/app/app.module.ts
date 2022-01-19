@@ -21,6 +21,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
 import { CartContentComponent } from './components/cart-content/cart-content.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { AppToastComponent } from './components/app-toast/app-toast.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     RegisterComponent,
     LoggedInComponent,
     CartContentComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    AppToastComponent
   ],
   imports: [
     BrowserModule,
