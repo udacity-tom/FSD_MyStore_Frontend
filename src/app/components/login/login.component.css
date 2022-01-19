@@ -9,3 +9,9 @@
   .btn-primary {
     margin: 10px;
   }
+
+  button:hover {
+    color: #007bff;
+    background-color: #fff;
+    border-color: #007bff;
+  }
