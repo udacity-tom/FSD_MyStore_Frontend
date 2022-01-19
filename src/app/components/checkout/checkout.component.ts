@@ -42,11 +42,11 @@ export class CheckoutComponent implements OnInit {
     this.userId = this.currentUserId();
     this.orderService.activeOrder().subscribe(res => {
       this.activeOrder = Number(res.id);
-      console.log('checkout component, this.activeOrder, res', this.activeOrder, res);
+      // console.log('checkout component, this.activeOrder, res', this.activeOrder, res);
     });
 
     this.userService.showUser(this.userId).subscribe(res => {
-      console.log('res from show user', res);
+      // console.log('res from show user', res);
       this.user = res;
     });
     // console.log(this.userService.show(this.userId));
@@ -55,13 +55,15 @@ export class CheckoutComponent implements OnInit {
   onSubmit(): void {
     this.updateUserDetails();
     this.completeOrder();
-    this.router.navigate(['/confirmation']);
+    if(this.orderStatus) {
+      this.router.navigate(['/confirmation']);
+    }
   }
 
   updateUserDetails(): void{
     this.userService.updateUserDetails(this.user
       ).subscribe(res => {
-        console.log('checkout.component.ts', res);
+        // console.log('checkout.component.ts', res);
       });
     }
 
@@ -70,21 +72,20 @@ export class CheckoutComponent implements OnInit {
     }
 
     completeOrder(): void {
-      console.log('completeOrder(), checkout component this.userId, this.activeOrder', this.userId, this.activeOrder);
+      // console.log('completeOrder(), checkout component this.userId, this.activeOrder', this.userId, this.activeOrder);
       this.orderService.completeOrder(this.activeOrder).subscribe(res => {
-          console.log('update order completeOrder res', res);
+          // console.log('update order completeOrder res', res);
           this.orderStatus = res;
           if (res.status === 'complete') {
             this.createNewActiveOrder();
           }
-
       });
     }
 
     createNewActiveOrder(): void {
       this.currentUserId();
       this.orderService.createOrder(String(this.userId)).subscribe(res => {
-        console.log('createNewActiveOrder()', res);
+        // console.log('createNewActiveOrder()', res);
       });
     }
 
