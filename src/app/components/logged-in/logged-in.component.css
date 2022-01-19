@@ -35,3 +35,9 @@ tr:hover {
     width: 120px;
     text-align: center;
 }
+
+button:hover {
+    color: #007bff;
+    background-color: #fff;
+    border-color: #007bff;
+  }
