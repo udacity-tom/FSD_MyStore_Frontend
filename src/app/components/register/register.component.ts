@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
 import { UserService } from 'src/app/service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -25,7 +26,7 @@ export class RegisterComponent implements OnInit {
   exp = 0;
 
 
-  constructor(private userService: UserService, private tokenService: TokenService) { }
+  constructor(private userService: UserService, private tokenService: TokenService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -36,6 +37,8 @@ export class RegisterComponent implements OnInit {
      // this.returnedJWT = this.returnedRes[1] as object;
     // console.log('returned res from api on user create', this.returnedRes);
     this.loading = false;
+    //Notify user!
+    this.router.navigate(['/login']);
   }
 
   registerUser(username: string, firstname: string, lastname: string, password: string ): object {
@@ -46,7 +49,7 @@ export class RegisterComponent implements OnInit {
         this.newtoken = Object.values(this.returnedRes)[1];
         this.payload = Object.values(this.returnedRes)[2].payload;
         this.exp = Object.values(this.payload)[13];
-        this.tokenService.setToken({token: this.newtoken, expiry: this.exp, user: this.username} );
+        this.tokenService.setToken({token: this.newtoken, expiry: this.exp, user: this.username});
       }
     );
   }
