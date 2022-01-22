@@ -1,3 +1,7 @@
-.margins {
-    margin: 40px 0px 0px 40px;   
-}
+:host {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 2em;
+    z-index: 1200;
+  }
