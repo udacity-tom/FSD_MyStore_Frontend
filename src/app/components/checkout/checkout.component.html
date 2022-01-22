@@ -71,7 +71,7 @@
         <br>
     </section>
 
-    <input type="submit" [disabled]="form.invalid" value="Submit Your Order" class="btn btn-primary button-position">
+    <Button type="submit" [disabled]="form.invalid" class="btn btn-primary button-position">Submit Your Order</Button>
 </form>
 <br>
     <div *ngIf="firstName.invalid && firstName.dirty">

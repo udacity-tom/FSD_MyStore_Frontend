@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { of, Observable } from 'rxjs';
-import { CartService } from 'src/app/service/cart.service';
+// import { CartService } from 'src/app/service/cart.service';
 import { OrdersService } from 'src/app/service/orders.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 import { Order } from 'src/app/models/Order';
 import { User } from 'src/app/models/User';
+import { ToastService } from 'src/app/service/toast.service';
 
 @Component({
   selector: 'app-checkout',
@@ -32,10 +33,11 @@ export class CheckoutComponent implements OnInit {
   userId = 0;
 
   constructor(
-    private cartService: CartService,
+    // private cartService: CartService,
     private orderService: OrdersService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private toastService: ToastService
     ) { }
 
   ngOnInit(): void {
@@ -63,7 +65,8 @@ export class CheckoutComponent implements OnInit {
   updateUserDetails(): void{
     this.userService.updateUserDetails(this.user
       ).subscribe(res => {
-        // console.log('checkout.component.ts', res);
+        this.toastService.show(this.user.username, `${this.user.username}'s details were updated!`);
+        console.log('checkout.component.ts', res);
       });
     }
 
@@ -73,19 +76,22 @@ export class CheckoutComponent implements OnInit {
 
     completeOrder(): void {
       // console.log('completeOrder(), checkout component this.userId, this.activeOrder', this.userId, this.activeOrder);
+      //Add final order check that order has orders and is not blank// if(this.orderService.getOrders())
       this.orderService.completeOrder(this.activeOrder).subscribe(res => {
           // console.log('update order completeOrder res', res);
           this.orderStatus = res;
           if (res.status === 'complete') {
             this.createNewActiveOrder();
+            this.toastService.show(`Order number ${this.activeOrder} Updated: Complete!`, `Your order with number ${this.activeOrder} was updated to complete!`);
           }
       });
     }
 
     createNewActiveOrder(): void {
-      this.currentUserId();
+      this.userId = this.currentUserId();
       this.orderService.createOrder(String(this.userId)).subscribe(res => {
-        // console.log('createNewActiveOrder()', res);
+        this.toastService.show(`New Order Created`, `A new order has been created!`);
+        console.log('checkout comp createNewActiveOrder()', res);
       });
     }
 
