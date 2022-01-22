@@ -13,6 +13,9 @@ import {
   environment
 } from 'src/environments/environment';
 import {
+  Product
+} from '../models/Product'
+import {
   Order
 } from '../models/Order';
 import {
@@ -56,7 +59,9 @@ export class OrdersService {
   // activeOrderNum: number = 0;
   justOne: Order[] = [];
   orderProducts: OrderProducts[] = [{id: 0, productid: 0, quantity: 0, orderid: 0}]; // order transactions
-
+  productId = 0;
+  orderId = 0;
+  url = '';
 
   constructor(
     private http: HttpClient,
@@ -102,6 +107,18 @@ export class OrdersService {
     return request;
   }
 
+  addProductToActiveOrder(pid: number, quantity: number, oid: number): Observable < object > {
+    this.productId = pid;
+    this.activeOrder();
+    const body = {
+      id: pid,
+      quantity
+    };
+    this.addAuthorisation();
+    this.url = `${this.baseURL}/users/${this.jwtToken.uid}/orders/${oid}/add-product`;
+    return this.http.post < Product > (this.url, body, this.httpOptions);
+  }
+
   removeCartItem(quantity: number, oid: number, productId: number, opid: number): Observable < {
     id: number,
     quantity: number,
@@ -125,15 +142,15 @@ export class OrdersService {
     return request;
   }
 
-activeOrder(): Observable < Order > {
-  this.addAuthorisation();
-  const request = this.http.get < Order > (`${this.baseURL}/users/` + this.jwtToken.uid + '/activeorder', this.httpOptions);
-  if ( request === undefined ) {
-    this.createOrder();
-    this.activeOrder();
+  activeOrder(): Observable < Order > {
+    this.addAuthorisation();
+    const request = this.http.get < Order > (`${this.baseURL}/users/` + this.jwtToken.uid + '/activeorder', this.httpOptions);
+    if ( request === undefined ) {
+      this.createOrder();
+      this.activeOrder();
+    }
+    return request;
   }
-  return request;
-}
 
   // checkOrderLength(orderArrayLength: Order[]): Observable < boolean > {
   //   const isTrue: boolean = orderArrayLength.length === 0;

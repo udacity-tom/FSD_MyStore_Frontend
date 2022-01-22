@@ -56,17 +56,27 @@ export class CartService {
   ) {}
 
 
-  addProductToActiveOrder(pid: number, quantity: number, oid: number): Observable < object > {
-    this.productId = pid;
-    this.currentActiveOrder();
-    const body = {
-      id: pid,
-      quantity
-    };
-    this.addAuthorisation();
-    this.url = `${this.baseURL}/users/${this.jwtToken.uid}/orders/${oid}/add-product`;
-    return this.http.post < Product > (this.url, body, this.httpOptions);
-  }
+  // addProductToActiveOrder(pid: number, quantity: number, oid: number): Observable < object > {
+  //   this.productId = pid;
+  //   this.currentActiveOrder();
+  //   const body = {
+  //     id: pid,
+  //     quantity
+  //   };
+  //   this.addAuthorisation();
+  //   this.url = `${this.baseURL}/users/${this.jwtToken.uid}/orders/${oid}/add-product`;
+  //   return this.http.post < Product > (this.url, body, this.httpOptions);
+  // }
+
+  // addProductToActiveOrder(pid: number, quantity: number, oid: number): void {
+  //   this.productId = pid;
+  //   this.currentActiveOrder();
+  //   const body = {
+  //     id: pid,
+  //     quantity
+  //   };
+  //   this.orderService.addProductToActiveOrder(pid, quantity, oid);
+  // };
 
   addAuthorisation(): void {
     this.currentToken(); // invoke method to update token before submission to API

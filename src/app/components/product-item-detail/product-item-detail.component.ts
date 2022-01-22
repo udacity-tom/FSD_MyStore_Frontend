@@ -75,18 +75,9 @@ export class ProductItemDetailComponent implements OnInit {
 
   addProductToCart(pid: number, quantity: number ): void{
     const item = {pid, quantity};
-    console.log('product-item-detail addproductotcart', item);
-    // this.addProductToCart.emit(item);
-    // Cghange this to an emitter to push the changes up to product list
-    // In this way there is only one call to the addProductToActiveOrder funciton for both product-detail and proudct list
-
-    console.log('product ', pid, ' added to order. Quantity is ', quantity);
-    // this.cartService.addProductToActiveOrder(pid, quantity);
-    // if()
-    this.cartService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
+    this.orderService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
       this.response = res;
-      console.log('product-list-item component, add product to cart res =', res);
-      this.toastService.show(this.product.name, `We have put ${quantity} ${this.product.name} into your Cart!` )
+      this.toastService.show(this.product.name, `We have put ${quantity} piece${(quantity > 1 ? 's' : '')} of the product '${this.product.name}' into your Cart!` )
     });
   }
 

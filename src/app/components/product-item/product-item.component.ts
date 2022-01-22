@@ -55,7 +55,7 @@ export class ProductItemComponent implements OnInit {
   addProductToCart(product: Product): void {
     console.log('product-list compont, item', product);
     this.getActiveOrder();
-    this.cartService.addProductToActiveOrder(product.id, 1, this.activeOrder).subscribe(res => {
+    this.orderService.addProductToActiveOrder(product.id, 1, this.activeOrder).subscribe(res => {
       this.response = res;
       console.log('product-item component, add product to cart res =', res);
     });
