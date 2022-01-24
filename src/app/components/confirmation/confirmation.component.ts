@@ -39,22 +39,16 @@ export class ConfirmationComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.userService.getUserId();
     this.userService.showUser(this.userId).subscribe(res => {
-      console.log('res from show user', res);
+      // console.log('confirmation comp res from show user', res);
       this.currentUser = res;
-    });
-    this.orderService.activeOrder().subscribe(res => {
-      this.activeOrder = res.id;
-      console.log('checkout component, this.activeOrder, res', this.activeOrder, res);
     });
     this.orderService.getOrders().subscribe(orders => {
       console.log('confirmation comp, orders,this.activeOrder, this.completedOrder', orders, this.activeOrder, this.completedOrder);
     })
 
   }
-
   // showPreviousOrder(): void
-
   /*find current orders, take the last but one order
-  print it out on screen
+  print it out on screen confirmation
   */
 }

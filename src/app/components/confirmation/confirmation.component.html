@@ -1,7 +1,6 @@
 <br>
-<h1>Thank you {{currentUser.firstname}} for your order</h1>
+<h1>{{currentUser.firstname}}, thank you for your order</h1>
 <br>
-<!-- <p>{{activeOrder.firstname}} {{currentUser.lastname}}</p> -->
 <h2>Your items will be dispatched within two business days to the following address: </h2>
 <br>
 <div class="address">
@@ -15,9 +14,10 @@
 <a routerLink="/products">
     <button class="btn btn-primary button-style">
         Return to Products
-    </button></a>
-    <br>
-    <br>
+    </button>
+</a>
+<br>
+<br>
 <a routerLink="/loggedin">
     <button class="btn btn-primary button-style">
         Return to your order page

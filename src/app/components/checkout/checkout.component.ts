@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { of, Observable } from 'rxjs';
-// import { CartService } from 'src/app/service/cart.service';
 import { OrdersService } from 'src/app/service/orders.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
@@ -44,14 +43,10 @@ export class CheckoutComponent implements OnInit {
     this.userId = this.currentUserId();
     this.orderService.activeOrder().subscribe(res => {
       this.activeOrder = Number(res.id);
-      // console.log('checkout component, this.activeOrder, res', this.activeOrder, res);
     });
-
     this.userService.showUser(this.userId).subscribe(res => {
-      // console.log('res from show user', res);
       this.user = res;
     });
-    // console.log(this.userService.show(this.userId));
   }
 
   onSubmit(): void {
@@ -75,7 +70,6 @@ export class CheckoutComponent implements OnInit {
     }
 
     completeOrder(): void {
-      // console.log('completeOrder(), checkout component this.userId, this.activeOrder', this.userId, this.activeOrder);
       //Add final order check that order has orders and is not blank// if(this.orderService.getOrders())
       this.orderService.completeOrder(this.activeOrder).subscribe(res => {
           // console.log('update order completeOrder res', res);
@@ -90,7 +84,7 @@ export class CheckoutComponent implements OnInit {
     createNewActiveOrder(): void {
       this.userId = this.currentUserId();
       this.orderService.createOrder(String(this.userId)).subscribe(res => {
-        this.toastService.show(`New Order Created`, `A new order has been created!`);
+        this.toastService.show(`New Order Created ${res.id}`, `A new order has been created!`);
         console.log('checkout comp createNewActiveOrder()', res);
       });
     }
