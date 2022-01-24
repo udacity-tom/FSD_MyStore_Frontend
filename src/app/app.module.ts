@@ -15,7 +15,6 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ProductItemButtonsComponent } from './components/product-item-buttons/product-item-buttons.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
@@ -34,7 +33,6 @@ import { AppToastComponent } from './components/app-toast/app-toast.component';
     ProductListComponent,
     NavbarComponent,
     HomeComponent,
-    ProductItemButtonsComponent,
     LoginComponent,
     RegisterComponent,
     LoggedInComponent,
