@@ -4,25 +4,31 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ToastService {
-  toasts:any[] = []
-
+  toast: any
+  toasts:any[] = [];
+  
+  
   constructor() { }
-
+  
   show(header: string, body: string) {
-    const sentToast = this.toasts.push({header, body});
-    // this.remove(sentToast);
+    const delay = 30000;
+    const sentToast = this.toasts.push({header, body, delay});
+    setTimeout( () => {
+      this.remove(sentToast);
+    }, delay+15000);
     }
 
   remove(toast: any) {
     this.toasts = this.toasts.filter(t => t != toast);
     setTimeout( () => {
-      this.delete()
+      this.delete(toast)
     }
-    , 20000);
+    , 25000);
   }
 
-  delete() {
-    this.toasts = [];
+  delete(toast: any) {
+    let index = this.toasts.indexOf(toast);
+    this.toasts.splice(index, 1);
   }
 
 }
