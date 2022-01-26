@@ -1,9 +1,40 @@
+
         <p *ngIf="currentCartStatus">You have no items in your cart!</p>
-        <td class="pid" title={{titleText1}} [routerLink]="'/detail/'+product.id">PID:{{product.id}}/<br>OPID:{{product.order_productsId}}</td>
-        <td class="image" title={{titleText1}} [routerLink]="'/detail/'+product.id"><img src = "{{product.url}}" width=60px; height=60px;></td>
-        <td class="description" title={{titleText1}} [routerLink]="'/detail/'+product.id">{{product.name}}</td>
-        <td class="category" title={{titleText1}} [routerLink]="'/detail/'+product.id">{{product.category}}</td>
-        <td class="quantity">{{product.quantity}}</td>
-        <td class="price">{{product.price}}</td>
-        <td class="space">{{product.price * product.quantity}}</td>
-        <td class="remove"><button class="btn btn-primary" (click)="removeItem()">Remove</button></td>
+        <td 
+                class="pid" 
+                title='{{titleText1}} {{product.name}}' 
+                [routerLink]="'../products/detail/'+product.id">PID:{{product.id}}/<br>OPID:{{product.order_productsId}}
+        </td>
+        <td 
+                class="image" 
+                title='{{titleText1}} {{product.name}}' 
+                [routerLink]="'../products/detail/'+product.id">
+                <img src = "{{product.url}}" 
+                width=60px; height=60px; />
+        </td>
+        <td 
+                class="description" 
+                title='{{titleText1}} {{product.name}}'
+                [routerLink]="'../products/detail/'+product.id">{{product.name}}
+        </td>
+        <td 
+                class="category" 
+                title='{{titleText1}} {{product.name}}' 
+                [routerLink]="'../products/detail/'+product.id">{{product.category}}
+        </td>
+        <td 
+                class="quantity">{{product.quantity}}
+        </td>
+        <td 
+                class="price">{{product.price}}
+        </td>
+        <td 
+                class="space">{{(product.price * product.quantity).toFixed(2)}}
+        </td>
+        <td 
+                class="remove">
+                <button 
+                        class="btn btn-primary" 
+                        (click)="removeItem()">Remove
+                </button>
+        </td>
