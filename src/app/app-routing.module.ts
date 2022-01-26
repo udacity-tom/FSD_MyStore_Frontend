@@ -13,15 +13,20 @@ import { ConfirmationComponent } from './components/confirmation/confirmation.co
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'products', component: ProductListComponent },
+  { path: 'products/detail/:id', component: ProductItemDetailComponent }, 
+  { path: 'products', component: ProductListComponent }, 
+    //   children: [
+    //     { path: 'detail/:id', component: ProductItemDetailComponent },
+    //   ],
+    // },
   { path: 'cart', component: CartComponent },
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'loggedin', component: LoggedInComponent },
-  { path: 'detail/:id', component: ProductItemDetailComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'checkout', component: CheckoutComponent },
-  { path: 'confirmation', component: ConfirmationComponent }
+  { path: 'confirmation', component: ConfirmationComponent },
+  // { path: '**', component: HomeComponent }
 ];
 
 @NgModule({
