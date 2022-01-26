@@ -13,10 +13,7 @@ import { ToastService } from 'src/app/service/toast.service';
   styleUrls: ['./product-item-detail.component.css']
 })
 export class ProductItemDetailComponent implements OnInit {
-  @Input() products: Product[] = [];
-  @Output() yes: EventEmitter<any> = new EventEmitter();
-  // @Output() addProductsToCart: EventEmitter<object> = new EventEmitter();
-  @Input() loginStatus = false;
+  loginStatus = false;
   product: Product;
   givenId: number;
   noOfItems: number;
@@ -24,11 +21,14 @@ export class ProductItemDetailComponent implements OnInit {
   response: object = {};
   activeOrder = 0;
   state = 'child';
+  item: {pid:number, quantity:number} = {
+    pid: 0,
+    quantity: 0
+  };
 
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
-    private cartService: CartService,
     private orderService: OrdersService,
     private loginService: LoginService,
     private toastService: ToastService
@@ -43,6 +43,7 @@ export class ProductItemDetailComponent implements OnInit {
       accreditation: '',
       category: ''
     };
+    // this.item = {pid: 0, quantity: 0};
     this.givenId = 0;
     this.noOfItems = 1;
     this.itemDescription = {};
@@ -56,12 +57,11 @@ export class ProductItemDetailComponent implements OnInit {
     this.productService.getProduct(this.givenId).subscribe(res => {
       this.product = res;
     });
-    console.log('subscribing to the current activeorder() function from orderService');
     this.orderService.activeOrder().subscribe(res => {
       this.activeOrder = res.id;
       console.log('product-item-detail, this.activeOrder, res', this.activeOrder, res);
     });
-
+    console.log('product-item-detail, this.activeOrder, this.loginStatus, ', this.activeOrder, this.loginStatus);
   }
 
   increaseItems(): void {
@@ -74,10 +74,10 @@ export class ProductItemDetailComponent implements OnInit {
   }
 
   addProductToCart(pid: number, quantity: number ): void{
-    const item = {pid, quantity};
+    // const item = {pid, quantity};
     this.orderService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
       this.response = res;
-      this.toastService.show(this.product.name, `We have put ${quantity} piece${(quantity > 1 ? 's' : '')} of the product '${this.product.name}' into your Cart!` )
+      this.toastService.show(`Add to Cart: ${this.product.name} x ${quantity}`, `We have put ${quantity} piece${(quantity > 1 ? 's' : '')} of the product '${this.product.name}' into your Cart!` )
     });
   }
 
