@@ -66,7 +66,8 @@ export class OrdersService {
   constructor(
     private http: HttpClient,
     private tokenService: TokenService,
-    private interceptRequest: InterceptorService) {}
+    // private interceptRequest: InterceptorService
+    ) {}
 
   getOrders(): Observable < Order[] > { // gets the results of orders DB
     this.addAuthorisation();
@@ -151,11 +152,6 @@ export class OrdersService {
     }
     return request;
   }
-
-  // checkOrderLength(orderArrayLength: Order[]): Observable < boolean > {
-  //   const isTrue: boolean = orderArrayLength.length === 0;
-  //   return of(isTrue);
-  // }
 
   addAuthorisation(): void {
     this.currentToken(); // invoke method to update token before submission to API
