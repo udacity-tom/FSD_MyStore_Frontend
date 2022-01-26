@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { OrderProducts } from 'src/app/models/OrderProducts';
 import { Order } from 'src/app/models/Order';
@@ -7,8 +7,7 @@ import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
 import { OrdersService } from 'src/app/service/orders.service';
 import { ProductService } from 'src/app/service/products.service';
-import { CartService } from 'src/app/service/cart.service';
-
+import { ToastService } from 'src/app/service/toast.service';
 interface CartProduct extends Product {
   quantity: number;
   order_productsId: number;
@@ -18,11 +17,12 @@ interface CartProduct extends Product {
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartComponent implements OnInit {
 
- @Input() cart: CartProduct[] = [];  // products in cart
- @Input() cartOrder: Order = {id: 0, userId: 0, status: ''}; // the current user cart to update to DB onChange
+ cart: CartProduct[] = [];  // products in cart
+ cartOrder: Order = {id: 0, userId: 0, status: ''}; // the current user cart to update to DB onChange
 
  cartTotal = 0.00;
  currentOrder: Order = {id: 0, userId: 0, status: ''}; // The DB order where status ='active'
@@ -42,17 +42,17 @@ export class CartComponent implements OnInit {
   private router: Router,
   private ordersService: OrdersService,
   private productService: ProductService,
-  private cartService: CartService
+  private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
     this.updateLoginStatus(); // check if user is logged in, (if yes update cart with active order)
-    this.getActiveOrder();
-     // get all orders on system BE for user
+    this.getActiveOrder();    // get all orders on system BE for user
   }
 
   onChanges(): void {
     // update the cart with changes: adding products, removing products, checkout, etc...if necessary
+    this.getActiveOrder();
   }
 
   updateLoginStatus(): void {
@@ -96,12 +96,18 @@ export class CartComponent implements OnInit {
   }
 
     removeItemFromCart(product: CartProduct): boolean {
+      console.log('cart comp remove() product', product);
       this.ordersService.removeCartItem(product.quantity, product.orderId, product.id, product.order_productsId).subscribe(res => {
         const wasDeleted = res;
+        console.log('cart component wasDeleted, res', wasDeleted, res);
         if (wasDeleted){
           console.log('The item ', product.id, product.order_productsId, ' was deleted!');
         }
-        return true;
+        this.toastService.show(`${product.name} was removed from the cart`, `The product ${product.name} was removed from the cart.`)
+        // this.productsInActiveOrder(this.activeOrderNum);
+        // this.productsInActiveCart();
+        // this.currentCartStatus = false;
+        this.getActiveOrder();
       });
       return false;
   }

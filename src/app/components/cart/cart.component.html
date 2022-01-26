@@ -27,7 +27,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr app-cart-content *ngFor="let product of cart" [product]="product" [cart]="cart" (removeItemFromCart)="removeItemFromCart($event)" height=70px>
+            <tr *ngFor="let product of cart"
+                app-cart-content 
+                [product]="product" 
+                [cart]="cart" 
+                (removeItemFromCart)="removeItemFromCart($event)" 
+                height=70px>
             </tr>
 
         </tbody>
