@@ -1,20 +1,20 @@
 <div class="product-container" (mouseover)="showButtons=true" (mouseout)="showButtons=false">
-    <img  src="{{ product.url }}" class=product-image [routerLink]="'/detail/'+product.id" />
+    <img  src="{{ product.url }}" class=product-image [routerLink]="'./detail/'+product.id" />
     <p>{{ product.name }}</p>
     <p>{{ product.price }}</p>
     <p>{{ product.snippet }}</p>
     <br>
     <br>
     <div *ngIf=(showButtons)>
-        <app-product-item-buttons [product]="product" (addProductToCart)="addProductToCart(product)"></app-product-item-buttons>
-        
+        <button 
+        class="btn btn-primary" 
+        style="margin-right: 40px;"
+        (click)='routeTo()'>
+        See Details</button>
+        <button 
+        *ngIf=(loginStatus) 
+        class="btn btn-primary" 
+        (click)="addProductToCart(product, 1)">
+        Add To Cart</button>
     </div>
 </div>
-
-<!-- <button [ngClass]= "showCss ? 'btn btn-primary.hover' : 'btn btn-primary'"></button> -->
-
-<!-- (mouseenter)="showCss=true" (mouseleave)="showCss=false" -->
-<!-- <span (mouseenter)="showCss=true" (mouseleave)="showCss=false" >    
-    <button class="btn btn-primary"  [class.btn-primary-hover]="showCss">
-    Add To Cart</button>
-    </span> -->

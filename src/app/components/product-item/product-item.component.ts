@@ -1,7 +1,9 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/service/cart.service';
 import { OrdersService } from 'src/app/service/orders.service';
+import { ToastService } from 'src/app/service/toast.service';
 
 @Component({
   selector: 'app-product-item',
@@ -10,15 +12,14 @@ import { OrdersService } from 'src/app/service/orders.service';
 })
 export class ProductItemComponent implements OnInit {
   @Input() product: Product;
-  // @Output() product: Product;
-  // noOfItems: number = 1;
+  @Input() loginStatus: boolean;
+  @Input() activeOrder: number;
   showButtons = false;
   showCss = false;
   value = false;
   response: object = {};
 
-  // response: object = {};
-  activeOrder = 0;
+  // activeOrder = 0;
   // item: {pid:number, quantity:number} = {
   //   pid: 0,
   //   quantity: 0
@@ -31,7 +32,9 @@ export class ProductItemComponent implements OnInit {
     this.value = false;
   }
 
-  constructor(private cartService: CartService, private orderService: OrdersService) {
+  constructor(private orderService: OrdersService, private toastService: ToastService, private route: ActivatedRoute, private router: Router) {
+    this.activeOrder = 0;
+    this.loginStatus = false;
     this.product = {
       id: 0,
       name: '',
@@ -45,26 +48,15 @@ export class ProductItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getActiveOrder();
-    // this.orderService.currentActiveOrder().subscribe(res => {
-    //   this.activeOrder = res;
-    //   console.log('product-item-detail, this.activeOrder, res', this.activeOrder, res);
-    // });
+  }
+  routeTo(): void {
+    this.router.navigate(['detail/'+this.product.id], {relativeTo: this.route});
   }
 
-  addProductToCart(product: Product): void {
-    console.log('product-list compont, item', product);
-    this.getActiveOrder();
+  addProductToCart(product: Product, quantity: number): void {
     this.orderService.addProductToActiveOrder(product.id, 1, this.activeOrder).subscribe(res => {
       this.response = res;
-      console.log('product-item component, add product to cart res =', res);
-    });
-  }
-
-  getActiveOrder(): void {
-    this.orderService.activeOrder().subscribe(res => {
-      this.activeOrder = res.id;
-      console.log('product-item, this.activeOrder, res', this.activeOrder, res);
+      this.toastService.show(`Add to Cart: ${this.product.name} x ${quantity}`, `We have put ${quantity} piece${(quantity > 1 ? 's' : '')} of the product '${this.product.name}' into your Cart!` )
     });
   }
 }
