@@ -47,7 +47,7 @@ export class OrderStore {
   //shows users orders
   async showUserOrders(uid: string): Promise<Order[]> {
     try {
-      console.log('order.ts userid', uid);
+      // console.log('order.ts userid', uid);
       const sql = 'SELECT * FROM orders WHERE userId=($1);';
       const conn = await client.connect();
       const result = await conn.query(sql, [uid]);
@@ -93,10 +93,10 @@ export class OrderStore {
           return order;
         }
       });
-      console.log(
-        'showActivOrder, order.ts, hasActiveOrder[0]',
-        hasActiveOrder[0]
-      );
+      // console.log(
+      //   'showActivOrder, order.ts, hasActiveOrder[0]',
+      //   hasActiveOrder[0]
+      // );
       return hasActiveOrder[0];
     } catch (err) {
       throw new Error(`User has no active order!`);
@@ -105,7 +105,7 @@ export class OrderStore {
 
   async create(id: string, status: string): Promise<Order | string> {
     try {
-      console.log('in create model userid, status', id, status);
+      // console.log('in create model userid, status', id, status);
       const currentActiveOrder = await this.showUserOrders(id);
       const hasActiveOrder = currentActiveOrder.filter(order => {
         if (order.status == 'active') {
@@ -120,7 +120,7 @@ export class OrderStore {
           'INSERT INTO orders (userId, status) VALUES ($1, $2) RETURNING *;';
         const conn = await client.connect();
         const result = await conn.query(sql, [id, status]);
-        console.log('SQL ran?');
+        // console.log('SQL ran?');
         conn.release();
         return result.rows[0];
       }
@@ -150,7 +150,7 @@ export class OrderStore {
         const conn = await client.connect();
         const result = await conn.query(sql, [oid, 'complete']);
         conn.release();
-        console.log('order.ts result.rows[0] from update', result.rows[0]);
+        // console.log('order.ts result.rows[0] from update', result.rows[0]);
         return result.rows[0];
       }
     } catch (err) {
@@ -295,7 +295,7 @@ export class OrderStore {
       if (!orderOpen) {
         return `Order id ${orderId} has been closed! Order status is marked as closed`;
       }
-      const sql = 'DELETE FROM order_products WHERE id=($1);';
+      const sql = 'DELETE FROM order_products WHERE id=($1) RETURNING *;';
       const conn = await client.connect();
       const result = await conn.query(sql, [order_productId]);
       conn.release();
