@@ -66,7 +66,6 @@ export class OrdersService {
   constructor(
     private http: HttpClient,
     private tokenService: TokenService,
-    // private interceptRequest: InterceptorService
     ) {}
 
   getOrders(): Observable < Order[] > { // gets the results of orders DB
@@ -120,23 +119,23 @@ export class OrdersService {
     return this.http.post < Product > (this.url, body, this.httpOptions);
   }
 
-  removeCartItem(quantity: number, oid: number, productId: number, opid: number): Observable < {
+  removeCartItem(quantity: number, oid: number, productid: number, opid: number): Observable < {
     id: number,
     quantity: number,
     orderId: number,
-    productId: number,
+    productid: number,
     order_productId: number
   } > {
     this.addAuthorisation();
     const body = {
-      id: productId,
+      id: productid,
       quantity
     };
     const request = this.http.post < {
       id: number,
       quantity: number,
       orderId: number,
-      productId: number,
+      productid: number,
       order_productId: number
     } > (`${this.baseURL}/users/` + this.jwtToken.uid + '/orders/' + oid +
       '/delete-product/' + opid, body, this.httpOptions);

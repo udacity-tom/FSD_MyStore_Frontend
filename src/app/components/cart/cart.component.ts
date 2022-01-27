@@ -95,21 +95,17 @@ export class CartComponent implements OnInit {
     }
   }
 
-    removeItemFromCart(product: CartProduct): boolean {
-      console.log('cart comp remove() product', product);
-      this.ordersService.removeCartItem(product.quantity, product.orderId, product.id, product.order_productsId).subscribe(res => {
-        const wasDeleted = res;
-        console.log('cart component wasDeleted, res', wasDeleted, res);
-        if (wasDeleted){
-          console.log('The item ', product.id, product.order_productsId, ' was deleted!');
-        }
-        this.toastService.show(`${product.name} was removed from the cart`, `The product ${product.name} was removed from the cart.`)
-        // this.productsInActiveOrder(this.activeOrderNum);
-        // this.productsInActiveCart();
-        // this.currentCartStatus = false;
-        this.getActiveOrder();
-      });
-      return false;
+  removeItemFromCart(product: CartProduct): boolean {
+    this.ordersService.removeCartItem(product.quantity, product.orderId, product.id, product.order_productsId).subscribe(res => {
+      const wasDeleted = res;
+      if (Number(res.productid) === product.id) {
+        alert(`'${product.name}' was removed from the cart!`);
+       
+      }
+      this.getActiveOrder();
+      location.reload();
+    });
+    return false;
   }
 
   checkout(): void{

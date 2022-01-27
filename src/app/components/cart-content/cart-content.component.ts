@@ -3,10 +3,7 @@ import {
   Input,
   OnInit,
   EventEmitter,
-  Output,
-  OnChanges,
-  SimpleChange,
-  SimpleChanges
+  Output
 } from '@angular/core';
 import {
   Product
@@ -51,22 +48,7 @@ export class CartContentComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  ngOnChanges(): void {
-    this.cart = []
-  }
-
   removeItem(): void {
-    console.log('cart-content comp, this.product', this.product);
     this.removeItemFromCart.emit(this.product);
-    
-    setTimeout(() => {
-      // location.reload();
-      window.location.reload();
-      this.ngOnInit();
-    }, 100);
-    setTimeout(() => {
-      this.toastService.show(`${this.product.name} was removed from the cart`, `The product ${this.product.name} was removed from the cart.`)
-    },250);
   }
-
 }

@@ -44,7 +44,6 @@ export class ProductListComponent implements OnInit {
   getActiveOrder() {
     this.orderService.activeOrder().subscribe(res => {
       this.activeOrder = res.id;
-      console.log('product-list, this.activeOrder, res', this.activeOrder, res);
     });
   }
 
