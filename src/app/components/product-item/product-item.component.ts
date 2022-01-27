@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/Product';
-import { CartService } from 'src/app/service/cart.service';
 import { OrdersService } from 'src/app/service/orders.service';
 import { ToastService } from 'src/app/service/toast.service';
 
@@ -14,23 +13,10 @@ export class ProductItemComponent implements OnInit {
   @Input() product: Product;
   @Input() loginStatus: boolean;
   @Input() activeOrder: number;
+  @Output() addProductToCart: EventEmitter<{pid: number, quantity: number}> = new EventEmitter;
   showButtons = false;
-  showCss = false;
-  value = false;
   response: object = {};
-
-  // activeOrder = 0;
-  // item: {pid:number, quantity:number} = {
-  //   pid: 0,
-  //   quantity: 0
-  // };
-
-  mouseEnter(div: string): void{
-    this.value = true;
-  }
-  mouseLeave(div: string): void {
-    this.value = false;
-  }
+  item: {pid: number, quantity: number} = {pid:0, quantity:0};
 
   constructor(private orderService: OrdersService, private toastService: ToastService, private route: ActivatedRoute, private router: Router) {
     this.activeOrder = 0;
@@ -48,15 +34,14 @@ export class ProductItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
   routeTo(): void {
     this.router.navigate(['detail/'+this.product.id], {relativeTo: this.route});
   }
 
-  addProductToCart(product: Product, quantity: number): void {
-    this.orderService.addProductToActiveOrder(product.id, 1, this.activeOrder).subscribe(res => {
-      this.response = res;
-      this.toastService.show(`Add to Cart: ${this.product.name} x ${quantity}`, `We have put ${quantity} piece${(quantity > 1 ? 's' : '')} of the product '${this.product.name}' into your Cart!` )
-    });
+  addProductsToCart(pid: number, quantity: number): void {
+    this.item = {pid:pid, quantity:quantity};
+    this.addProductToCart.emit({pid:pid, quantity:quantity});
   }
 }

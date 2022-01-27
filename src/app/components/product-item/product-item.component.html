@@ -5,16 +5,16 @@
     <p>{{ product.snippet }}</p>
     <br>
     <br>
-    <div *ngIf=(showButtons)>
-        <button 
+    <div>
+</div>
+<div>
+    <button 
         class="btn btn-primary" 
         style="margin-right: 40px;"
-        (click)='routeTo()'>
-        See Details</button>
+        (click)='routeTo()'>See Details</button>
         <button 
         *ngIf=(loginStatus) 
         class="btn btn-primary" 
-        (click)="addProductToCart(product, 1)">
+        (click)="addProductsToCart(product.id, 1)">
         Add To Cart</button>
-    </div>
 </div>
