@@ -21,10 +21,10 @@ export class ProductItemDetailComponent implements OnInit {
   response: object = {};
   activeOrder = 0;
   state = 'child';
-  item: {pid:number, quantity:number} = {
-    pid: 0,
-    quantity: 0
-  };
+  // item: {pid:number, quantity:number} = {
+  //   pid: 0,
+  //   quantity: 0
+  // };
 
   constructor(
     private productService: ProductService,
@@ -43,7 +43,6 @@ export class ProductItemDetailComponent implements OnInit {
       accreditation: '',
       category: ''
     };
-    // this.item = {pid: 0, quantity: 0};
     this.givenId = 0;
     this.noOfItems = 1;
     this.itemDescription = {};
@@ -59,9 +58,7 @@ export class ProductItemDetailComponent implements OnInit {
     });
     this.orderService.activeOrder().subscribe(res => {
       this.activeOrder = res.id;
-      console.log('product-item-detail, this.activeOrder, res', this.activeOrder, res);
     });
-    console.log('product-item-detail, this.activeOrder, this.loginStatus, ', this.activeOrder, this.loginStatus);
   }
 
   increaseItems(): void {
@@ -74,10 +71,9 @@ export class ProductItemDetailComponent implements OnInit {
   }
 
   addProductToCart(pid: number, quantity: number ): void{
-    // const item = {pid, quantity};
     this.orderService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
       this.response = res;
-      this.toastService.show(`Add to Cart: ${this.product.name} x ${quantity}`, `We have put ${quantity} piece${(quantity > 1 ? 's' : '')} of the product '${this.product.name}' into your Cart!` )
+      this.toastService.show(`Add to Cart: ${this.product.name}`, `We have put ${quantity} piece${(quantity > 1 ? 's' : '')} of the product '${this.product.name}' into your Cart!` )
     });
   }
 

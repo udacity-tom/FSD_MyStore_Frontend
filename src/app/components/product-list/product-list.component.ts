@@ -37,7 +37,7 @@ export class ProductListComponent implements OnInit {
     this.orderService.addProductToActiveOrder(item.pid, item.quantity, this.activeOrder).subscribe(res => {
       this.response = res;
       const productIndex = item.pid-1;
-      this.toastService.show(`Add to Cart: ${this.products[productIndex].name} (${item.quantity})`, `We have put ${item.quantity} piece${(item.quantity > 1 ? 's' : '')} of the product '${this.products[productIndex].name}' into your Cart!` );
+      this.toastService.show(`Add to Cart: ${this.products[productIndex].name}`, `We have put ${item.quantity} piece${(item.quantity > 1 ? 's' : '')} of the product '${this.products[productIndex].name}' into your Cart!` );
     })
   }
 
