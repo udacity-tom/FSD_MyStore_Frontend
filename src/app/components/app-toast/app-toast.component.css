@@ -8,6 +8,6 @@
   .toast, ngb-toast, div.toast-header {
     font-size: 1.1em;
     box-shadow: 0px 10px 120px 20px #a8a8a8;
-    padding: 0 2em 2em;
+    padding: 1em 2em 1em 2em;
     margin: 2em;
   }

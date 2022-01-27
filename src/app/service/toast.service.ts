@@ -11,7 +11,7 @@ export class ToastService {
   constructor() { }
   
   show(header: string, body: string) {
-    const delay = 30000;
+    const delay = 12000;
     const sentToast = this.toasts.push({header, body, delay});
     setTimeout( () => {
       this.remove(sentToast);
