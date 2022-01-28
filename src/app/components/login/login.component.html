@@ -1,6 +1,4 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()" class="login-container" >
-    <!-- <h2 *ngIf="loginStatus">{{username}} is logged in!</h2> -->
-    <!-- <h1 *ngIf()>Login Here!</h1> -->
     <h1>Login Here!</h1>
     <br>
     <br>
@@ -27,7 +25,7 @@
     <button type="submit" [disabled]="form.invalid" value="Submit" class="btn btn-primary">Submit</button>
     <br>
     <br>
-    <button class="btn btn-primary">If you haven't registered, please register first</button>
+    <button class="btn btn-primary" (click)="register()">If you haven't registered, please register first</button>
 </form>
 <p *ngIf=(loading) class="signin-text">Currently logging in as: {{username}}</p>
 <br>
