@@ -45,8 +45,6 @@ img {
     border-color: #fff;
   }
 
-  .btn-primary:hover {
-    color: #007bff;
-    background-color: #fff;
-    border-color: #fff;
+  .loggedin {
+    margin-right: 40px;
   }

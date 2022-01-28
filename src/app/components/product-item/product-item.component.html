@@ -9,8 +9,8 @@
 </div>
 <div>
     <button 
-        class="btn btn-primary" 
-        style="margin-right: 40px;"
+        class="btn btn-primary"
+        [ngClass]="getClass()"
         (click)='routeTo()'>See Details</button>
         <button 
         *ngIf=(loginStatus) 

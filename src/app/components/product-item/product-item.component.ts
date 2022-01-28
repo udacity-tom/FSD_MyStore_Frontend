@@ -44,4 +44,10 @@ export class ProductItemComponent implements OnInit {
     this.item = {pid:pid, quantity:quantity};
     this.addProductToCart.emit({pid:pid, quantity:quantity});
   }
+
+  getClass(): object {
+    return {
+      'loggedin': this.loginStatus
+    }
+  }
 }
