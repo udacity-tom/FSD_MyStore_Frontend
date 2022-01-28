@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
 import { UserService } from 'src/app/service/user.service';
 import { Router } from '@angular/router';
+import { ToastService } from 'src/app/service/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
   exp = 0;
 
 
-  constructor(private userService: UserService, private tokenService: TokenService, private router: Router) { }
+  constructor(private userService: UserService, private tokenService: TokenService, private router: Router, private toastService: ToastService) { }
 
   ngOnInit(): void {
   }
@@ -34,15 +34,12 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     this.loading = true;
     this.returnedRes = this.registerUser(this.username, this.firstname, this.lastname, this.password);
-     // this.returnedJWT = this.returnedRes[1] as object;
-    // console.log('returned res from api on user create', this.returnedRes);
     this.loading = false;
-    //Notify user!
+    this.toastService.show(`Welcome ${this.username}`, `New account created for ${this.firstname} ${this.lastname}, username: '${this.username}'. \nPlease login!`);
     this.router.navigate(['/login']);
   }
 
   registerUser(username: string, firstname: string, lastname: string, password: string ): object {
-    // console.log('register component', username, firstname, lastname, password);
     return this.userService.registerNewUser( username, firstname, lastname, password ).subscribe(
       res => {   // TO-DO: this MUST be refactored, accessing via array method, better way?, something to with the interface?
         this.returnedRes = res;
