@@ -32,7 +32,6 @@ export class CheckoutComponent implements OnInit {
   userId = 0;
 
   constructor(
-    // private cartService: CartService,
     private orderService: OrdersService,
     private router: Router,
     private userService: UserService,
@@ -60,8 +59,10 @@ export class CheckoutComponent implements OnInit {
   updateUserDetails(): void{
     this.userService.updateUserDetails(this.user
       ).subscribe(res => {
-        this.toastService.show(this.user.username, `${this.user.username}'s details were updated!`);
-        console.log('checkout.component.ts', res);
+        this.toastService.show(`For ${this.user.username}` , `${this.user.username}'s details were updated!`);
+        // if(this.user === res){//this.user will never be == to res, res includes isAdmin
+        // this.toastService.show(`For ${this.user.username}` , `${this.user.username}'s details were updated!`);
+        // }
       });
     }
 
@@ -72,11 +73,10 @@ export class CheckoutComponent implements OnInit {
     completeOrder(): void {
       //Add final order check that order has orders and is not blank// if(this.orderService.getOrders())
       this.orderService.completeOrder(this.activeOrder).subscribe(res => {
-          // console.log('update order completeOrder res', res);
           this.orderStatus = res;
           if (res.status === 'complete') {
             this.createNewActiveOrder();
-            this.toastService.show(`Order number ${this.activeOrder} Updated: Complete!`, `Your order with number ${this.activeOrder} was updated to complete!`);
+            this.toastService.show(`Order number ${this.activeOrder}`, `Your order with number ${this.activeOrder} was updated, new status: Complete!`);
           }
       });
     }
@@ -85,7 +85,6 @@ export class CheckoutComponent implements OnInit {
       this.userId = this.currentUserId();
       this.orderService.createOrder(String(this.userId)).subscribe(res => {
         this.toastService.show(`New Order Created ${res.id}`, `A new order has been created!`);
-        console.log('checkout comp createNewActiveOrder()', res);
       });
     }
 
