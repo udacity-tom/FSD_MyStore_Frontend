@@ -9,11 +9,7 @@ import { User } from '../models/User';
   providedIn: 'root'
 })
 export class UserService {
-  // apiServer: string = environment.API_SERVER_IP;
-  // apiPort: string = environment.API_PORT;
-  // protocol: string = environment.PROTOCOL;
   baseURL: string = environment.PROTOCOL + environment.API_SERVER_IP + ':' + environment.API_PORT;
-  // +this.protocol + this.apiServer + this.apiPort;
   username: string;
   password: string;
   url: string;
@@ -32,7 +28,6 @@ export class UserService {
     this.password = '';
     this.url = '';
    }
-
 
   registerNewUser(username: string, firstname: string, lastname: string, password: string): Observable<object> {
     this.url = `${this.baseURL}/users/create`;
@@ -56,7 +51,7 @@ export class UserService {
 
   showUser(uid: number): Observable<User> {
     this.addAuthorisation();
-    const request = this.http.get<User> (`${this.baseURL}/users/` + this.jwtToken.uid, this.httpOptions);
+    const request = this.http.get<User> (`${this.baseURL}/users/` + (this.jwtToken.uid || uid), this.httpOptions);
     return request;
   }
 
