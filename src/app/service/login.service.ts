@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { TokenService } from './token.service';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +27,7 @@ export class LoginService {
     })
   };
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {
+  constructor(private http: HttpClient, private tokenService: TokenService, private router: Router, private toastService:ToastService) {
     this.username = '';
     this.password = '';
     this.currentJWT = '';
@@ -41,11 +43,11 @@ export class LoginService {
     });
     const currentTime = Math.floor((Number(new Date()) / 1000));
     if (this.currentJWT !== 'no Token') {
-        if (this.expiry > currentTime) { //add additional checking
+        if (this.expiry > currentTime) { //add additional checking?
           this.userIsLoggedIn = true;
         } else {
           this.userIsLoggedIn = false;
-          this.logOut();
+          this.logOut('');
         }
       } else {
         this.userIsLoggedIn = false;
@@ -60,9 +62,12 @@ export class LoginService {
     }
 
 
-  logOut(): void {
+  logOut(name: string): void {
     this.tokenService.deleteToken();
-    // logs user out: removes localstorage token, eventually updates logged in status
+    if(name!==''){
+      this.toastService.show(`Logout ${(name )}`, `${name} successfully logged out!`);
+    }
+    this.router.navigate(['/']);
   }
 
 }

@@ -114,7 +114,6 @@ export class LoggedInComponent implements OnInit {
 
   logout(): void {
     this.loginService.logOut(this.firstname);
-    this.router.navigate(['/']);
   }
 }
 
