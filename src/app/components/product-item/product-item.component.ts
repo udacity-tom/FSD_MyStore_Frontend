@@ -1,9 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/Product';
-import { OrdersService } from 'src/app/service/orders.service';
-import { ToastService } from 'src/app/service/toast.service';
-
 @Component({
   selector: 'app-product-item',
   templateUrl: './product-item.component.html',
@@ -18,7 +15,7 @@ export class ProductItemComponent implements OnInit {
   response: object = {};
   item: {pid: number, quantity: number} = {pid:0, quantity:0};
 
-  constructor(private orderService: OrdersService, private toastService: ToastService, private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.activeOrder = 0;
     this.loginStatus = false;
     this.product = {
