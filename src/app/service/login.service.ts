@@ -64,10 +64,9 @@ export class LoginService {
 
   logOut(name: string): void {
     this.tokenService.deleteToken();
-    if(name!==''){
-      this.toastService.show(`Logout ${(name )}`, `${name} successfully logged out!`);
-    }
     this.router.navigate(['/']);
+    if(name!==''){
+      this.toastService.show(`Logout ${name}`, `${name} successfully logged out!`);
+    }
   }
-
 }
