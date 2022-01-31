@@ -40,6 +40,7 @@
     #passWord="ngModel">
     <br>
     <input type="submit" [disabled]="form.invalid" value="Submit" class="btn btn-primary">
+    <button class="btn btn-primary" (click)="login()">Already have a Login? Login Here!</button>
 </form>
 <p *ngIf="loading" class="signin-text">Currently logging in as: {{username}}</p>
 <br>

@@ -31,6 +31,10 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  login(): void {
+    this.router.navigate(['login']);
+  }
+
   onSubmit(): void {
     this.loading = true;
     this.returnedRes = this.registerUser(this.username, this.firstname, this.lastname, this.password);
