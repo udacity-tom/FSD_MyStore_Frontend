@@ -25,9 +25,7 @@ const show = async (req: Request, res: Response) => {
 
 const showOrder = async (req: Request, res: Response) => {
   try {
-    console.log('showOrder req', req.params);
     const orders = await orderStore.showOrder(req.params.id, req.params.oid);
-    console.log('showOrder return from DB', orders);
     res.json(orders);
   } catch (err) {
     res.status(400).json(err);
@@ -36,9 +34,7 @@ const showOrder = async (req: Request, res: Response) => {
 
 const showUserOrders = async (req: Request, res: Response) => {
   try {
-    // console.log('showUserOrder req', req.params.id);
     const orders = await orderStore.showUserOrders(req.params.id);
-    console.log('showUserOrder return from DB', orders);
     res.json(orders);
   } catch (err) {
     res.status(400).json(err);
@@ -48,7 +44,6 @@ const showUserOrders = async (req: Request, res: Response) => {
 const showActiveOrder = async (req: Request, res: Response) => {
   try {
     const activeOrder = await orderStore.showActiveOrder(req.params.id);
-    console.log('orders.ts showActiveOrder()', activeOrder);
     res.json(activeOrder);
   } catch (err) {
     res.status(400).json(err);
@@ -108,14 +103,6 @@ const addProduct = async (req: Request, res: Response) => {
 
 const removeProduct = async (req: Request, res: Response) => {
   try {
-    console.log(
-      'orders.ts handler removeProduct called info ',
-      req.params.id,
-      req.body.quantity,
-      req.params.oid,
-      req.body.id,
-      req.params.opid
-    );
     const removeProduct = await orderStore.removeProduct(
       req.params.id, //user id
       req.body.quantity,
@@ -140,8 +127,8 @@ const orderRoutes = (app: express.Application): void => {
   ); //show current orders for user (id)
   app.get(
     '/users/:id/activeorder',
-    // auth.verifyAuthToken,
-    // auth.verifyUserAuth,
+    auth.verifyAuthToken,
+    auth.verifyUserAuth,
     showActiveOrder
   );
   app.get(
