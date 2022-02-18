@@ -1,7 +1,5 @@
-// import { Console } from 'console';
 import client from '../database';
 import { User, UserStore } from './user';
-// import { product_}
 
 const user = new UserStore();
 
@@ -47,7 +45,6 @@ export class OrderStore {
   //shows users orders
   async showUserOrders(uid: string): Promise<Order[]> {
     try {
-      // console.log('order.ts userid', uid);
       const sql = 'SELECT * FROM orders WHERE userId=($1);';
       const conn = await client.connect();
       const result = await conn.query(sql, [uid]);
@@ -93,10 +90,6 @@ export class OrderStore {
           return order;
         }
       });
-      // console.log(
-      //   'showActivOrder, order.ts, hasActiveOrder[0]',
-      //   hasActiveOrder[0]
-      // );
       return hasActiveOrder[0];
     } catch (err) {
       throw new Error(`User has no active order!`);
@@ -105,14 +98,12 @@ export class OrderStore {
 
   async create(id: string, status: string): Promise<Order | string> {
     try {
-      // console.log('in create model userid, status', id, status);
       const currentActiveOrder = await this.showUserOrders(id);
       const hasActiveOrder = currentActiveOrder.filter(order => {
         if (order.status == 'active') {
           return order;
         }
       });
-      // console.log('active orders collated! ', hasActiveOrder);
       if (hasActiveOrder.length > 0) {
         return `User has an active order! Order No. : ${hasActiveOrder[0].id} is active. Cannot create a new order, until this order is complete.`;
       } else {
@@ -120,7 +111,6 @@ export class OrderStore {
           'INSERT INTO orders (userId, status) VALUES ($1, $2) RETURNING *;';
         const conn = await client.connect();
         const result = await conn.query(sql, [id, status]);
-        // console.log('SQL ran?');
         conn.release();
         return result.rows[0];
       }
@@ -150,7 +140,6 @@ export class OrderStore {
         const conn = await client.connect();
         const result = await conn.query(sql, [oid, 'complete']);
         conn.release();
-        // console.log('order.ts result.rows[0] from update', result.rows[0]);
         return result.rows[0];
       }
     } catch (err) {
@@ -210,17 +199,12 @@ export class OrderStore {
         orderId,
         productId
       );
-      // console.log('doesExist', doesExist);
       if (doesExist) {
-        // const productOrder = doesExist;
-        // console.log('doesExist returned to addProduct()', doesExist);
         sql =
           'SELECT * FROM order_products WHERE orderId=($1) AND productId=($2);';
         const conn = await client.connect();
         const result = await conn.query(sql, [orderId, productId]);
         conn.release();
-        // console.log('it doesExist, result', result.rows[0]);
-        // return doesExist;
         return result.rows[0];
       } else {
         sql =
@@ -228,7 +212,6 @@ export class OrderStore {
         const conn = await client.connect();
         const result = await conn.query(sql, [quantity, orderId, productId]);
         conn.release();
-        // console.log("It doesn't exist result", result.rows[0]);
         return result.rows[0];
       }
     } catch (err) {
@@ -244,15 +227,12 @@ export class OrderStore {
     orderId: number,
     productId: number
   ): Promise<boolean | Order_products> {
-    // console.log('in the checkexistingitem()', quantity, orderId, productId);
     let sql =
       'SELECT * FROM order_products WHERE orderId=($1) AND productId=($2);';
     const conn = await client.connect();
     const result = await conn.query(sql, [orderId, productId]);
     const newResult = result;
-    // console.log('check existing cart products', result.rows[0]);
     if (result.rows[0] == undefined) {
-      // console.log('result.rows[0] equals zero, returning an empty object');
       return false;
     } else {
       sql =
@@ -264,8 +244,6 @@ export class OrderStore {
         orderId
       ]);
       conn.release();
-
-      // console.log('yes, resutl.rows[0] does not equal zero!');
       return result.rows[0];
     }
   }
@@ -278,7 +256,6 @@ export class OrderStore {
     order_productId: string
   ): Promise<Order | string> {
     try {
-      // console.log('in the removeProduct model for SQL!!!');
       let orderIdTrue, orderOpen;
       const currentOpenOrders = await this.showUserOrders(id); //List of all orders for userId
       currentOpenOrders.filter(order => {
