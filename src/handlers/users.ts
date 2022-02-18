@@ -25,7 +25,6 @@ const show = async (req: Request, res: Response) => {
 };
 
 const create = async (req: Request, res: Response) => {
-  console.log('users.ts body submitted', req.body);
   try {
     const user: User = {
       admin: req.body.admin || false,
@@ -40,9 +39,7 @@ const create = async (req: Request, res: Response) => {
       postcode: req.body.postcode || '',
       country: req.body.country || ''
     };
-    console.log('submitted data in user object', user);
     const newUser = await userStore.create(user);
-    console.log('newUser', newUser);
     const jwtPayloadData: User = {
       id: newUser.id,
       username: newUser.username,
@@ -58,16 +55,6 @@ const create = async (req: Request, res: Response) => {
     };
     const token = await auth.createToken(jwtPayloadData);
     const jwtPayload = await auth.getPayload(token);
-    console.log('newUser, token', {
-      newUser: newUser,
-      newtoken: token,
-      payload: jwtPayload
-    });
-    // const createObj = {
-    //   newUser: newUser,
-    //   newtoken: token,
-    //   payload: jwtPayload
-    // };
     res.send({ newUser, token, jwtPayload });
   } catch (err) {
     res.status(400).json(err);
@@ -77,12 +64,8 @@ const create = async (req: Request, res: Response) => {
 const authenticate = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
-    console.log('Users: Recieved params', username, password);
-    console.log('Users: req.headers', req.headers);
-    const userAuth = await auth.authenticate(username, password);
-    console.log('userAuth return', userAuth);
-    // const expiresIn = await auth.jwtExpirey(userAuth);
-    res.send(userAuth); //returns jwt
+    const userAuthjwt = await auth.authenticate(username, password);
+    res.send(userAuthjwt); //returns jwt
   } catch (err) {
     res.status(400).json(err);
   }
@@ -109,9 +92,6 @@ const update = async (req: Request, res: Response) => {
     if (req.body.street1) {
       currentUserDetails.street1 = req.body.street1;
     }
-    // if (req.body.street2) {
-    //   currentUserDetails.street2 = req.body.street2;
-    // }
     if (req.body.city) {
       currentUserDetails.city = req.body.city;
     }
