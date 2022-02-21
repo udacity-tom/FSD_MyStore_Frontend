@@ -24,9 +24,6 @@ import {
 import {
   TokenService
 } from './token.service';
-import {
-  InterceptorService
-} from './interceptor.service';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +53,6 @@ export class OrdersService {
     status: ''
   }; // The DB order where status ='active'
   allOrders: Order[] = []; // all user orders on DB
-  // activeOrderNum: number = 0;
   justOne: Order[] = [];
   orderProducts: OrderProducts[] = [{id: 0, productid: 0, quantity: 0, orderid: 0}]; // order transactions
   productId = 0;
