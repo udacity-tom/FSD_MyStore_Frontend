@@ -1,27 +1,55 @@
-# Mystore
+# FSD Mystore Angular Frontend  
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.2.
+Part of the Full Stack Developer Nanondegree, this project focuses on the creation of a frontend website store. The entire project was written in the web framework Angular, using the angular CLI ver 11.1.4 and Node 12.13.1
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Introduction/App functionality
 
-## Code scaffolding
+This angular app provides a simple demonstration of a shopping cart connected to a RESTful API backend. 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Once installed and functional the app can perform the following functions
 
-## Build
+* Register unique users
+* Show all completed orders
+* Show items in completed orders
+* Maintain a persistant cart
+* Adds items to a cart
+* Removes items from a cart
+* 
+* Get and store a JSON Web Token (JWT) after appropriate authorisation
+    The JWT stores
+    * Expiry date
+    * Username
+    * User ID (backend ID)
+    * Secure Token (backend issued)
+    These details are used for
+    * Identification 
+    * Authorisation
+    * Validating API requests
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Technical Notes
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Utilising various angular technologies: 
 
-## Running end-to-end tests
+* Component based structure
+* Child/Parent hierarchy
+* Relationships between Child & Parents are directive based using decorators
+* A recommended component based architecture has been used
+* Services are used for communications between unrelated components
+* Directives are used to implement communication between Child & Parent Components
+* Observables are used throughtout for service based modules
+* 
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+### Note on Backend API
 
-## Further help
+Part of the extended requirements for submission was to interface the frontend Angular store to a backend API. This has been implemented in this submission with a modified version of the previous project.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The following documentation for installation and setup requires the use of the backend. What needs to be done in order that the backend is available for the front end will be described below.
+
+## Installation, Environment Setup
+
+To start the process, clone the repository and make sure node (v12.13.1) and npm are installed in the local dev environment.
+
+
+
