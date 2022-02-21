@@ -26,7 +26,7 @@ export class LoggedInComponent implements OnInit {
   currentOrders: Order[] = [];
   products: Product[] = [];
   currentProduct: Product = {
-    id: 0, 
+    id: 0,
     name: '',
     price: 0,
     url: '',
@@ -93,7 +93,7 @@ export class LoggedInComponent implements OnInit {
     });
   }
 
-  completedOrders(currentOrders: Order[]): void {// just return the length, not all the objects
+  completedOrders(currentOrders: Order[]): void {
     this.noOfCompletedOrders = currentOrders.filter(item => {
       return item.status === 'complete';
     });
@@ -106,7 +106,7 @@ export class LoggedInComponent implements OnInit {
       res.forEach(item => {
         this.productsService.getProduct(item.productid).subscribe(product => {
           this.products.push(product);
-        })
+        });
       });
     });
     this.showOrderDetails = true;
