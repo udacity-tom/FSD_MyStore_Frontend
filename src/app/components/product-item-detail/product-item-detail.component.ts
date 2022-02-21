@@ -2,9 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { ProductService } from 'src/app/service/products.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { CartService } from 'src/app/service/cart.service';
 import { OrdersService } from 'src/app/service/orders.service';
-import { Observable } from 'rxjs';
 import { LoginService } from 'src/app/service/login.service';
 import { ToastService } from 'src/app/service/toast.service';
 @Component({
@@ -21,10 +19,6 @@ export class ProductItemDetailComponent implements OnInit {
   response: object = {};
   activeOrder = 0;
   state = 'child';
-  // item: {pid:number, quantity:number} = {
-  //   pid: 0,
-  //   quantity: 0
-  // };
 
   constructor(
     private productService: ProductService,
