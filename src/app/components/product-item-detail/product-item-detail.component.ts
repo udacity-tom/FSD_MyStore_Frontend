@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { ProductService } from 'src/app/service/products.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { OrdersService } from 'src/app/service/orders.service';
 import { LoginService } from 'src/app/service/login.service';
 import { ToastService } from 'src/app/service/toast.service';
@@ -71,5 +71,4 @@ export class ProductItemDetailComponent implements OnInit {
     });
   }
 
-}
-
+};
