@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit, OnChanges {
   moreBlurb = 'Please register to place items in your Cart. When finished, click checkout for delivery. Register now to speed the check-out process.';
   username = '';
 
-
   constructor(private loginService: LoginService, private router: Router, private tokenService: TokenService) { }
 
   ngOnInit(): void {
@@ -32,8 +31,6 @@ export class HomeComponent implements OnInit, OnChanges {
     this.loginService.loginStatus().subscribe(res => {
       this.loginStatus = res;
       if (!this.loginStatus){
-        // console.log('logged-in component re-route page, this.loginStatus is ', this.loginStatus);
-        // this.router.navigate(['/', {relativeTo: this.route}]);
         this.router.navigate(['/']);
         return;
       }
@@ -41,7 +38,6 @@ export class HomeComponent implements OnInit, OnChanges {
               this.username = token.user;
             });
     });
-    console.log('logged-in componet loginStatus', this.loginStatus);
   }
 
 }
