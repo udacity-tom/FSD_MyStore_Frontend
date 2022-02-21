@@ -56,11 +56,9 @@ export class LoginService {
   }
 
   authUser(username: string, password: string): Observable< {token: string, expiry: number, uid: number, user: string}>{
-    // console.log('login service, authUser() username, password', username, password);
     this.url = `${this.baseURL}/users/authenticate`;
     return this.http.post< any >(this.url, {"username": username, "password":password});
     }
-
 
   logOut(name: string): void {
     this.tokenService.deleteToken();
