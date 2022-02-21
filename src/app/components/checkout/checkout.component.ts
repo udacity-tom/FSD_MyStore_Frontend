@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { of, Observable } from 'rxjs';
 import { OrdersService } from 'src/app/service/orders.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
@@ -60,9 +59,6 @@ export class CheckoutComponent implements OnInit {
     this.userService.updateUserDetails(this.user
       ).subscribe(res => {
         this.toastService.show(`For ${this.user.username}` , `${this.user.username}'s details were updated!`);
-        // if(this.user === res){//this.user will never be == to res, res includes isAdmin
-        // this.toastService.show(`For ${this.user.username}` , `${this.user.username}'s details were updated!`);
-        // }
       });
     }
 
