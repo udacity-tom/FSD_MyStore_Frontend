@@ -15,10 +15,6 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'products/detail/:id', component: ProductItemDetailComponent }, 
   { path: 'products', component: ProductListComponent }, 
-    //   children: [
-    //     { path: 'detail/:id', component: ProductItemDetailComponent },
-    //   ],
-    // },
   { path: 'cart', component: CartComponent },
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
