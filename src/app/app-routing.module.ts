@@ -13,8 +13,8 @@ import { ConfirmationComponent } from './components/confirmation/confirmation.co
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'products/detail/:id', component: ProductItemDetailComponent }, 
-  { path: 'products', component: ProductListComponent }, 
+  { path: 'products/detail/:id', component: ProductItemDetailComponent },
+  { path: 'products', component: ProductListComponent },
   { path: 'cart', component: CartComponent },
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
