@@ -62,17 +62,17 @@ export class LoginComponent implements OnInit {
       this.returnedJWT = res;
       this.tokenService.setToken(this.returnedJWT);
       this.updateLoginStatus();
-      if(this.loginStatus) {
-        this.toastService.show(`Login Successful`, 
+      if (this.loginStatus) {
+        this.toastService.show(`Login Successful`,
         `Welcome back ${this.username}. You successfully logged in!`);
         this.reRouteUser();
       } else {
-        this.toastService.show(`Login Unsuccessful!`, 
+        this.toastService.show(`Login Unsuccessful!`,
         `Sorry! Do you already have a user account? If not, register first!`);
         this.username = '';
         this.password = '';
         this.router.navigate(['/login']);
       }
-    })
+    });
   }
 }
