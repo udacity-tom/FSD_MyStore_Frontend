@@ -67,8 +67,7 @@ export class ProductItemDetailComponent implements OnInit {
   addProductToCart(pid: number, quantity: number ): void{
     this.orderService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
       this.response = res;
-      this.toastService.show(`Add to Cart: ${this.product.name}`, `We have put ${quantity} piece${(quantity > 1 ? 's' : '')} of the product '${this.product.name}' into your Cart!` )
+      this.toastService.show(`Add to Cart: ${this.product.name}`, `We have put ${quantity} piece${(quantity > 1 ? 's' : '')} of the product '${this.product.name}' into your Cart!` );
     });
   }
-
-};
+}
