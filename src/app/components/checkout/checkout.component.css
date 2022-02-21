@@ -1,5 +1,4 @@
 .checkout-container {
-    font: 300;
     color: black;
     margin: 50px;
 }
@@ -16,10 +15,7 @@
 input {
     margin: 10px;
     width: 500px;
-    /* outline: none; */
-    /* border: none;< */
 }
-
 
 input-complete {
     margin: 10px;
@@ -28,15 +24,12 @@ input-complete {
     border: none;
 }
 
-
 .ng-valid[required], .ng-valid.required {
     padding-left: 10px;
     border: none;
     border-left: 5px solid #42A948;
-
 }
 
-/* .ng-valid.required:not(form), .ng-valid[required]:not(form) */
 .ng-valid:not(form)  {
     padding-left: 10px;
     border-left: 5px solid #A94442;
