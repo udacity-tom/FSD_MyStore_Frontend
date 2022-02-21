@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastService } from 'src/app/service/toast.service';
 @Component({
   selector: 'app-login',
@@ -22,12 +22,10 @@ export class LoginComponent implements OnInit {
     private tokenService: TokenService,
     private router: Router,
     private toastService: ToastService) {
-
   }
 
   ngOnInit(): void {
     this.updateLoginStatus();
-    console.log('login.component ngOnInit ran')
     if (!this.loginStatus){
       this.username = '';
       this.router.navigate(['/login']);
@@ -38,7 +36,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.loading = true;
-    console.log('onSubmit(), this.username, this.password', this.username, this.password);
     this.getLogin(this.username, this.password);
     this.loading = false;
   }
