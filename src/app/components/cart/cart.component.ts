@@ -7,7 +7,6 @@ import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
 import { OrdersService } from 'src/app/service/orders.service';
 import { ProductService } from 'src/app/service/products.service';
-import { ToastService } from 'src/app/service/toast.service';
 interface CartProduct extends Product {
   quantity: number;
   order_productsId: number;
@@ -41,8 +40,7 @@ export class CartComponent implements OnInit {
   private tokenService: TokenService,
   private router: Router,
   private ordersService: OrdersService,
-  private productService: ProductService,
-  private toastService: ToastService
+  private productService: ProductService
   ) { }
 
   ngOnInit(): void {
@@ -100,7 +98,6 @@ export class CartComponent implements OnInit {
       const wasDeleted = res;
       if (Number(res.productid) === product.id) {
         alert(`'${product.name}' was removed from the cart!`);
-       
       }
       this.getActiveOrder();
       location.reload();
