@@ -14,7 +14,6 @@ export type Product = {
 export class ProductStore {
   async index(): Promise<Product[]> {
     try {
-      // console.log('request made to products');
       const sql = 'SELECT * FROM products ORDER BY id ASC;';
       const conn = await client.connect();
       const result = await conn.query(sql);
