@@ -11,7 +11,6 @@ export class NavbarComponent implements OnInit, DoCheck {
   loginStatus: boolean;
   username: string;
 
-
   constructor(private loginAuth: LoginService, private tokenService: TokenService  ) {
     this.loginStatus = false;
     this.username = '';
@@ -28,10 +27,10 @@ export class NavbarComponent implements OnInit, DoCheck {
   updateLoginStatus(): void {
     this.loginAuth.loginStatus().subscribe(res => {
       this.loginStatus = res;
-      if(this.loginStatus){
+      if (this.loginStatus){
         this.tokenService.getToken().subscribe(token => {
           this.username = token.user;
-        })
+        });
       } else {
         this.username = '';
       }
