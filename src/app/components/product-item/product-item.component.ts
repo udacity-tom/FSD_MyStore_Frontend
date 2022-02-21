@@ -13,7 +13,7 @@ export class ProductItemComponent implements OnInit {
   @Output() addProductToCart: EventEmitter<{pid: number, quantity: number}> = new EventEmitter;
   showButtons = false;
   response: object = {};
-  item: {pid: number, quantity: number} = {pid:0, quantity:0};
+  item: {pid: number, quantity: number} = {pid: 0, quantity: 0};
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.activeOrder = 0;
@@ -31,20 +31,19 @@ export class ProductItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
   }
   routeTo(): void {
-    this.router.navigate(['detail/'+this.product.id], {relativeTo: this.route});
+    this.router.navigate(['detail/' + this.product.id], {relativeTo: this.route});
   }
 
   addProductsToCart(pid: number, quantity: number): void {
-    this.item = {pid:pid, quantity:quantity};
-    this.addProductToCart.emit({pid:pid, quantity:quantity});
+    this.item = {pid: pid, quantity: quantity};
+    this.addProductToCart.emit({pid: pid, quantity: quantity});
   }
 
   getClass(): object {
     return {
       'loggedin': this.loginStatus
-    }
+    };
   }
 }
