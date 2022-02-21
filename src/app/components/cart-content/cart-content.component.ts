@@ -8,8 +8,8 @@ import {
 import {
   Product
 } from 'src/app/models/Product';
-import { 
-  ToastService 
+import {
+  ToastService
 } from 'src/app/service/toast.service';
 
 interface CartProduct extends Product {
