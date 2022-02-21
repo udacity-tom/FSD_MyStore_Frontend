@@ -50,7 +50,7 @@ export class CheckoutComponent implements OnInit {
   onSubmit(): void {
     this.updateUserDetails();
     this.completeOrder();
-    if(this.orderStatus) {
+    if (this.orderStatus) {
       this.router.navigate(['/confirmation']);
     }
   }
@@ -67,7 +67,7 @@ export class CheckoutComponent implements OnInit {
     }
 
     completeOrder(): void {
-      //Add final order check that order has orders and is not blank// if(this.orderService.getOrders())
+      // Add final order check that order has orders and is not blank// if(this.orderService.getOrders())
       this.orderService.completeOrder(this.activeOrder).subscribe(res => {
           this.orderStatus = res;
           if (res.status === 'complete') {
