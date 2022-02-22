@@ -55,9 +55,9 @@ export class LoginService {
     return of(this.userIsLoggedIn);
   }
 
-  authUser(username: string, password: string): Observable< {token: string, expiry: number, uid: number, user: string}>{
+  authUser(usernameGiven: string, passwordGiven: string): Observable< {token: string, expiry: number, uid: number, user: string}>{
     this.url = `${this.baseURL}/users/authenticate`;
-    return this.http.post< any >(this.url, {'username': username, 'password': password});
+    return this.http.post< any >(this.url, {username: usernameGiven, password: passwordGiven});
     }
 
   logOut(name: string): void {
