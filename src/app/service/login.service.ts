@@ -27,7 +27,7 @@ export class LoginService {
     })
   };
 
-  constructor(private http: HttpClient, private tokenService: TokenService, private router: Router, private toastService:ToastService) {
+  constructor(private http: HttpClient, private tokenService: TokenService, private router: Router, private toastService: ToastService) {
     this.username = '';
     this.password = '';
     this.currentJWT = '';
@@ -43,7 +43,7 @@ export class LoginService {
     });
     const currentTime = Math.floor((Number(new Date()) / 1000));
     if (this.currentJWT !== 'no Token') {
-        if (this.expiry > currentTime) { //add additional checking?
+        if (this.expiry > currentTime) { // add additional checking?
           this.userIsLoggedIn = true;
         } else {
           this.userIsLoggedIn = false;
@@ -57,13 +57,13 @@ export class LoginService {
 
   authUser(username: string, password: string): Observable< {token: string, expiry: number, uid: number, user: string}>{
     this.url = `${this.baseURL}/users/authenticate`;
-    return this.http.post< any >(this.url, {"username": username, "password":password});
+    return this.http.post< any >(this.url, {'username': username, 'password': password});
     }
 
   logOut(name: string): void {
     this.tokenService.deleteToken();
     this.router.navigate(['/']);
-    if(name!==''){
+    if (name !== ''){
       this.toastService.show(`Logout ${name}`, `${name} successfully logged out!`);
     }
   }
