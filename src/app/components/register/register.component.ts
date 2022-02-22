@@ -26,7 +26,12 @@ export class RegisterComponent implements OnInit {
   exp = 0;
 
 
-  constructor(private userService: UserService, private tokenService: TokenService, private router: Router, private toastService: ToastService) { }
+  constructor(
+    private userService: UserService, 
+    private tokenService: TokenService, 
+    private router: Router, 
+    private toastService: ToastService) 
+    { }
 
   ngOnInit(): void {
   }
