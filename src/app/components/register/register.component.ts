@@ -27,10 +27,11 @@ export class RegisterComponent implements OnInit {
 
 
   constructor(
-    private userService: UserService, 
-    private tokenService: TokenService, 
-    private router: Router, 
-    private toastService: ToastService) 
+    private userService: UserService,
+    private tokenService: TokenService,
+    private router: Router,
+    private toastService: ToastService
+    )
     { }
 
   ngOnInit(): void {
