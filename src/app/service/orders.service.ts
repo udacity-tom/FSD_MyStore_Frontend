@@ -1,30 +1,11 @@
-import {
-  Injectable
-} from '@angular/core';
-import {
-  Observable,
-  of
-} from 'rxjs';
-import {
-  HttpClient,
-  HttpHeaders
-} from '@angular/common/http';
-import {
-  environment
-} from 'src/environments/environment';
-import {
-  Product
-} from '../models/Product'
-import {
-  Order
-} from '../models/Order';
-import {
-  OrderProducts
-} from '../models/OrderProducts';
-import {
-  TokenService
-} from './token.service';
-
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { Product } from '../models/Product';
+import { Order } from '../models/Order';
+import { OrderProducts } from '../models/OrderProducts';
+import { TokenService } from './token.service';
 @Injectable({
   providedIn: 'root'
 })
