@@ -1,27 +1,8 @@
-import {
-  Injectable
-} from '@angular/core';
-import {
-  environment
-} from 'src/environments/environment';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpEvent
-} from '@angular/common/http';
-import {
-  Observable,
-  of
-} from 'rxjs';
-import {
-  Product
-} from '../models/Product';
-import {
-  TokenService
-} from './token.service';
-import {
-  OrdersService
-} from './orders.service';
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { TokenService } from './token.service';
+import { OrdersService } from './orders.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -54,29 +35,6 @@ export class CartService {
     private tokenService: TokenService,
     private orderService: OrdersService
   ) {}
-
-
-  // addProductToActiveOrder(pid: number, quantity: number, oid: number): Observable < object > {
-  //   this.productId = pid;
-  //   this.currentActiveOrder();
-  //   const body = {
-  //     id: pid,
-  //     quantity
-  //   };
-  //   this.addAuthorisation();
-  //   this.url = `${this.baseURL}/users/${this.jwtToken.uid}/orders/${oid}/add-product`;
-  //   return this.http.post < Product > (this.url, body, this.httpOptions);
-  // }
-
-  // addProductToActiveOrder(pid: number, quantity: number, oid: number): void {
-  //   this.productId = pid;
-  //   this.currentActiveOrder();
-  //   const body = {
-  //     id: pid,
-  //     quantity
-  //   };
-  //   this.orderService.addProductToActiveOrder(pid, quantity, oid);
-  // };
 
   addAuthorisation(): void {
     this.currentToken(); // invoke method to update token before submission to API
