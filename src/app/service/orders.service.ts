@@ -11,17 +11,7 @@ import { TokenService } from './token.service';
 })
 export class OrdersService {
   baseURL: string = environment.PROTOCOL + environment.API_SERVER_IP + ':' + environment.API_PORT;
-  jwtToken: {
-    token: string,
-    expiry: number,
-    user: string,
-    uid: number
-  } = {
-    token: '',
-    expiry: 0,
-    user: '',
-    uid: 0
-  };
+  jwtToken: { token: string, expiry: number, user: string, uid: number } = { token: '', expiry: 0, user: '', uid: 0 };
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -121,6 +111,13 @@ export class OrdersService {
 
   activeOrder(): Observable < Order > {
     this.addAuthorisation();
+    if (this.jwtToken.uid === 0) { // gets round error of calling API for orders when not logged in
+      return of({
+        id: 0,
+        userId: 0,
+        status: 'active'
+      }); // if user not logged in return order zero
+    }
     const request = this.http.get < Order > (`${this.baseURL}/users/` + this.jwtToken.uid + '/activeorder', this.httpOptions);
     if ( request === undefined ) {
       this.createOrder();
