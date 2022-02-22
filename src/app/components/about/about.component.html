@@ -1,1 +1,41 @@
-<p>about works!</p>
+<h1>Our top five products are</h1>
+<ul *ngFor="let product of products" >
+    <li> {{product.name}} {{product.sum}}</li>
+</ul>
+
+
+<h2>Demonstration Shopping Cart Application - created with Angular</h2>
+<p>This is a demonstration shopping Cart illustrating : </p>
+<ul>
+    <li>Component based Structure</li>
+    <li>Services used for non-related components</li>
+    <li>Child/Parent communications are directive based</li>
+    <li>Utilises Angulars state based templating</li>
+    <li>Image data retrieved dynamically from a third party API (unsplash.com)</li>
+    <li>Observables are used for services</li>
+    <li>Typescript from Frontend to Backend!</li>
+    <li>Interfaces with a RESTful API Backend, which uses</li>
+    <ul>
+        <li>Node</li>
+        <li>Express</li>
+        <li>Postgres as Database</li>
+        <li>JSON Web Token (JWT) for authentication</li>
+        <li>Middleware for admin, user verification on API routes</li>
+        <li>API routes (setup with Postman)</li>
+        <li>Safe SQL retrieval</li>
+    </ul>
+</ul>
+<h3>There are various functions integrated, for example: </h3>
+<ul>
+    <li>Register unique users (API)</li>
+    <li>Show all completed orders for logged in users (API)</li>
+    <li>Show items in completed orders (API)</li>
+    <li>Maintain a persistant cart (API)</li>
+    <li>Adds items to a cart (API)</li>
+    <li>Removes items from a cart (API)</li>
+    <li>Adds items to a cart (API)</li>
+</ul>
+
+<ul>
+    <li>Technologies used, ngBootstrap/toasts/postgres/etc</li>
+</ul>
