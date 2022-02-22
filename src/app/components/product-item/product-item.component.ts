@@ -10,7 +10,7 @@ export class ProductItemComponent implements OnInit {
   @Input() product: Product;
   @Input() loginStatus: boolean;
   @Input() activeOrder: number;
-  @Output() addProductToCart: EventEmitter<{pid: number, quantity: number}> = new EventEmitter;
+  @Output() addProductToCart: EventEmitter<{pid: number, quantity: number}> = new EventEmitter();
   showButtons = false;
   response: object = {};
   item: {pid: number, quantity: number} = {pid: 0, quantity: 0};
@@ -36,14 +36,14 @@ export class ProductItemComponent implements OnInit {
     this.router.navigate(['detail/' + this.product.id], {relativeTo: this.route});
   }
 
-  addProductsToCart(pid: number, quantity: number): void {
-    this.item = {pid: pid, quantity: quantity};
-    this.addProductToCart.emit({pid: pid, quantity: quantity});
+  addProductsToCart(pidGiven: number, quantityGiven: number): void {
+    this.item = {pid: pidGiven, quantity: quantityGiven};
+    this.addProductToCart.emit({pid: pidGiven, quantity: quantityGiven});
   }
 
   getClass(): object {
     return {
-      'loggedin': this.loginStatus
+      loggedin: this.loginStatus
     };
   }
 }
