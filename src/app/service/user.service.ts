@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of  } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TokenService } from './token.service';
 import { User } from '../models/User';
@@ -34,16 +34,14 @@ export class UserService {
     return this.http.post<{newUser: object, newToken: string, payload: object}> (this.url, {username, firstname, lastname, password}, );
   }
 
-  updateUserDetails( user: User
-  ): Observable<object> {
+  updateUserDetails( user: User ): Observable<object> {
     this.addAuthorisation();
     const body = user;
     const request = this.http.put<{uid: number}> (`${this.baseURL}/users/` + this.jwtToken.uid, body, this.httpOptions);
     return request;
   }
 
-  getUserId(): number {
-    this.tokenService.getToken().subscribe(res => {
+  getUserId(): number { this.tokenService.getToken().subscribe(res => {
       this.jwtToken = res;
     });
     return this.jwtToken.uid;
