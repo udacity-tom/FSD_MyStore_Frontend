@@ -1,17 +1,6 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  EventEmitter,
-  Output
-} from '@angular/core';
-import {
-  Product
-} from 'src/app/models/Product';
-import {
-  ToastService
-} from 'src/app/service/toast.service';
-
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Product } from 'src/app/models/Product';
+import { ToastService } from 'src/app/service/toast.service';
 interface CartProduct extends Product {
   quantity: number;
   order_productsId: number;
@@ -39,7 +28,7 @@ export class CartContentComponent implements OnInit {
   };
   // @Input() product: Product;
   @Input() cart: CartProduct[] = [];
-  @Output() removeItemFromCart: EventEmitter < CartProduct > = new EventEmitter;
+  @Output() removeItemFromCart: EventEmitter < CartProduct > = new EventEmitter();
   currentCartStatus = false;
   titleText1 = 'See Product Description ->';
 
