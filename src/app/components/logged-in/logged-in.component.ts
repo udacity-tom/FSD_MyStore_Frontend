@@ -74,8 +74,8 @@ export class LoggedInComponent implements OnInit {
         return;
       }
       this.tokenService.getToken().subscribe(token => {
-              this.username = token.user;
-            });
+        this.username = token.user;
+        });
     });
   }
 
