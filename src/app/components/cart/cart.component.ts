@@ -32,6 +32,7 @@ export class CartComponent implements OnInit {
  username = '';
  addedCartItem = 0;
  currentCartStatus = false;
+ itemsInCart = 0;
 
  constructor(
   private loginService: LoginService,
@@ -83,6 +84,12 @@ export class CartComponent implements OnInit {
         res = Object.assign(res, {quantity: item.quantity, order_productsId: item.id, orderId: item.orderid});
         this.cartTotal += Number(res.price) * Number(res.quantity);
         this.cart.push(res);
+        this.itemsInCart += Number(res.quantity);
+        this.ordersService.setCartItems(this.itemsInCart);
+        console.log('cart comp items in cart', this.itemsInCart);
+        this.ordersService.cartItems.subscribe(res => {
+          console.log('cartItems orderServer', res);
+        })
       });
     });
     if (this.orderProducts.length !== 0) {

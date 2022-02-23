@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Product } from '../models/Product';
@@ -29,11 +29,19 @@ export class OrdersService {
   productId = 0;
   orderId = 0;
   url = '';
+  cartItems: Subject<number> = new BehaviorSubject<number>(0);
+
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenService,
+    private tokenService: TokenService
     ) {}
+
+  setCartItems(numberOfCartItems: number): void {
+    this.cartItems.next(numberOfCartItems);
+    console.log('order service cart items', numberOfCartItems);
+    console.log('order service cart items', this.cartItems);
+  }
 
   getOrders(): Observable < Order[] > { // gets the results of orders DB
     this.addAuthorisation();

@@ -1,5 +1,7 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
+// import { Order } from 'src/app/models/Order';
 import { LoginService } from 'src/app/service/login.service';
+import { OrdersService } from 'src/app/service/orders.service';
 import { TokenService } from 'src/app/service/token.service';
 
 @Component({
@@ -8,12 +10,16 @@ import { TokenService } from 'src/app/service/token.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit, DoCheck {
-  loginStatus: boolean;
-  username: string;
+  loginStatus: boolean = false;
+  username: string = '';
+  activeOrderNum = 0;
+  itemsInCart = 0;
 
-  constructor(private loginAuth: LoginService, private tokenService: TokenService  ) {
-    this.loginStatus = false;
-    this.username = '';
+  constructor(
+    private loginAuth: LoginService,
+    private tokenService: TokenService,
+    private ordersService: OrdersService
+    ) {
   }
 
   ngOnInit(): void {
@@ -22,6 +28,9 @@ export class NavbarComponent implements OnInit, DoCheck {
 
   ngDoCheck(): void {
     this.updateLoginStatus();
+    this.ordersService.cartItems.subscribe(res => {
+      this.itemsInCart = res;
+    })
   }
 
   updateLoginStatus(): void {
