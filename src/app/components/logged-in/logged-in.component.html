@@ -50,7 +50,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr title='View Product {{product.name}}' [routerLink]="'/detail/'+product.id" >
+                            <tr title='View Product {{product.name}}' [routerLink]="'../products/detail/'+product.id" >
                                 <td class="image"><img src = "{{product.url}}" width=60px; height=60px;></td>
                                 <td class="description">{{product.name}}</td>
                                 <td class="quantity">{{currentOrderDetails[0].quantity}}</td>
