@@ -7,7 +7,6 @@ import { ToastService } from 'src/app/service/toast.service';
   styleUrls: ['./app-toast.component.css']
 })
 export class AppToastComponent implements OnInit {
-  // toast.delay = 10
 
   constructor(public toastService: ToastService) { }
 
