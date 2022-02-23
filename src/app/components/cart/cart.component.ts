@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { OrderProducts } from 'src/app/models/OrderProducts';
 import { Order } from 'src/app/models/Order';
@@ -22,7 +22,6 @@ export class CartComponent implements OnInit {
 
  cart: CartProduct[] = [];  // products in cart
  cartOrder: Order = {id: 0, userId: 0, status: ''}; // the current user cart to update to DB onChange
-
  cartTotal = 0.00;
  currentOrder: Order = {id: 0, userId: 0, status: ''}; // The DB order where status ='active'
  allOrders: Order[] = []; // all user orders on DB
@@ -32,7 +31,6 @@ export class CartComponent implements OnInit {
  loginStatus = false;
  username = '';
  addedCartItem = 0;
-
  currentCartStatus = false;
 
  constructor(
@@ -49,7 +47,6 @@ export class CartComponent implements OnInit {
   }
 
   onChanges(): void {
-    // update the cart with changes: adding products, removing products, checkout, etc...if necessary
     this.getActiveOrder();
   }
 
