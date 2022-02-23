@@ -2,12 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { Order } from 'src/app/models/Order';
 import { OrdersService } from 'src/app/service/orders.service';
 import { OrderProducts } from 'src/app/models/OrderProducts';
 import { ProductService } from 'src/app/service/products.service';
 import { Product } from 'src/app/models/Product';
+
 @Component({
   selector: 'app-logged-in',
   templateUrl: './logged-in.component.html',
@@ -37,13 +37,8 @@ export class LoggedInComponent implements OnInit {
   };
   noOfCompletedOrders: Order[] = [];
   showOrderDetails = false;
-  loginStatus: boolean;
+  loginStatus: boolean = false;
   order: Order = {id: 0, userId: 0, status: ''};
-
-
-  apiServer: string = environment.API_SERVER_IP;
-  apiPort: string = environment.API_PORT;
-  protocol: string = environment.PROTOCOL;
 
   constructor(
     private loginService: LoginService,
@@ -52,7 +47,6 @@ export class LoggedInComponent implements OnInit {
     private orderService: OrdersService,
     private productsService: ProductService
     ) {
-    this.loginStatus = false;
   }
 
   ngOnInit(): void {
