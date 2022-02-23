@@ -1,11 +1,30 @@
 <h1>Our top five products are</h1>
-<ul *ngFor="let product of products" >
-    <li> {{product.name}} {{product.sum}}</li>
-</ul>
-
-
+<div>
+    <table >
+        <colgroup>
+            <col />
+            <col />
+            <col />
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Name</th>
+                <th scope="col">Number Sold</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let product of products" >
+            <tr title='View Product {{product.name}}' [routerLink]="'../products/detail/'+product.id" >
+                <td class="image"><img src = "{{product.url}}" width=60px; height=60px;></td>
+                <td width="150px" >{{product.name}} </td>
+                <td align="center"> {{product.sum}} </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br>
 <h2>Demonstration Shopping Cart Application - created with Angular</h2>
-<p>This is a demonstration shopping Cart illustrating : </p>
+<p>This is an Angular based shopping Cart illustrating : </p>
 <ul>
     <li>Component based Structure</li>
     <li>Services used for non-related components</li>
@@ -14,28 +33,26 @@
     <li>Image data retrieved dynamically from a third party API (unsplash.com)</li>
     <li>Observables are used for services</li>
     <li>Typescript from Frontend to Backend!</li>
+    <li>ngBootstrap used for presentation</li>
+    <li>Toasts used for notifications</li>
     <li>Interfaces with a RESTful API Backend, which uses</li>
     <ul>
         <li>Node</li>
         <li>Express</li>
-        <li>Postgres as Database</li>
+        <li>Postgres</li>
         <li>JSON Web Token (JWT) for authentication</li>
-        <li>Middleware for admin, user verification on API routes</li>
-        <li>API routes (setup with Postman)</li>
+        <li>Express Middleware for admin, user verification on routes</li>
+        <li>API routes were setup with Postman</li>
         <li>Safe SQL retrieval</li>
     </ul>
 </ul>
 <h3>There are various functions integrated, for example: </h3>
 <ul>
-    <li>Register unique users (API)</li>
-    <li>Show all completed orders for logged in users (API)</li>
-    <li>Show items in completed orders (API)</li>
-    <li>Maintain a persistant cart (API)</li>
-    <li>Adds items to a cart (API)</li>
-    <li>Removes items from a cart (API)</li>
-    <li>Adds items to a cart (API)</li>
-</ul>
-
-<ul>
-    <li>Technologies used, ngBootstrap/toasts/postgres/etc</li>
+    <li>Register unique users</li>
+    <li>Show all completed orders for logged in users</li>
+    <li>Show items in completed orders</li>
+    <li>Maintain a persistant cart using the API</li>
+    <li>Adds items to a cart</li>
+    <li>Removes items from a cart</li>
+    <li>Shows top five products</li>
 </ul>
