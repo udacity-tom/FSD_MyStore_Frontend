@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/Product';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { from } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -24,7 +24,6 @@ export class ProductService {
   constructor(private http: HttpClient, private tokenService: TokenService) {
     this.itemDescription = {};
    }
-   userState = new BehaviorSubject(false);
 
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.protocol}${this.apiServer}:${this.apiPort}/products`);
@@ -37,19 +36,5 @@ export class ProductService {
   addProduct(newProduct: Product): Observable<Product> {
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.tokenService.getToken());
     return this.http.post<Product>(`${this.protocol}${this.apiServer}:${this.apiPort}/products/create`, {newProduct});
-  }
-
-  getDescription(link: string, itemName: string): Observable<object> {
-    return this.itemDescription = from(
-      fetch(`${link}${itemName}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'GET',
-          mode: 'no-cors'
-        }
-      )
-    );
   }
 }
