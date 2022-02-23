@@ -18,14 +18,23 @@ export class CheckoutComponent implements OnInit {
   explanation = `Click on any entry below that needs changing.`;
   explanation1 = `This information is required in order to provide a seemless checkout process.`;
   explanation2 = `We need your full details.`;
-  user: User = {id: 0, username: '', firstname: '', lastname: '', password: '', housenum: '', street1: '', city: '', postcode: '', country: ''};
+  user: User = {
+    id: 0, username: '',
+    firstname: '',
+    lastname: '',
+    password: '',
+    housenum: '',
+    street1: '',
+    city: '',
+    postcode: '',
+    country: ''
+  };
   activeOrder = 0;
   orderStatus: Order = {
     id: 0,
     userId: 0,
     status: 'active'
 };
-
   loading = false;
   loginStatus = false;
   userId = 0;
@@ -83,5 +92,4 @@ export class CheckoutComponent implements OnInit {
         this.toastService.show(`New Order Created ${res.id}`, `A new order has been created!`);
       });
     }
-
 }
