@@ -3,11 +3,10 @@
     <a routerLink="/products">
         <img src="{{ product.url }}" class=product-image/>
     </a>
-    <!-- <button class="btn btn-primary">See Details</button> -->
     <p>Product Name: {{ product.name }}</p>
     <p>Product Price USD: {{ product.price }}</p>
     <p>{{ product.snippet }}</p>
-    <p class="description">Full Description: {{ product.description }}</p>
+    <p class="description">Full Description: {{ product.description }} (Accreditation for text: {{product.accreditation}})</p>
     <br>
     <br>
     <a routerLink="/login"><button class="btn btn-primary" *ngIf=(!loginStatus)>Please login to add this item to your cart.</button></a>
