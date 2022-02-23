@@ -22,7 +22,6 @@ export class DashboardService {
 
   topFiveProducts(): Observable<object[]> {
     const request =  this.http.get<object[]> (`${this.baseURL}/products/info/top-5-products`);
-    console.log('dashboard service request', request);
     return request;
   }
 }
