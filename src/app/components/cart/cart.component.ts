@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
 import { OrdersService } from 'src/app/service/orders.service';
-import { ProductService } from 'src/app/service/products.service';
 interface CartProduct extends Product {
   quantity: number;
   order_productsId: number;
@@ -16,7 +15,6 @@ interface CartProduct extends Product {
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartComponent implements OnInit {
 
@@ -39,16 +37,16 @@ export class CartComponent implements OnInit {
   private tokenService: TokenService,
   private router: Router,
   private ordersService: OrdersService,
-  private productService: ProductService
   ) { }
 
   ngOnInit(): void {
     this.updateLoginStatus(); // check if user is logged in, (if yes update cart with active order)
-    this.getActiveOrder();    // get all orders on system BE for user
+    // get all orders on system BE for user
+    this.productsInActiveCart();
   }
 
   onChanges(): void {
-    this.getActiveOrder();
+    this.productsInActiveCart();
   }
 
   updateLoginStatus(): void {
@@ -64,34 +62,18 @@ export class CartComponent implements OnInit {
     });
   }
 
-  getActiveOrder(): void {
-    this.ordersService.activeOrder().subscribe(order => {
-      this.activeOrderNum = order.id;
-      this.productsInActiveOrder(order.id);
-    });
-  }
-
-  productsInActiveOrder(oid: number): void { // gets the products in the active order (list)
-    this.ordersService.orderDetails(oid).subscribe(res => {
-      this.orderProducts = res;
-      this.productsInActiveCart();
-    });
-  }
-
   productsInActiveCart(): void { //  pushes products in active order to cart.
-    this.orderProducts.forEach(item => {
-      this.productService.getProduct(item.productid).subscribe(res => {
-        res = Object.assign(res, {quantity: item.quantity, order_productsId: item.id, orderId: item.orderid});
-        this.cartTotal += Number(res.price) * Number(res.quantity);
-        this.cart.push(res);
-        this.itemsInCart += Number(res.quantity);
-        this.ordersService.setCartItems(this.itemsInCart);
-        console.log('cart comp items in cart', this.itemsInCart);
-        this.ordersService.cartItems.subscribe(res => {
-          console.log('cartItems orderServer', res);
-        })
+    this.ordersService.cartContent.subscribe(res => {
+      console.log('cart.component res from cartContent', res);  
+      this.cart = res;
+      res.forEach(item => {
+        console.log('cart component', item);
+        this.cartTotal += Number(item.price) * Number(item.quantity);
       });
-    });
+    })
+    this.cart.forEach(item => {
+      console.log('cart component ', item);
+    })
     if (this.orderProducts.length !== 0) {
       this.currentCartStatus = true;
     }
@@ -99,11 +81,10 @@ export class CartComponent implements OnInit {
 
   removeItemFromCart(product: CartProduct): boolean {
     this.ordersService.removeCartItem(product.quantity, product.orderId, product.id, product.order_productsId).subscribe(res => {
-      const wasDeleted = res;
+      // const wasDeleted = res;
       if (Number(res.productid) === product.id) {
         alert(`'${product.name}' was removed from the cart!`);
       }
-      this.getActiveOrder();
       location.reload();
     });
     return false;
