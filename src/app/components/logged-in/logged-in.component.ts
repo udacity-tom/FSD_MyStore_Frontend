@@ -44,7 +44,7 @@ export class LoggedInComponent implements OnInit {
     private loginService: LoginService,
     private tokenService: TokenService,
     private router: Router,
-    private orderService: OrdersService,
+    private ordersService: OrdersService,
     private productsService: ProductService
     ) {
   }
@@ -74,9 +74,9 @@ export class LoggedInComponent implements OnInit {
   }
 
   existingOrders(): void {
-    this.orderService.getOrders().subscribe(res => {
+    this.ordersService.getOrders().subscribe(res => {
       if (res.length === 0 || res === undefined){
-        this.orderService.createOrder().subscribe(order => {
+        this.ordersService.createOrder().subscribe(order => {
           const orderServiceResult = order;
           return orderServiceResult;
         });
@@ -95,7 +95,7 @@ export class LoggedInComponent implements OnInit {
 
   orderDetails(oid: number): void {
     this.products = [];
-    this.orderService.orderDetails(oid).subscribe(res => {
+    this.ordersService.orderDetails(oid).subscribe(res => {
       this.currentOrderDetails = res;
       res.forEach(item => {
         this.productsService.getProduct(item.productid).subscribe(product => {
