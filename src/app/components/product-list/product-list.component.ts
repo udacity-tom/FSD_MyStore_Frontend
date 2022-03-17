@@ -10,7 +10,7 @@ import { ToastService } from 'src/app/service/toast.service';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  title = 'Our List Of Prouducts';
+  title = 'Our List Of Products';
   products: Product[] = [];
   activeOrder = 0;
   loginStatus = false;
