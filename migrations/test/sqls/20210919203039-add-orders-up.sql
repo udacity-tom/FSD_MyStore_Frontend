@@ -1,3 +1,4 @@
+INSERT INTO orders(id, status, userId) VALUES(0, 'active', '0');
 INSERT INTO orders(id, status, userId) VALUES(1, 'complete', '1');
 INSERT INTO orders(id, status, userId) VALUES(2, 'complete', '1');
 INSERT INTO orders(id, status, userId) VALUES(3, 'active', '1');
