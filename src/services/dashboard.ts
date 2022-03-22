@@ -3,7 +3,7 @@ import { Order } from '../models/order';
 import { Product } from '../models/product';
 
 export class DashboardQueries {
-  //NOTE: Where to put? Not a model? No handler-> so no route->better placed here. This keeps routes/models clean.
+  //NOTE: Where to put isUserAdmin? Not a model? No handler-> so no route->better placed here. This keeps routes/models clean.
   async isUserAdmin(tokenUid: number): Promise<boolean> {
     try {
       const sql = 'SELECT * FROM users WHERE id = ($1);';
@@ -14,14 +14,16 @@ export class DashboardQueries {
       throw new Error(`User is not Admin!`);
     }
   }
-  async popularProducts(): Promise<string[]> {
+  async popularProducts(): Promise<{ productid: number; sum: number }[]> {
     try {
       const sql =
-        'SELECT productId, sum(quantity) FROM order_products GROUP BY ROLLUP(productId) ORDER BY sum(quantity) DESC LIMIT 6;';
+        'SELECT productid, sum(quantity) FROM order_products GROUP BY ROLLUP(productid) ORDER BY sum(quantity) DESC LIMIT 6;';
       const conn = await client.connect();
       const filtered = (await conn.query(sql)).rows.filter(item => {
-        if (item.productId != null) {
+        if (item.productid !== null) {
+          // console.log('item', item, typeof item);
           return item;
+          // return {item.productid, item.sum};
         }
       });
       conn.release();
