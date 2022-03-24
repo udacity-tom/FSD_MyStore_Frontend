@@ -1,7 +1,8 @@
+<!-- Generates cart view using this.cart observable from order service -->
 <div>
     <h2 *ngIf="loginStatus">Currently {{username}} is logged in!</h2>
     <br>
-    <h3 *ngIf="currentCartStatus">Your current Cart Contents</h3>
+    <h3 *ngIf="currentCartStatus">Your current Cart Contents For Active Order No.: {{this.activeOrderNum}}</h3>
     <br>
     <table *ngIf="currentCartStatus" Cols="8" class="cartContent">
         <colgroup>
@@ -27,10 +28,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let product of cart"
+            <tr *ngFor="let product of products"
                 app-cart-content 
                 [product]="product" 
-                [cart]="cart" 
                 (removeItemFromCart)="removeItemFromCart($event)" 
                 height=70px>
             </tr>
@@ -40,6 +40,8 @@
     <br>
     <h2 *ngIf="!currentCartStatus">You have no items in your cart! <br> Please visit the <a routerLink="/products">Products page</a> to add Products to your Cart</h2>
     <h2 class="total" *ngIf="currentCartStatus">Your Cart Total is: USD {{cartTotal.toFixed(2)}}</h2>
+    <br>
+    <h4 *ngIf="currentCartStatus">You can still add items to your cart before you checkout! <br>Our <a routerLink="/products">Products page</a> shows all our items</h4>
     <br>
     <button *ngIf="currentCartStatus" class="btn btn-primary" (click)="checkout()">Checkout</button>
 </div>
