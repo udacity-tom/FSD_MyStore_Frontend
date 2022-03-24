@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { Product } from 'src/app/models/Product';
-import { ToastService } from 'src/app/service/toast.service';
 interface CartProduct extends Product {
   quantity: number;
   order_productsId: number;
@@ -12,7 +11,7 @@ interface CartProduct extends Product {
   templateUrl: './cart-content.component.html',
   styleUrls: ['./cart-content.component.css']
 })
-export class CartContentComponent implements OnInit {
+export class CartContentComponent {
   @Input() product: CartProduct = {
     id: 0,
     name: '',
@@ -26,16 +25,12 @@ export class CartContentComponent implements OnInit {
     order_productsId: 0,
     orderId: 0
   };
-  // @Input() product: Product;
-  @Input() cart: CartProduct[] = [];
+  @Input() cart: CartProduct[] = new Array;
   @Output() removeItemFromCart: EventEmitter < CartProduct > = new EventEmitter();
   currentCartStatus = false;
   titleText1 = 'See Product Description ->';
 
-  constructor(private toastService: ToastService) {}
-
-  ngOnInit(): void {
-  }
+  constructor() {}
 
   removeItem(): void {
     this.removeItemFromCart.emit(this.product);
