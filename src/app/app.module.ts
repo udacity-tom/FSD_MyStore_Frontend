@@ -25,19 +25,19 @@ import { AppToastComponent } from './components/app-toast/app-toast.component';
 @NgModule({
   declarations: [
     AppComponent,
-    AboutComponent,
-    CartComponent,
-    ConfirmationComponent,
-    ProductItemComponent,
-    ProductItemDetailComponent,
-    ProductListComponent,
     NavbarComponent,
     HomeComponent,
-    LoginComponent,
     RegisterComponent,
+    LoginComponent,
     LoggedInComponent,
+    AboutComponent,
+    CartComponent,
     CartContentComponent,
+    ProductListComponent,
+    ProductItemComponent,
+    ProductItemDetailComponent,
     CheckoutComponent,
+    ConfirmationComponent,
     AppToastComponent
   ],
   imports: [
