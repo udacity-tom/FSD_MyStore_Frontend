@@ -4,7 +4,9 @@
     <br>
     <a routerLink="/products">Products</a>
     <br>
-    <a routerLink="/cart">Cart={{itemsInCart}}</a>
+    <div>
+        <a routerLink="/cart">Cart&nbsp;&nbsp;&nbsp;</a><span *ngIf="items" class="background">{{items}}</span>
+    </div>
     <br>
     <a routerLink="/about">About</a>
 </div>
