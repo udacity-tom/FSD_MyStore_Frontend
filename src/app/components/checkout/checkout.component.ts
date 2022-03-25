@@ -40,7 +40,7 @@ export class CheckoutComponent implements OnInit {
   userId = 0;
 
   constructor(
-    private orderService: OrdersService,
+    private ordersService: OrdersService,
     private router: Router,
     private userService: UserService,
     private toastService: ToastService
@@ -48,7 +48,7 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.currentUserId();
-    this.orderService.activeOrder().subscribe(res => {
+    this.ordersService.activeOrder().subscribe(res => {
       this.activeOrder = Number(res.id);
     });
     this.userService.showUser(this.userId).subscribe(res => {
@@ -76,8 +76,8 @@ export class CheckoutComponent implements OnInit {
     }
 
     completeOrder(): void {
-      // Add final order check that order has orders and is not blank// if(this.orderService.getOrders())
-      this.orderService.completeOrder(this.activeOrder).subscribe(res => {
+      // Add final order check that order has orders and is not blank// if(this.ordersService.getOrders())
+      this.ordersService.completeOrder(this.activeOrder).subscribe(res => {
           this.orderStatus = res;
           if (res.status === 'complete') {
             this.createNewActiveOrder();
@@ -88,7 +88,7 @@ export class CheckoutComponent implements OnInit {
 
     createNewActiveOrder(): void {
       this.userId = this.currentUserId();
-      this.orderService.createOrder(String(this.userId)).subscribe(res => {
+      this.ordersService.createOrder(String(this.userId)).subscribe(res => {
         this.toastService.show(`New Order Created ${res.id}`, `A new order has been created!`);
       });
     }
