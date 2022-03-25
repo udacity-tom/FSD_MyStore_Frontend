@@ -19,13 +19,14 @@ interface CartProduct extends Product {
 })
 export class CartComponent implements OnInit {
  
- orderIdNum: Observable<number>;
+//  orderIdNum: Observable<number>;
 
- cart: CartProduct[] = new Array;
- cart2: CartProduct[] = new Array;
+//  cart: CartProduct[] = new Array;
+//  cart2: CartProduct[] = new Array;
+//  itemCountInternal = 0;
+
+//  product: Product = {id: 0, name: '', url: '', price: 0, snippet: '', description: '', accreditation: '', category: '' };
  cartTotal = 0.00;
-
- product: Product = {id: 0, name: '', url: '', price: 0, snippet: '', description: '', accreditation: '', category: '' };
  products: CartProduct[] = [];
  currentOrderDetails: OrderProducts[] = [ {id: 0, productid: 0, quantity: 0, orderid: 0}];
  loginStatus = false;
@@ -41,7 +42,7 @@ export class CartComponent implements OnInit {
   private ordersService: OrdersService,
   private productsService: ProductService
   ) {
-    this.orderIdNum = this.ordersService.orderIdNum;
+    // this.orderIdNum = this.ordersService.orderIdNum;
     const numOfActiveOrder = this.activeOrder();
    }
 
@@ -50,7 +51,7 @@ export class CartComponent implements OnInit {
   }
   
   ngOnChanges(): void {
-    // this.activeOrder();
+    this.activeOrder();
   }
   
   updateLoginStatus(): void {
@@ -87,6 +88,8 @@ export class CartComponent implements OnInit {
           product = Object.assign(product, {quantity: item.quantity, order_productsId: item.id, orderId: item.orderid});
           this.products.push(product);
           this.cartTotal += Number(product.price) * Number(product.quantity);
+          // this.itemCountInternal += Number(product.quantity);
+          // console.log('cart comp-orderDetails, this.itemCountInternal', this.itemCountInternal);
         });
       });
       if (this.currentOrderDetails.length !== 0) {
