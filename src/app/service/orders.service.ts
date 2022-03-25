@@ -27,7 +27,7 @@ export class OrdersService {
   // activeOrderNumber = 0;
   cartCount = 0;
   
-  orderIdNum: Subject<number> = new BehaviorSubject<number>(0);
+  // orderIdNum: Subject<number> = new BehaviorSubject<number>(0);
   cartItems: Subject<number> = new BehaviorSubject<number>(0);
 
   constructor(
@@ -35,7 +35,7 @@ export class OrdersService {
     private tokenService: TokenService
     ) {
       this.activeOrder().subscribe( orderNum => {
-        this.setOrderIdNum(orderNum.id);
+        // this.setOrderIdNum(orderNum.id);
         this.countCartItems(orderNum.id);
       });
     }
@@ -44,9 +44,9 @@ export class OrdersService {
     this.cartItems.next(numberOfCartItems);
   }
 
-  setOrderIdNum(currentOrderId: number): void {
-    this.orderIdNum.next(currentOrderId);
-  }
+  // setOrderIdNum(currentOrderId: number): void {
+  //   this.orderIdNum.next(currentOrderId);
+  // }
 
   countCartItems(oid: number): void {
     this.cartCount = 0;
