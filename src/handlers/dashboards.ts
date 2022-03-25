@@ -8,7 +8,9 @@ const auth = new AuthStore();
 const topFiveProducts = async (req: Request, res: Response) => {
   try {
     const products = await service.popularProducts();
+    // console.log('Dashboard', products);
     res.json(products);
+    // res.json(products);
   } catch (err) {
     res.status(400).send(err);
   }
