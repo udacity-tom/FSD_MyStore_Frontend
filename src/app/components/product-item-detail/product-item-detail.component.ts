@@ -23,7 +23,7 @@ export class ProductItemDetailComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
-    private orderService: OrdersService,
+    private ordersService: OrdersService,
     private loginService: LoginService,
     private toastService: ToastService
     ) {
@@ -50,7 +50,7 @@ export class ProductItemDetailComponent implements OnInit {
     this.productService.getProduct(this.givenId).subscribe(res => {
       this.product = res;
     });
-    this.orderService.activeOrder().subscribe(res => {
+    this.ordersService.activeOrder().subscribe(res => {
       this.activeOrder = res.id;
     });
   }
@@ -65,9 +65,10 @@ export class ProductItemDetailComponent implements OnInit {
   }
 
   addProductToCart(pid: number, quantity: number ): void{
-    this.orderService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
+    this.ordersService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
       this.response = res;
       this.toastService.show(`Add to Cart: ${this.product.name}`, `We have put ${quantity} piece${(quantity > 1 ? 's' : '')} of the product '${this.product.name}' into your Cart!` );
+      this.ordersService.countCartItems(this.activeOrder);
     });
   }
 }
