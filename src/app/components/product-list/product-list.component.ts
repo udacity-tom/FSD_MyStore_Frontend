@@ -21,7 +21,7 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private loginService: LoginService,
-    private orderService: OrdersService,
+    private ordersService: OrdersService,
     private toastService: ToastService
     )
     { }
@@ -40,15 +40,16 @@ export class ProductListComponent implements OnInit {
 
   addProductToCart(item: {pid: number, quantity: number}): void {
     this.getActiveOrder();
-    this.orderService.addProductToActiveOrder(item.pid, item.quantity, this.activeOrder).subscribe(res => {
+    this.ordersService.addProductToActiveOrder(item.pid, item.quantity, this.activeOrder).subscribe(res => {
       this.response = res;
       const productIndex = item.pid - 1;
       this.toastService.show(`Add to Cart: ${this.products[productIndex].name}`, `We have put ${item.quantity} piece${(item.quantity > 1 ? 's' : '')} of the product '${this.products[productIndex].name}' into your Cart!` );
+      this.ordersService.countCartItems(this.activeOrder);
     });
   }
 
   getActiveOrder(): void {
-    this.orderService.activeOrder().subscribe(res => {
+    this.ordersService.activeOrder().subscribe(res => {
       this.activeOrder = res.id;
     });
   }
