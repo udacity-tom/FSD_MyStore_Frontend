@@ -11,11 +11,10 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit, DoCheck {
-  loginStatus: boolean = false;
-  username: string = '';
+  loginStatus = false;
+  username = '';
   itemsInCart: Observable<number>;
-  items: number = 0;
-  cartItems: number = -1;
+  items = 0;
 
   constructor(
     private loginAuth: LoginService,
@@ -23,17 +22,20 @@ export class NavbarComponent implements OnInit, DoCheck {
     private ordersService: OrdersService,
     ) {
       this.itemsInCart = this.ordersService.cartItems;
-    }
-    
-    ngOnInit(): void {
-      this.updateLoginStatus();
       this.itemsInCart.subscribe(num => {
         this.items = num;
-      })
+      });
+    }
+
+    ngOnInit(): void {
+      this.updateLoginStatus();
   }
 
     ngDoCheck(): void {
       this.updateLoginStatus();
+      this.itemsInCart.subscribe(num => {
+        this.items = num;
+      });
     }
 
     updateLoginStatus(): void {
@@ -45,6 +47,7 @@ export class NavbarComponent implements OnInit, DoCheck {
           });
         } else {
           this.username = '';
+          this.items = 0;
         }
       });
     }
