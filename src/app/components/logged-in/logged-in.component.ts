@@ -21,30 +21,13 @@ interface CartProduct extends Product {
 
 export class LoggedInComponent implements OnInit {
   @Input() currentOrderDetails: OrderProducts[] = [ {id: 0, productid: 0, quantity: 0, orderid: 0}];
-  // @Input() product: 
   username = '';
-  password = '';
-  firstname = '';
-  returnedJWT: object = {};
   token = '';
-  authFn: object = {};
-  loading = false;
   currentOrders: Order[] = [];
   products: CartProduct[] = [];
-  currentProduct: Product = {
-    id: 0,
-    name: '',
-    price: 0,
-    url: '',
-    snippet: '',
-    description: '',
-    accreditation: '',
-    category: '',
-  };
-  noOfCompletedOrders: Order[] = [];
-  showOrderDetails = false;
-  loginStatus: boolean = false;
-  order: Order = {id: 0, userId: 0, status: ''};
+  noOfCompletedOrders: Order[] = []; // ngif status indicator on html page
+  showOrderDetails = false; // ngif status indicator on html page
+  loginStatus = false;
 
   constructor(
     private loginService: LoginService,
@@ -90,6 +73,9 @@ export class LoggedInComponent implements OnInit {
       }
       this.currentOrders = res;
       this.completedOrders(res);
+      this.ordersService.activeOrder().subscribe( activeOrderNum => {
+        this.ordersService.countCartItems(activeOrderNum.id);
+      });
     });
   }
 
@@ -103,11 +89,9 @@ export class LoggedInComponent implements OnInit {
     this.products = [];
     this.ordersService.orderDetails(oid).subscribe(res => {
       this.currentOrderDetails = res;
-      console.log('loggedin comp-orderdetails(), currentorderdetails', res);
       res.forEach(item => {
         this.productsService.getProduct(item.productid).subscribe(product => {
           product = Object.assign(product, {quantity: item.quantity, order_productsId: item.id, orderId: item.orderid});
-          console.log('loggedin comp-orderdetails(), product', product)
           this.products.push(product);
         });
       });
