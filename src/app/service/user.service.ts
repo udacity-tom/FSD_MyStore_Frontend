@@ -13,7 +13,6 @@ export class UserService {
   username: string;
   password: string;
   url: string;
-  loading = false;
   loginStatus = false;
   httpOptions = {
     headers: new HttpHeaders({
@@ -41,8 +40,9 @@ export class UserService {
     return request;
   }
 
-  getUserId(): number { this.tokenService.getToken().subscribe(res => {
-      this.jwtToken = res;
+  getUserId(): number {
+    this.tokenService.getToken().subscribe(res => {
+    this.jwtToken = res;
     });
     return this.jwtToken.uid;
   }
