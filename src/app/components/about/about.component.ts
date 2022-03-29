@@ -34,6 +34,7 @@ export class AboutComponent implements OnInit {
         this.productsService.getProduct(productidValue).subscribe(res => {
           this.products.push(res);
           this.products[this.products.length-1].sum = sumValue;
+          this.products.sort( (a, b) => b.sum - a.sum); 
         });
       });
     });
