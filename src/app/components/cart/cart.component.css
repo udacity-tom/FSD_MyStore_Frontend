@@ -60,3 +60,9 @@ table {
     text-align: center;
     margin: auto;
 }
+
+.btn-primary:hover {
+    color: #007bff;
+    background-color: #fff;
+    border-color: #007bff;
+  }

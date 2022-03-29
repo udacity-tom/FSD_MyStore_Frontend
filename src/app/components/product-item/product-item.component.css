@@ -39,10 +39,10 @@ img {
     margin-bottom: 8px;
   }
 
-  .btn-primary-hover {
+  .btn-primary:hover {
     color: #007bff;
     background-color: #fff;
-    border-color: #fff;
+    border-color: #007bff;
   }
 
   .loggedin {
