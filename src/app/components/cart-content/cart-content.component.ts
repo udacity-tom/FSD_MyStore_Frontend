@@ -7,6 +7,7 @@ interface CartProduct extends Product {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: '[app-cart-content]',
   templateUrl: './cart-content.component.html',
   styleUrls: ['./cart-content.component.css']
@@ -25,7 +26,7 @@ export class CartContentComponent {
     order_productsId: 0,
     orderId: 0
   };
-  @Input() cart: CartProduct[] = new Array;
+  @Input() cart: CartProduct[] = new Array();
   @Output() removeItemFromCart: EventEmitter < CartProduct > = new EventEmitter();
   currentCartStatus = false;
   titleText1 = 'See Product Description ->';
