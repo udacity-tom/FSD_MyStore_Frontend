@@ -80,6 +80,7 @@ export class CheckoutComponent implements OnInit {
       this.ordersService.completeOrder(this.activeOrder).subscribe(res => {
           this.orderStatus = res;
           if (res.status === 'complete') {
+            this.ordersService.setCartItems(0);
             this.createNewActiveOrder();
             this.toastService.show(`Order number ${this.activeOrder}`, `Your order with number ${this.activeOrder} was updated, new status: Complete!`);
           }
