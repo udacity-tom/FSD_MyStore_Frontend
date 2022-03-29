@@ -87,6 +87,10 @@ export class CartComponent implements OnInit {
         this.productsService.getProduct(item.productid).subscribe(product => {
           product = Object.assign(product, {quantity: item.quantity, order_productsId: item.id, orderId: item.orderid});
           this.products.push(product);
+          console.log('cart comp-orderDetails this.products', this.products)
+          this.products.sort( (a, b) => {
+            return a.id - b.id;
+          });
           this.cartTotal += Number(product.price) * Number(product.quantity);
           // this.itemCountInternal += Number(product.quantity);
           // console.log('cart comp-orderDetails, this.itemCountInternal', this.itemCountInternal);
