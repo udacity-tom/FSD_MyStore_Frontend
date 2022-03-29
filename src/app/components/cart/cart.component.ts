@@ -62,6 +62,7 @@ export class CartComponent implements OnInit {
     this.ordersService.activeOrder().subscribe( orderNum => {
       this.activeOrderNum = orderNum.id;
       tempOrderNum = orderNum.id;
+      if ( orderNum.id === 0 ) return;
       this.orderDetails(tempOrderNum);
     });
     return tempOrderNum;
