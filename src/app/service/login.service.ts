@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { TokenService } from './token.service';
 import { ToastService } from './toast.service';
+import { OrdersService } from './orders.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,12 @@ export class LoginService {
     })
   };
 
-  constructor(private http: HttpClient, private tokenService: TokenService, private router: Router, private toastService: ToastService) {
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService,
+    private router: Router,
+    private toastService: ToastService,
+    private ordersService: OrdersService) {
     this.username = '';
     this.password = '';
     this.currentJWT = '';
@@ -62,6 +68,7 @@ export class LoginService {
 
   logOut(name: string): void {
     this.tokenService.deleteToken();
+    this.ordersService.setCartItems(0);
     this.router.navigate(['/']);
     if (name !== ''){
       this.toastService.show(`Logout ${name}`, `${name} successfully logged out!`);
