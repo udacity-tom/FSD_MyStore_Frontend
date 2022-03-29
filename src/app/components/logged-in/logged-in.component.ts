@@ -8,6 +8,11 @@ import { OrderProducts } from 'src/app/models/OrderProducts';
 import { ProductService } from 'src/app/service/products.service';
 import { Product } from 'src/app/models/Product';
 
+interface CartProduct extends Product {
+  quantity: number;
+  order_productsId: number;
+  orderId: number;
+}
 @Component({
   selector: 'app-logged-in',
   templateUrl: './logged-in.component.html',
@@ -16,6 +21,7 @@ import { Product } from 'src/app/models/Product';
 
 export class LoggedInComponent implements OnInit {
   @Input() currentOrderDetails: OrderProducts[] = [ {id: 0, productid: 0, quantity: 0, orderid: 0}];
+  // @Input() product: 
   username = '';
   password = '';
   firstname = '';
@@ -24,7 +30,7 @@ export class LoggedInComponent implements OnInit {
   authFn: object = {};
   loading = false;
   currentOrders: Order[] = [];
-  products: Product[] = [];
+  products: CartProduct[] = [];
   currentProduct: Product = {
     id: 0,
     name: '',
@@ -97,8 +103,11 @@ export class LoggedInComponent implements OnInit {
     this.products = [];
     this.ordersService.orderDetails(oid).subscribe(res => {
       this.currentOrderDetails = res;
+      console.log('loggedin comp-orderdetails(), currentorderdetails', res);
       res.forEach(item => {
         this.productsService.getProduct(item.productid).subscribe(product => {
+          product = Object.assign(product, {quantity: item.quantity, order_productsId: item.id, orderId: item.orderid});
+          console.log('loggedin comp-orderdetails(), product', product)
           this.products.push(product);
         });
       });
