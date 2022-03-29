@@ -24,29 +24,18 @@ export class OrdersService {
   productId = 0;
   orderId = 0;
   url = '';
-  // activeOrderNumber = 0;
   cartCount = 0;
-  
-  // orderIdNum: Subject<number> = new BehaviorSubject<number>(0);
+
   cartItems: Subject<number> = new BehaviorSubject<number>(0);
 
   constructor(
     private http: HttpClient,
     private tokenService: TokenService
-    ) {
-      this.activeOrder().subscribe( orderNum => {
-        // this.setOrderIdNum(orderNum.id);
-        this.countCartItems(orderNum.id);
-      });
-    }
+    ) {}
 
   setCartItems(numberOfCartItems: number): void {
     this.cartItems.next(numberOfCartItems);
   }
-
-  // setOrderIdNum(currentOrderId: number): void {
-  //   this.orderIdNum.next(currentOrderId);
-  // }
 
   countCartItems(oid: number): void {
     this.cartCount = 0;
@@ -56,7 +45,7 @@ export class OrdersService {
         this.setCartItems(this.cartCount);
       });
     });
-    if(this.cartCount === 0){
+    if (this.cartCount === 0){
       this.setCartItems(this.cartCount);
     }
   }
@@ -74,7 +63,7 @@ export class OrdersService {
     this.jwtToken.uid + '/orders', this.httpOptions);
     return request;
   }
-  
+
   createOrder(userId ?: string, status ?: string): Observable < Order > {
     this.addAuthorisation();
     const request = this.http.post < Order > (`${this.baseURL}/users/` +
@@ -84,7 +73,7 @@ export class OrdersService {
     }, this.httpOptions);
     return request;
   }
-  
+
   completeOrder(oid: number): Observable < Order > {
     this.addAuthorisation();
     const body = {}; // required for http put request (modification) RFC7231
@@ -92,14 +81,14 @@ export class OrdersService {
     this.jwtToken.uid + '/orders/' + oid, body, this.httpOptions);
     return request;
   }
-  
+
   orderDetails(oid: number): Observable < OrderProducts[] > {
-    this.addAuthorisation();
-    const request = this.http.get < OrderProducts[] > (`${this.baseURL}/users/` +
-    this.jwtToken.uid + '/orders/' + oid, this.httpOptions);
+      this.addAuthorisation();
+      const request = this.http.get < OrderProducts[] > (`${this.baseURL}/users/` +
+      this.jwtToken.uid + '/orders/' + oid, this.httpOptions);
       return request;
     }
-    
+
   addProductToActiveOrder(pid: number, quantity: number, oid: number): Observable < object > {
     this.productId = pid;
     this.activeOrder();
@@ -111,27 +100,27 @@ export class OrdersService {
     this.url = `${this.baseURL}/users/${this.jwtToken.uid}/orders/${oid}/add-product`;
     return this.http.post < Product > (this.url, body, this.httpOptions);
   }
-    
+
   removeCartItem(quantity: number, oid: number, productid: number, opid: number): Observable < {
       id: number, quantity: number, orderId: number, productid: number, order_productId: number
     } > {
       this.activeOrder();
-    this.addAuthorisation();
-    const body = {
-      id: productid,
-      quantity
-    };
-    const request = this.http.post < {
-      id: number,
-      quantity: number,
-      orderId: number,
-      productid: number,
-      order_productId: number
-    } > (`${this.baseURL}/users/` + this.jwtToken.uid + '/orders/' + oid +
+      this.addAuthorisation();
+      const body = {
+        id: productid,
+        quantity
+      };
+      const request = this.http.post < {
+        id: number,
+        quantity: number,
+        orderId: number,
+        productid: number,
+        order_productId: number
+      } > (`${this.baseURL}/users/` + this.jwtToken.uid + '/orders/' + oid +
     '/delete-product/' + opid, body, this.httpOptions);
-    return request;
+      return request;
   }
-  
+
   activeOrder(): Observable < Order > {
     this.addAuthorisation();
     if (this.jwtToken.uid === 0) { // gets round error of calling API for orders when not logged in
@@ -148,12 +137,12 @@ export class OrdersService {
     }
     return request;
   }
-  
+
   addAuthorisation(): void {
     this.currentToken(); // invoke method to update token before submission to API
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.jwtToken.token);
   }
-  
+
   currentToken(): void {
     this.tokenService.getToken().subscribe(res => {
       this.jwtToken = res;
