@@ -1,12 +1,10 @@
 <div class="navigation">
-    <a *ngIf="!loginStatus" routerLink="/">Home</a>
-    <a *ngIf="loginStatus" routerLink="/loggedin">{{username}}</a>
+    <a *ngIf="!loginStatus" class="menu-title" routerLink="/">Home</a>
+    <a *ngIf="loginStatus" class="menu-title" routerLink="/loggedin">{{username}}</a>
     <br>
-    <a routerLink="/products">Products</a>
+    <a class="menu-title" routerLink="/products">Products</a>
     <br>
-    <div>
-        <a routerLink="/cart">Cart&nbsp;&nbsp;&nbsp;</a><span *ngIf="items" class="background">{{items}}</span>
-    </div>
+    <a class="menu-title" routerLink="/cart">Cart&nbsp;<span *ngIf="items" class="background">{{items}}</span></a>
     <br>
-    <a routerLink="/about">About</a>
+    <a class="menu-title" routerLink="/about">About</a>
 </div>

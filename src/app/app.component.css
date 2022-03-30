@@ -1,7 +1,14 @@
-.margins {
-    margin: 40px 40px 40px 40px;   
-    /* margin: 0;   */
+.navbar-main {
+    position: fixed;
+    width: 100%;
+    margin-top: -40px;
 }
+
+.margins {
+    margin: 40px 40px 40px 40px;
+    padding-top: 45px;
+}
+
 .app-display {
     display: flex;
     flex-wrap: wrap;

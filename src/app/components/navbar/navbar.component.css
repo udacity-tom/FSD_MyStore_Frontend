@@ -6,14 +6,16 @@
     background: #33B5E5;
     padding: 20px 200px 20px 200px;
     font-size: large;
-    height: 70px;
+    height: 90px;
 }
 
+.menu-title {
+    padding: 5px;
+}
 .background {
     background-image: url("../../../assets/cart-background.png");
     background-repeat: no-repeat;
     display:inline-block;
-    margin-right: 2em;
     width: 30px;
     height: 30px;
     float: none;
@@ -28,5 +30,5 @@ a {
     font-weight: bold;
     text-decoration: none;
     text-align: center;
-    width: 8em;
+    width: 10em;
 }
