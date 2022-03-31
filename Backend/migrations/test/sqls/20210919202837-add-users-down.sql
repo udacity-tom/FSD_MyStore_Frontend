@@ -1,0 +1,1 @@
+/* Entries will be deleted on table drop */

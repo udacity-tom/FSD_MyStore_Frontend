@@ -1,0 +1,18 @@
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (1, 6, 2, 5);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (2, 6, 2, 4);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (3, 6, 3, 2);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (4, 5, 4, 2);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (5, 3, 10, 2);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (6, 4, 10, 1);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (7, 4, 2, 4);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (8, 2, 2, 8);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (9, 7, 2, 3);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (10, 2, 2, 3);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (11, 9, 2, 3);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (12, 12, 2, 3);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (13, 2, 2, 6);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (14, 2, 2, 7);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (15, 2, 2, 8);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (16, 2, 2, 8);
+INSERT INTO order_products (id, productId, quantity, orderId) VALUES (17, 2, 2, 8);
+ALTER SEQUENCE order_products_id_seq RESTART WITH 18;
