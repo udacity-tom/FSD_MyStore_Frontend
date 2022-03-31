@@ -155,13 +155,12 @@ const orderRoutes = (app: express.Application): void => {
     auth.verifyUserAuth,
     removeProduct
   );
-  //updates order status
   app.put(
     '/users/:id/orders/:oid',
     auth.verifyAuthToken,
     auth.verifyUserAuth,
     update
-  );
+  ); //updates order status
   app.delete(
     '/users/:id/orders/:oid',
     auth.verifyAuthToken,
