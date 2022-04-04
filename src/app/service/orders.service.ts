@@ -38,7 +38,7 @@ export class OrdersService {
   }
 
   countCartItems(oid: number): void {
-    if (oid === 0) return;
+    if (oid === 0) { return; }
     this.cartCount = 0;
     this.orderDetails(oid).subscribe(product => {
       product.forEach(item => {
