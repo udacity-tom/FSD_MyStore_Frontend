@@ -6,6 +6,7 @@ import { LoginService } from 'src/app/service/login.service';
 import { TokenService } from 'src/app/service/token.service';
 import { OrdersService } from 'src/app/service/orders.service';
 import { ProductService } from 'src/app/service/products.service';
+import { ToastService } from 'src/app/service/toast.service';
 interface CartProduct extends Product {
   quantity: number;
   order_productsId: number;
@@ -31,7 +32,8 @@ export class CartComponent implements OnInit {
   private tokenService: TokenService,
   private router: Router,
   private ordersService: OrdersService,
-  private productsService: ProductService
+  private productsService: ProductService,
+  private toastService: ToastService
   ) {
     this.activeOrder();
    }
@@ -93,9 +95,10 @@ export class CartComponent implements OnInit {
   }
 
   removeItemFromCart(product: CartProduct): void {
+    console.log('cart comp-removeItemFromCart this.products', this.products);
     this.ordersService.removeCartItem(product.quantity, product.orderId, product.id, product.order_productsId).subscribe(res => {
       if (Number(res.productid) === product.id) {
-        alert(`'${product.name}' was removed from the cart!`);
+        this.toastService.show(`Remove from Cart: ${product.name}`, `We have removed ${product.quantity} piece${(product.quantity > 1 ? 's' : '')} of the product '${product.name}' from your Cart!` );
       }
       this.activeOrder();
     });
