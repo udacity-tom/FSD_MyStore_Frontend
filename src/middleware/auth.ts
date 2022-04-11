@@ -54,7 +54,13 @@ export class AuthStore {
   }
 
   async getPayload(givenToken: string): Promise<jwt.JwtPayload | null> {
-    return jwt.decode(givenToken, { complete: true });
+    let answer;
+    try {
+      answer = jwt.decode(givenToken, { complete: true });
+      return answer;
+    } catch (err) {
+      throw new Error('Payload token is not valid');
+    }
   }
 
   async createToken(jwtPayloadData: User): Promise<string> {
@@ -83,7 +89,9 @@ export class AuthStore {
     const authorisationHeader = String(req.headers.authorization);
     const jwtToken: string = authorisationHeader.split(' ')[1];
     const decoded = jwt.verify(jwtToken, tokenSecret);
-    const jwtPayload = jwt.decode(jwtToken, { complete: true });
+    const jwtPayload: jwt.JwtPayload | null = jwt.decode(jwtToken, {
+      complete: true
+    });
 
     try {
       if (decoded) {
@@ -106,7 +114,9 @@ export class AuthStore {
     const routeUid = Number(req.params.id);
     const authorisationHeader = String(req.headers.authorization);
     const jwtToken: string = authorisationHeader.split(' ')[1];
-    const jwtPayload = jwt.decode(jwtToken, { complete: true });
+    const jwtPayload: jwt.JwtPayload | null = jwt.decode(jwtToken, {
+      complete: true
+    });
     try {
       if (
         jwtPayload?.payload.id == routeUid ||
