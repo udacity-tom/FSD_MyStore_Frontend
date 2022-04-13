@@ -33,7 +33,9 @@ export class AboutComponent implements OnInit {
           this.products.push(Object.assign(product, {sum: sumValue}));
         });
       });
-      this.products.sort( (a, b) => b.sum - a.sum);
+      this.products.sort( (a, b) => {
+       return b.sum - a.sum
+      });
     });
   }
 }
