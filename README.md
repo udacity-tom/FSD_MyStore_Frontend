@@ -1,13 +1,13 @@
 # FSD Mystore Angular Frontend  
 
-This README constitutes an important part of the Full Stack Developer Nanondegree, this project focuses on the creation of a frontend website store. The entire project was written in the web framework Angular, using the Angular CLI ver 11.1.4, Angular 11.1.2 and Node 12.13.1
+This project focuses on the creation of a frontend website store and constitutes an important part of the Full Stack Developer Nanondegree. This README explains some of the functional features and technologies used and more importantly explains how to setup the project in your local development environment.  The project was written in the web framework Angular, using the Angular CLI ver 11.1.4, Angular 11.1.2 and Node 12.13.1
 
 
 ## Introduction/App functionality
 
 This Angular app provides a simple demonstration of a shopping cart connected to a RESTful API backend. 
 
-Once installed and functional the app can perform the following functions
+Once installed and functional, the app can perform the following functions
 
 * Login/Register unique users
 * Show all completed & current orders for logged-in users
@@ -33,12 +33,12 @@ Once installed and functional the app can perform the following functions
 ## Notes on the Integration of the Backend API
 
 Part of the extended requirements for submission are to interface the frontend Angular store to a backend API. **This has been implemented** in this submission with a modified version of the previous [Full Stack Developer Backend API project](https://github.com/udacity-tom/FSD_MyStore_Backend_API).
-The following documentation for installation and setup requires the use of the backend. What needs to be done in order that the backend is available for the frontend will be described below.
+The following documentation for installation and setup requires the use of the backend API in order to properly function. What needs to be done in order that the backend API is available for the frontend will be described below.
 
 ## Installation Notes
-Because this project interfaces to the backend API and utilises the cart functionality defined in the previous project both 'Frontend'-the Angular app and the 'Backend'-the node API are included in this repository. 
+Because this project interfaces to the backend API and utilises the cart functionality defined in the previous Nanodegree project, both 'Frontend'-the Angular app and the 'Backend'-the node API are included in this repository. 
 
-The backend is located in this repository as a subtree - the simplest, but also effective, method of referencing a seperate project within a single repository. ([Github Subtree Help page](https://docs.github.com/en/get-started/using-git/about-git-subtree-merges))
+The backend is stored in this repository as a subtree - the simplest, but also effective, method of referencing a seperate project within a single repository. ([Github Subtree Help page](https://docs.github.com/en/get-started/using-git/about-git-subtree-merges))
 
 What this means is:
 To use this application, there are additional steps involved.
@@ -67,8 +67,8 @@ To start the process, clone the repository and make sure node (min. v12.13.1) an
    ```
    NOTE: where necessary substitute your own Postgres environmental variables.
    * Once set, start an instance of Postgres on port 5432. 
-   (In our local environment we used the given `docker-compose.yml` to setup the Postgres database.)
-   * Create the necessary Databases by accessing the psql prompt of the Postgres instance.
+   (In our local environment we used the given `Backend/docker-compose.yml` to setup the Postgres database.)
+   * Create the necessary Database by accessing the psql prompt of the Postgres instance.
    ```
    CREATE DATABASE mystore;
    CREATE USER storefront_admin WITH PASSWORD 'password';
@@ -76,12 +76,25 @@ To start the process, clone the repository and make sure node (min. v12.13.1) an
    ```
    NOTE: The original, modified README.md from the Backend Project provides additional information regarding the Backend API, its function, features and implementation, although it should not be necessary for the continuing installation of the Frontend [More Details in the Backend README](Backend/README.md)
 3. Create the environmental variables for 
-   * the Backend API
    * the Frontend Angular App
+   * the Backend API
 
-   3.1 Create the Backend API '.env' in the `Backend` subdirectory of the cloned repository.
+   <br>
+   3.1 Create the Frontend environmental variables in the `root` of the cloned project directory. (1. Clone the repository)
 
-      Use the following and/or subsitute your relevant system configuration variables: 
+      Open the file `/src/environments/environment.ts` in an editor and paste, then save, the following information into the file: 
+
+   ```
+   export const environment = {
+   production: false,
+   API_SERVER_IP: '127.0.0.1',
+   API_PORT: '3002',
+   PROTOCOL: 'http://',
+   };
+   ```
+   3.2 Create the Backend API '.env' in the `Backend/` subdirectory of the repository cloned in the first step above (1. Clone the repository).
+
+      Use the following and/or substitute your relevant system configuration variables: 
       ```
             POSTGRES_HOST=127.0.0.1
             POSTGRES_DB=mystore
@@ -104,43 +117,34 @@ To start the process, clone the repository and make sure node (min. v12.13.1) an
             SERVER_PORT=3002
             SERVER_ADDRESS=127.0.0.1
       ```
-   3.2 Create the Frontend environmenta variables in the `root` of the cloned project directory.
-      
-      Edit the file `/src/enviroments/enviroment.ts` in an editor and paste, then save the follwing information into the file: 
 
-   ```
-   export const environment = {
-   production: false,
-   API_SERVER_IP: '127.0.0.1',
-   API_PORT: '3002',
-   PROTOCOL: 'http://',
-   };
-   ```
-
-4. Install the dependencies and test data. Once the environmental variables are set, we can install the dependencies and test data using the following command from the `root` of the cloned project directory.
-   Use
+4. Install the dependencies and test data.   
+Once the environmental variables are set, we can install the dependencies and test data using the following command from the `root` of the cloned project directory.
+   Use the following prepared script: 
    ```
    npm run install-app
    ````
-   This script will install the dependencies for the frontend and backend, create a `mystore_test` database, set up the required tables and populate said tables with test data.
+   This script will install the dependencies for the frontend and backend, create a `mystore_test` database, set up the required tables, populate said tables with test data and launch the backend API.
 
 5. Finally in another terminal window, in the root directory of the cloned project directory enter
    ```
    ng serve
    ```
-   This will launch the angular app. Note the given URL in the terminal output.
+   This will launch the angular app. Note the given URL in the terminal output-we will use this in the next step.
 
 ### Accessing the Frontend App
 
 Once the backend and the frontend servers are running 
 
-* open a browser to the default path shown by `ng serve` once the app has been compiled and served.
-    * usually https://localhost:4200
-    * or https://127.0.0.1:4200
+* open a browser to the default path shown by the previous steps `ng serve` after the app has been compiled and served.
+    * usually this is http://localhost:4200
+    * or http://127.0.0.1:4200
 
 ### Accessing the Backend API
-Assuming that you have used the default suggestions for the `.env` enviromental variables, the API on the backend can be accessed by opening a browser window to:<br>
-`http://127.0.01:3002`
+Assuming that you have used the default suggestions for the `.env` environmental variables, the API on the backend can be accessed by opening a browser window to:<br>
+```
+http://127.0.01:3002
+```
 
 Alternatively to call the API interactively, with the provided test data, use software similar to [Postman](https://www.postman.com/), point Postman to `http://127.0.0.1:3002`
 
