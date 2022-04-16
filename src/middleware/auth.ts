@@ -136,6 +136,15 @@ export class AuthStore {
     }
   }
 
+  async authorise(token: string): Promise<string> {
+    try {
+      jwt.verify(token, tokenSecret);
+    } catch (err) {
+      throw new Error(`Invalid Token!!`);
+    }
+    return 'valid';
+  }
+
   async verifyAuthToken(
     req: express.Request,
     res: express.Response,
