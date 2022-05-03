@@ -74,44 +74,32 @@
     <Button type="submit" [disabled]="form.invalid" class="btn btn-primary button-position">Submit Your Order</Button>
 </form>
 <br>
-    <div *ngIf="firstName.invalid && firstName.dirty">
-        <div *ngIf="firstName.errors?.required">
+<div class="checkout-container">
+    <div *ngIf="firstName.invalid">
             Please enter your first name, it must be at least 3 characters long.
-        </div>
     </div>
     <br>
-    <div *ngIf="lastName.invalid && lastName.dirty">
-        <div *ngIf="lastName.errors?.required">
+    <div *ngIf="lastName.invalid">
             You must enter a lastName and it must be at least 3 characters long.
-        </div>
     </div>
     <br>
-    <div *ngIf="housenum.invalid && housenum.dirty">
-        <div *ngIf="housenum.errors?.required">
+    <div *ngIf="housenum.invalid">
             You must enter a house number or house name.
-        </div>
     </div>
     <br>
-    <div *ngIf="street1.invalid && street1.dirty">
-        <div *ngIf="street1.errors?.required">
+    <div *ngIf="street1.invalid">
             You must enter a street and it must be at least 5 characters long.
-        </div>
     </div>
     <br>
-    <div *ngIf="City.invalid && City.dirty">
-        <div *ngIf="City.errors?.required">
+    <div *ngIf="City.invalid">
             You must enter a city and it must be at least 5 characters long.
-        </div>
     </div>
     <br>
-    <div *ngIf="PostCode.invalid && PostCode.dirty">
-        <div *ngIf="PostCode.errors?.required">
+    <div *ngIf="PostCode.invalid">
             You must enter a postcode, and it must be at least 3 characters long.
-        </div>
     </div>
     <br>
-    <div *ngIf="Country.invalid && Country.dirty">
-        <div *ngIf="Country.errors?.required">
-            You must enter a country, it is required.
-        </div>
+    <div *ngIf="Country.invalid">
+            You must enter a country, it is required and it must be at least 5 characters long.
     </div>
+</div>
