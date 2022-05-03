@@ -15,10 +15,8 @@ export class ProductItemDetailComponent implements OnInit {
   product: Product;
   givenId: number;
   noOfItems: number;
-  itemDescription: object;
   response: object = {};
   activeOrder = 0;
-  state = 'child';
 
   constructor(
     private productService: ProductService,
@@ -39,7 +37,6 @@ export class ProductItemDetailComponent implements OnInit {
     };
     this.givenId = 0;
     this.noOfItems = 1;
-    this.itemDescription = {};
   }
 
   async ngOnInit(): Promise<void> {
@@ -60,11 +57,22 @@ export class ProductItemDetailComponent implements OnInit {
   }
 
   decreaseItems(): void {
-    if (this.noOfItems === 1) { return; }
+    if (this.noOfItems === 1 || this.noOfItems <= 1) {
+      this.noOfItems = 1
+      return; }
     this.noOfItems--;
   }
 
+  checkQuantity(value: number): void {
+    if (value === null || String(value) === ''){ return;}
+    if (isNaN(value) || Number(value) < 1) {
+      this.noOfItems = 1;
+      alert('No of Items ordered MUST be a number greater than 0!');
+    }
+  }
+
   addProductToCart(pid: number, quantity: number ): void{
+    if (isNaN(quantity) || String(quantity) === '' ){ return; }
     this.ordersService.addProductToActiveOrder(pid, quantity, this.activeOrder).subscribe(res => {
       this.response = res;
       this.toastService.show(`Add to Cart: ${this.product.name}`, `We have put ${quantity} piece${(quantity > 1 ? 's' : '')} of the product '${this.product.name}' into your Cart!` );
