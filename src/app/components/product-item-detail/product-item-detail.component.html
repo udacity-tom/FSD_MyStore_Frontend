@@ -10,16 +10,17 @@
     <br>
     <br>
     <a routerLink="/login"><button class="btn btn-primary" *ngIf=(!loginStatus)>Please login to add this item to your cart.</button></a>
-    <div *ngIf=(loginStatus)>
-        <div class="quantity">
-            <button (click)="decreaseItems()">-</button>
-            {{ noOfItems }}
-            <button (click)="increaseItems()">+</button>
+    <div class="item-align">
+        <div class="item-align" *ngIf=(loginStatus)>
+            <div class="quantity">
+                <button (click)="decreaseItems()">-</button>
+                <input class="input-field" type="text" name="noOfItems" placeholder={{noOfItems}} [(ngModel)]="noOfItems" (ngModelChange)="checkQuantity(noOfItems)" min="1" inputmode="numeric">
+                <button (click)="increaseItems()">+</button>
+            </div>
+            <button class="btn btn-primary align-buttons" (click)="addProductToCart(product.id, noOfItems)">Add To Cart</button>
         </div>
-    <!-- <br> -->
-    <button class="btn btn-primary" (click)="addProductToCart(product.id, noOfItems)">Add To Cart</button>&nbsp;
+        <br>
+        <br>
+        <button class="btn btn-primary align-buttons" [routerLink]="['/products']">Back To Products</button>
     </div>
-    <br>
-    <br>
-    <button class="btn btn-primary" [routerLink]="['/products']">Back To Products</button>
-</div> 
+</div>

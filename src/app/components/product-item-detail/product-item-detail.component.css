@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
 }
 
 .title {
@@ -39,8 +38,24 @@ img {
     width: 60%;
   }
 
+  .item-align {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .quantity {
     margin: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .input-field {
+    width: 50px;
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
   }
 
   .back-link {
