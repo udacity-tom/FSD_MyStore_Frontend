@@ -1,8 +1,27 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()" class="login-container">
     <h1>Register Here!</h1>
     <br>
+<div style="font-size:x-large">
+    <div *ngIf="userName.invalid">
+            Please enter a username, it must be at least 3 characters long.
+    </div>
     <br>
-    <!-- <p login-text>Username:</p> -->
+    <div *ngIf="!userName.invalid && passWord.invalid">
+        Now enter a password, it must be at least 8 characters long.
+    </div>
+    <div *ngIf="(firstName.invalid && lastName.invalid) && !userName.invalid && !passWord.invalid">
+        You can also add: your first name & your last name, But this is NOT required for registering!
+    </div>
+    <div *ngIf="(!firstName.invalid && lastName.invalid) && !userName.invalid && !passWord.invalid">
+        Press the 'Submit' button to set up your account, when you're finished!
+    </div>
+    <div *ngIf="(!firstName.invalid && !lastName.invalid) && !userName.invalid && !passWord.invalid">
+        Press 'Submit' to set up your account!
+    </div>
+
+</div>
+    <br>
+    <br>
     <input 
     type="text" 
     name="username" 
@@ -14,24 +33,6 @@
     <br>
     <input 
     type="text" 
-    name="firstname" 
-    required 
-    minlength="3" 
-    placeholder="Enter Firstname" 
-    [(ngModel)]="firstname"
-    #userName="ngModel">
-    <br>
-    <input 
-    type="text" 
-    name="lastname" 
-    required 
-    minlength="3" 
-    placeholder="Enter lastname" 
-    [(ngModel)]="lastname"
-    #userName="ngModel">
-    <br>
-    <input 
-    type="text" 
     name="password" 
     required 
     minlength="8" 
@@ -39,17 +40,24 @@
     [(ngModel)]="password"
     #passWord="ngModel">
     <br>
+    <input 
+    type="text" 
+    name="firstname" 
+    required 
+    minlength="3" 
+    placeholder="Enter Firstname" 
+    [(ngModel)]="firstname"
+    #firstName="ngModel">
+    <br>
+    <input 
+    type="text" 
+    name="lastname" 
+    required 
+    minlength="3" 
+    placeholder="Enter Lastname" 
+    [(ngModel)]="lastname"
+    #lastName="ngModel">
+    <br>
     <input type="submit" [disabled]="form.invalid" value="Submit" class="btn btn-primary">
-    <button class="btn btn-primary" (click)="login()">Already have a Login? Login Here!</button>
+    <button *ngIf="userName.invalid || passWord.invalid" class="btn btn-primary" (click)="login()">Already have a Login? Login Here!</button>
 </form>
-<p *ngIf="loading" class="signin-text">Currently logging in as: {{username}}</p>
-<br>
-<div *ngIf="userName.invalid && userName.dirty">
-    <div *ngIf="userName.errors?.required">
-        Please enter your username, it must be at least 5 characters long.
-    </div>
-</div>
-<br>
-<div *ngIf="passWord.invalid && passWord.dirty">
-    You must enter a password and it must be at least 8 characters long.
-</div>
