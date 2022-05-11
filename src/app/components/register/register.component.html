@@ -43,7 +43,6 @@
     <input 
     type="text" 
     name="firstname" 
-    required 
     minlength="3" 
     placeholder="Enter Firstname" 
     [(ngModel)]="firstname"
@@ -52,12 +51,11 @@
     <input 
     type="text" 
     name="lastname" 
-    required 
     minlength="3" 
     placeholder="Enter Lastname" 
     [(ngModel)]="lastname"
     #lastName="ngModel">
     <br>
-    <input type="submit" [disabled]="username.invalid || password.invalid" value="Submit" class="btn btn-primary">
+    <input type="submit" [disabled]="form.invalid" value="Submit" class="btn btn-primary">
     <button *ngIf="userName.invalid || passWord.invalid" class="btn btn-primary" (click)="login()">Already have an account? Login Here!</button>
 </form>
