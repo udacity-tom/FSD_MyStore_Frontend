@@ -9,12 +9,12 @@
     <div *ngIf="!userName.invalid && passWord.invalid">
         Now enter a password, it must be at least 8 characters long.
     </div>
-    <div *ngIf="(firstName.invalid && lastName.invalid) && !userName.invalid && !passWord.invalid">
+    <div *ngIf="!userName.invalid && !passWord.invalid">
         You can also add: your first name & your last name, But this is NOT required for registering!
     </div>
-    <div *ngIf="(!firstName.invalid && lastName.invalid) && !userName.invalid && !passWord.invalid">
+    <!-- <div *ngIf="(!firstName.invalid && lastName.invalid) && !userName.invalid && !passWord.invalid">
         Press the 'Submit' button to set up your account, when you're finished!
-    </div>
+    </div> -->
     <div *ngIf="(!firstName.invalid && !lastName.invalid) && !userName.invalid && !passWord.invalid">
         Press 'Submit' to set up your account!
     </div>
