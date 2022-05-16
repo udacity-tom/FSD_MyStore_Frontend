@@ -5,7 +5,36 @@
     <p>{{explanation1}}</p>
     <p>{{explanation2}}</p>
     <br>
-    <br>
+    <div class="checkout-container" style="font-size: x-large;">
+        <div *ngIf="firstName.invalid">
+                Please enter your first name, it must be at least 3 characters long.
+                <br>
+        </div>
+        <div *ngIf="lastName.invalid">
+                You must enter a lastName and it must be at least 3 characters long.
+                <br>
+        </div>
+        <div *ngIf="housenum.invalid">
+                You must enter a house number or house name.
+                <br>
+        </div>
+        <div *ngIf="street1.invalid">
+                You must enter a street and it must be at least 5 characters long.
+                <br>
+        </div>
+        <div *ngIf="City.invalid">
+                You must enter a city and it must be at least 5 characters long.
+                <br>
+        </div>
+        <div *ngIf="PostCode.invalid">
+                You must enter a postcode, and it must be at least 3 characters long.
+                <br>
+        </div>
+        <div *ngIf="Country.invalid">
+                You must enter a country, it is required and it must be at least 5 characters long.
+                <br>
+        </div>
+    </div>
     <section class="form-input">
         <input 
         type="text" 
@@ -74,32 +103,3 @@
     <Button type="submit" [disabled]="form.invalid" class="btn btn-primary button-position">Submit Your Order</Button>
 </form>
 <br>
-<div class="checkout-container" style="font-size: x-large;">
-    <div *ngIf="firstName.invalid">
-            Please enter your first name, it must be at least 3 characters long.
-    </div>
-    <br>
-    <div *ngIf="lastName.invalid">
-            You must enter a lastName and it must be at least 3 characters long.
-    </div>
-    <br>
-    <div *ngIf="housenum.invalid">
-            You must enter a house number or house name.
-    </div>
-    <br>
-    <div *ngIf="street1.invalid">
-            You must enter a street and it must be at least 5 characters long.
-    </div>
-    <br>
-    <div *ngIf="City.invalid">
-            You must enter a city and it must be at least 5 characters long.
-    </div>
-    <br>
-    <div *ngIf="PostCode.invalid">
-            You must enter a postcode, and it must be at least 3 characters long.
-    </div>
-    <br>
-    <div *ngIf="Country.invalid">
-            You must enter a country, it is required and it must be at least 5 characters long.
-    </div>
-</div>
